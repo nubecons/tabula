@@ -1,214 +1,172 @@
 <?php $site_url = $this->Url->build('/',true); ?> 
 <div class="row">
-    <div class="col-sm-5">
+    <div class="col-sm-12">
   
-<button class="btn m-b-xs w-xl btn-default" data-toggle="modal" data-target="#AddReq"> <i class="glyphicon glyphicon-plus"></i></button>
-<div class="panel panel-default">
-        <div class="panel-heading">
-          <h4> Requirments </h4>                  
-        </div>
-        <div class="panel-body">
-          <article class="media">
-         <div class="pull-right">
-          <?php /*?>  <div class="pull-left">
-              <span class="fa-stack fa-lg">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fa fa-bold fa-stack-1x text-white"></i>
-              </span>
-            </div><?php */?>
-              <span class="fa-stack fa-lg" data-toggle="modal" data-target="#AddReq">
-               Edit 
-              </span>
-            </div>
-            <div class="media-body">                        
-              <a href = "#" class="h4" onClick="$('#ReqDetail').show()" >First Requirment</a>
-              <small class="block m-t-xs"></small>
-              <em class="text-xs"> Muzammil Posted on <span class="text-danger">April 30, 2018</span></em>
-            </div>
-           
-           </article>
-           
-           <article class="media">
-             <div class="pull-right">
-              <span class="fa-stack fa-lg" data-toggle="modal" data-target="#AddReq">
-               Edit 
-              </span>
-            </div>
-            <div class="media-body">                        
-              <a href = "#" class="h4" onClick="$('#ReqDetail').show()" > Requirment 2</a>
-              <small class="block m-t-xs"></small>
-              <em class="text-xs"> Muzammil Posted on <span class="text-danger">April 30, 2018</span></em>
-            </div>
-          </article>
-          
-            <article class="media">
-             <div class="pull-right">
-              <span class="fa-stack fa-lg" data-toggle="modal" data-target="#AddReq">
-               Edit 
-              </span>
-            </div>
-            <div class="media-body">                        
-               <a href = "#" class="h4" onClick="$('#ReqDetail').show()" > Requirment 3</a>
-              <small class="block m-t-xs"></small>
-              <em class="text-xs"> Muzammil Posted on <span class="text-danger">April 30, 2018</span></em>
-            </div>
-          </article>
-          
-            <article class="media">
-             <div class="pull-right">
-              <span class="fa-stack fa-lg" data-toggle="modal" data-target="#AddReq">
-               Edit 
-              </span>
-            </div>
-            <div class="media-body">                        
-              <a href = "#" class="h4" onClick="$('#ReqDetail').show()" > Requirment 4</a>
-              <small class="block m-t-xs"></small>
-              <em class="text-xs"> Muzammil Posted on <span class="text-danger">April 30, 2018</span></em>
-            </div>
-          </article>
-          
-       
-       
-        </div>
-      </div>
-      
-      </div>
-    
-     <div class="col-sm-7">
-  
-<br> <br>
-<div class="panel panel-default" id="ReqDetail" <?php /*?>style="display:none"<?php */?>>
-        <div class="panel-heading">
-          <h4> First Requirment </h4>                  
-        </div>
-        <div class="panel-body">
-  
-          
-            <i class="glyphicon glyphicon-th"></i> Project 1  &nbsp;&nbsp;
-            <i class="glyphicon glyphicon-user"></i> Muzammil
-         
-          <article class="media">
-          <small class="block m-t-xs select_text" >it is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose </small>
-            <div class="media-body">                        
-            
-              <small class="block m-t-xs"></small>
-              <em class="text-xs"> Muzammil Posted on <span class="text-danger">April 30, 2018</span></em>
-            </div>
-            <br>
-            <small class="block m-t-xs">  
-            Muzammil Shabir created task. <span class="text-danger">9:27pm</span> <br>
-            Muzammil Shabir added to my test project. <span class="text-danger">9:27pm</span><br>
-            Muzammil Shabir changed the due date to <span class="text-danger">Apr 19.9:27pm</span><br>
-            Muzammil Shabir assigned to you.<span class="text-danger">9:27pm</span><br>
-            Muzammil Shabir unassigned from you. <span class="text-danger">9:27pm</span><br>
-            </small>
-            <br>
-            <div class="m-l-lg">
-          <a class="pull-left thumb-sm avatar">
-            <img src="img/a5.jpg" alt="...">
-          </a>          
-          <div class="m-l-xxl panel b-a">
-            <div class="panel-heading pos-rlt">
-              <span class="arrow left pull-up"></span>
-              <span class="text-muted m-l-sm pull-right">
-                10 m ago
-              </span>
-              <a href>Muzammil</a>
-              good work!!                       
-            </div>
-          </div>
-        </div>
         
-        <div class="m-l-lg">
-          <a class="pull-left thumb-sm avatar">
-            <img src="img/a5.jpg" alt="...">
-          </a>          
-          <div class="m-l-xxl panel b-a">
-            <div class="panel-heading pos-rlt">
-              <span class="arrow left pull-up"></span>
-              <span class="text-muted m-l-sm pull-right">
-                15 m ago
-              </span>
-              <a href>Muzammil</a>
-               this  is helpful                           
-            </div>
-          </div>
-        </div>
-        
-        <div class="m-l-lg">
-          <a class="pull-left thumb-sm avatar">
-            <img src="img/a5.jpg" alt="...">
-          </a>          
-          <div class="m-l-xxl panel b-a">
-            <div class="panel-heading pos-rlt">
-              <span class="arrow left pull-up"></span>
-              <span class="text-muted m-l-sm pull-right">
-                30 m ago
-              </span>
-              <a href>Muzammil</a>
-             test comment 1                         
-            </div>
-          </div>
-        </div>
-            <div class="panel panel-default m-t-md m-b-n-sm pos-rlt">
-                <form>
-                  <textarea class="form-control no-border" rows="2" placeholder="Your comment..."></textarea>
-                </form>
-                <div class="panel-footer bg-light lter">
-                  <button class="btn btn-info pull-right btn-sm">Comment</button>
-                  <ul class="nav nav-pills nav-sm">
-                   <li><button class="btn btn-primary btn-addon btn-sm"><i class="fa fa-plus"></i>Followers</button>
-				 </a>   
-				   <?php /*?><i class="fa fa-camera text-muted"></i><?php */?></li>
-                   <?php /*?>  <li><a href><i class="fa fa-video-camera text-muted"></i></a></li><?php */?>
-                  </ul>
-                </div>
-              </div>
-           </article>
-           
-         
-          
-       
-       
+<button class="btn m-b-xs w-xl btn-default" data-toggle="modal" data-target="#AddReq"> <i class="glyphicon glyphicon-plus"></i>Create New Requirement</button>
+<div class="btn-group pull-right">
+	          <button type="button" class="btn btn-sm btn-bg btn-default"><i class="glyphicon glyphicon-list"></i></button>
+	          <button type="button" class="btn btn-sm btn-bg btn-default"><i class="glyphicon glyphicon-blackboard"></i></button>
+	        </div>
+      <div class="panel panel-default">
+    <div class="panel-heading">
+      Requirements
+    </div>
+<!--    <div class="row wrapper">
+      <div class="col-sm-5 m-b-xs">
+        <select class="input-sm form-control w-sm inline v-middle">
+          <option value="0">Bulk action</option>
+          <option value="1">Delete selected</option>
+          <option value="2">Bulk edit</option>
+          <option value="3">Export</option>
+        </select>
+        <button class="btn btn-sm btn-default">Apply</button>                
+      </div>
+      <div class="col-sm-4">
+      </div>
+      <div class="col-sm-3">
+        <div class="input-group">
+          <input class="input-sm form-control" placeholder="Search" type="text">
+          <span class="input-group-btn">
+            <button class="btn btn-sm btn-default" type="button">Go!</button>
+          </span>
         </div>
       </div>
-      
+    </div>-->
+    <div class="table-responsive">
+      <table class="table table-striped b-t b-light">
+        <thead>
+          <tr>
+<!--            <th style="width:20px;">
+              <label class="i-checks m-b-none">
+                <input type="checkbox"><i></i>
+              </label>
+            </th>-->
+            <th>Requirement</th>
+            <th>Design Task</th>
+            <th>QA Tasks</th>
+            <th>Project</th>
+            <th>Health</th>
+            <th style="width:30px;">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <!--<td><label class="i-checks m-b-none"><input name="post[]" type="checkbox"><i></i></label></td>-->
+            <td>Requiremnt 1</td>
+            <td><span class="label bg-danger pull-right m-t-xs">4 Open</span><span class="label bg-info pull-right m-t-xs">10 in review</span><span class="label bg-warning pull-right m-t-xs">4 in progress</span><span class="label bg-success pull-right m-t-xs">4 left</span></td>
+            <td><span class="label bg-danger pull-right m-t-xs">4 Open</span><span class="label bg-info pull-right m-t-xs">10 in review</span><span class="label bg-warning pull-right m-t-xs">4 in progress</span><span class="label bg-success pull-right m-t-xs">4 left</span></td>
+            <td><span class="label bg-primary pull-right m-t-xs">HR</span></td>
+            <td class="text-success"><i class="fa fa-level-up"></i> 20%</td>
+            <td><div class="btn-group dropdown">
+	            <button class="btn btn-default btn-sm btn-bg dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+	              <span class="dropdown-label">Filter</span>                    
+	              <span class="caret"></span>
+	            </button>
+	            <ul class="dropdown-menu text-left text-sm">
+                        <li><a  href="#">Edit</a></li>
+                      <li><a  href="#">+Create Design Task</a></li>
+                      <li><a  href="#">+Create QA Task</a></li>
+	            </ul>
+	          </div>
+            </td>
+          </tr>
+
+          <tr>
+            <!--<td><label class="i-checks m-b-none"><input name="post[]" type="checkbox"><i></i></label></td>-->
+            <td>Handling VPS Max Sub Layers in Media 1</td>
+            <td><span class="label bg-danger pull-right m-t-xs">4 Open</span><span class="label bg-info pull-right m-t-xs">10 in review</span><span class="label bg-warning pull-right m-t-xs">4 in progress</span><span class="label bg-success pull-right m-t-xs">4 left</span></td>
+            <td><span class="label bg-danger pull-right m-t-xs">4 Open</span><span class="label bg-info pull-right m-t-xs">10 in review</span><span class="label bg-warning pull-right m-t-xs">4 in progress</span><span class="label bg-success pull-right m-t-xs">4 left</span></td>
+            <td><span class="label bg-primary pull-right m-t-xs">HR</span></td>
+            <td class="text-success"><i class="fa fa-level-up"></i> 20%</td>
+            <td><div class="btn-group dropdown">
+	            <button class="btn btn-default btn-sm btn-bg dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+	              <span class="dropdown-label">Filter</span>                    
+	              <span class="caret"></span>
+	            </button>
+	            <ul class="dropdown-menu text-left text-sm">
+                        <li><a  href="#">Edit</a></li>
+                      <li><a  href="#">+Create Design Task</a></li>
+                      <li><a  href="#">+Create QA Task</a></li>
+	            </ul>
+	          </div>
+            </td>
+          </tr>
+                    <tr>
+            <!--<td><label class="i-checks m-b-none"><input name="post[]" type="checkbox"><i></i></label></td>-->
+            <td>Requiremnt 1</td>
+            <td><span class="label bg-danger pull-right m-t-xs">4 Open</span><span class="label bg-info pull-right m-t-xs">10 in review</span><span class="label bg-warning pull-right m-t-xs">4 in progress</span><span class="label bg-success pull-right m-t-xs">4 left</span></td>
+            <td><span class="label bg-danger pull-right m-t-xs">4 Open</span><span class="label bg-info pull-right m-t-xs">10 in review</span><span class="label bg-warning pull-right m-t-xs">4 in progress</span><span class="label bg-success pull-right m-t-xs">4 left</span></td>
+            <td><span class="label bg-primary pull-right m-t-xs">HR</span></td>
+            <td class="text-success"><i class="fa fa-level-up"></i> 20%</td>
+            <td><div class="btn-group dropdown">
+	            <button class="btn btn-default btn-sm btn-bg dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+	              <span class="dropdown-label">Filter</span>                    
+	              <span class="caret"></span>
+	            </button>
+	            <ul class="dropdown-menu text-left text-sm">
+                        <li><a  href="#">Edit</a></li>
+                      <li><a  href="#">+Create Design Task</a></li>
+                      <li><a  href="#">+Create QA Task</a></li>
+	            </ul>
+	          </div>
+            </td>
+          </tr>
+                    <tr>
+            <!--<td><label class="i-checks m-b-none"><input name="post[]" type="checkbox"><i></i></label></td>-->
+            <td>Requiremnt 1</td>
+            <td><span class="label bg-danger pull-right m-t-xs">4 Open</span><span class="label bg-info pull-right m-t-xs">10 in review</span><span class="label bg-warning pull-right m-t-xs">4 in progress</span><span class="label bg-success pull-right m-t-xs">4 left</span></td>
+            <td><span class="label bg-danger pull-right m-t-xs">4 Open</span><span class="label bg-info pull-right m-t-xs">10 in review</span><span class="label bg-warning pull-right m-t-xs">4 in progress</span><span class="label bg-success pull-right m-t-xs">4 left</span></td>
+            <td><span class="label bg-primary pull-right m-t-xs">HR</span></td>
+            <td class="text-success"><i class="fa fa-level-up"></i> 20%</td>
+            <td><div class="btn-group dropdown">
+	            <button class="btn btn-default btn-sm btn-bg dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+	              <span class="dropdown-label">Filter</span>                    
+	              <span class="caret"></span>
+	            </button>
+	            <ul class="dropdown-menu text-left text-sm">
+                        <li><a  href="#">Edit</a></li>
+                      <li><a  href="#">+Create Design Task</a></li>
+                      <li><a  href="#">+Create QA Task</a></li>
+	            </ul>
+	          </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <footer class="panel-footer">
+      <div class="row">
+        <div class="col-sm-4 hidden-xs">
+          <select class="input-sm form-control w-sm inline v-middle">
+            <option value="0">Bulk action</option>
+            <option value="1">Delete selected</option>
+            <option value="2">Bulk edit</option>
+            <option value="3">Export</option>
+          </select>
+          <button class="btn btn-sm btn-default">Apply</button>                  
+        </div>
+        <div class="col-sm-4 text-center">
+          <small class="text-muted inline m-t-sm m-b-sm">showing 20-30 of 50 items</small>
+        </div>
+        <div class="col-sm-4 text-right text-center-xs">                
+          <ul class="pagination pagination-sm m-t-none m-b-none">
+            <li><a href=""><i class="fa fa-chevron-left"></i></a></li>
+            <li><a href="">1</a></li>
+            <li><a href="">2</a></li>
+            <li><a href="">3</a></li>
+            <li><a href="">4</a></li>
+            <li><a href="">5</a></li>
+            <li><a href=""><i class="fa fa-chevron-right"></i></a></li>
+          </ul>
+        </div>
       </div>
+    </footer>
+  </div>
+      </div>
+
 
 </div>
-      
-<script>
-	
-	
-	$(document).ready(function() {
-		$('.select_text').bind("mouseup", function() {
-
-			if (!window.x) {
-					x = {};
-				}
-			
-				x.Selector = {};
-				x.Selector.getSelected = function() {
-					var t = '';
-					if (window.getSelection) {
-						t = window.getSelection();
-					} else if (document.getSelection) {
-						t = document.getSelection();
-					} else if (document.selection) {
-						t = document.selection.createRange().text;
-					}
-					return t;
-				}
-			var mytext = x.Selector.getSelected();
-			
-			if(confirm("Do you want to create requirment")){
-				$('#AddReq').modal('show');
-				$('#req_field').val(mytext);
-				}
-		});
-	});
-
-</script>  
 
       
  <div id="AddReq" class="modal fade" role="dialog">
