@@ -24,6 +24,14 @@ class GetInfoHelper extends Helper
 	
    }
    
+   
+    function getProjects($conditions = []){
+
+	 $Projects = TableRegistry::get('Projects');
+     return  $Projects->find()->where($conditions)->all();
+
+	   } 
+   
   function getCity($id, $fields =[]){
 
 		$ObjCities = TableRegistry::get('Cities');
@@ -39,12 +47,7 @@ class GetInfoHelper extends Helper
 	   } 
 
 
- function getProductCount($conditions = []){
 
-	 $Products = TableRegistry::get('Products');
-     return  $Products->find()->where($conditions)->count();
-
-	   } 
  function getLocationCount($conditions = []) {
 
         $Locations = TableRegistry::get('Locations');

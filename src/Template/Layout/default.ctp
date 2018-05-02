@@ -280,7 +280,11 @@ site_url = '<?=$site_url?>';
              
               </li>
               <li>
-                <a href class="auto">      
+              
+              <?php echo $this->element('left_projects')?>
+              
+              
+                <?php /*?><a href class="auto">      
                   <span class="pull-right text-muted">
                     <i class="fa fa-fw fa-angle-right text"></i>
                     <i class="fa fa-fw fa-angle-down text-active"></i>
@@ -310,7 +314,7 @@ site_url = '<?=$site_url?>';
                       <span>Project 4</span>
                     </a>
                   </li>      
-                </ul>
+                </ul><?php */?>
               </li>
               
               <li>
@@ -367,7 +371,7 @@ site_url = '<?=$site_url?>';
   <!-- / aside -->
   <div id="content" class="app-content" role="main">
   	<div class="app-content-body ">
-    
+    <?= $this->Flash->render() ?>
     <?= $this->fetch('content') ?>
   
   <?php /*?><?php */?>
@@ -392,7 +396,7 @@ site_url = '<?=$site_url?>';
             </div>
             <div class="form-group">
              <label>Description</label>
-              <input name="description" type="text" class="form-control" placeholder="Enter Description">
+             <textarea  name="description"  class="form-control" placeholder="Enter Description" ></textarea>
             </div>
            
             <button type="button"  class="btn btn-sm btn-warning btnload"  id="btn_addProject_load"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Working...</button>
@@ -474,6 +478,12 @@ $("#btn_addProject").click(function(e) {
 		alert('Pleae enter project name');   
 		return;
 		}
+	if($('#form_addProject [name=description]').val() == '')
+	   {
+		alert('Pleae enter project description');   
+		return;
+		}	
+		
   
   e.preventDefault();
   var dataString = $( '#form_addProject' ).serialize();
@@ -493,12 +503,16 @@ $("#btn_addProject").click(function(e) {
 				 alert('Project could not created');
 		   }else{
 			   
-				window.location.href = '<?=$site_url?>Requirments/index/'+data; 	   
+				window.location.href = '<?=$site_url?>Projects/index/'+data; 	   
 	      }
 		  
 		}
   });
   return false;
+});
+
+$( document ).ready(function() {
+   $(".message.success,.message.error").fadeOut(10000);
 });
 
 </script>

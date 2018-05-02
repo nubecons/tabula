@@ -34,9 +34,7 @@ class UsersController extends AppController {
 
 
 
-    public $helpers = ['OrderInfo'];
-
-
+  
 
     public function initialize() {
 
@@ -66,7 +64,7 @@ class UsersController extends AppController {
 
 
 
-        $this->Auth->allow(['login', 'logout', 'signup', 'becomeClient', 'agentApplication', 'retrievePassword', 'forgotPassword', 'forgotreset', 'guestUser']);
+        $this->Auth->allow(['login', 'logout', 'signup','retrievePassword', 'forgotPassword', 'forgotreset', 'guestUser']);
 
     }
 

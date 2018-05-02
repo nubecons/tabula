@@ -31,3 +31,36 @@ display:none;
     from { transform: scale(1) rotate(0deg);}
     to { transform: scale(1) rotate(360deg);}
 }
+
+
+.form-error {
+		border: 1px solid #CC9999;
+	}
+
+.error-message{
+	color: #AA0B0B;
+	
+	}
+.message.error {
+	margin-bottom: 6px;
+	margin-top: 6px;
+	margin-left: 6px;
+	margin-right: 6px;
+	background-color: #FFEEEE;
+	border: 2px solid #CC9999;
+	border-radius: 7px 7px 7px 7px;
+	color: #AA0B0B;
+	padding:8px;
+	}
+
+.message.success {
+	margin-bottom: 6px;
+	margin-top: 6px;
+	margin-left: 6px;
+	margin-right: 6px;
+	background-color: #dff0d8;
+	border: 2px solid #d6e9c6;
+	border-radius: 7px 7px 7px 7px;
+	color: #3c763d;
+	padding:8px;
+	}	
