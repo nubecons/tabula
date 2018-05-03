@@ -24,7 +24,7 @@
                  <?php
 				  foreach($Projects as $Project){?>
                   <li>
-                    <a href = "#" >
+                    <a href = "<?=$site_url?>requirments/index/<?=$Project['id']?>" >
                       <span><?=$Project['name']?></span>
                     </a>
                   </li>

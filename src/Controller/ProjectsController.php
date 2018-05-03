@@ -123,10 +123,44 @@ public function ajaxDetail($id = null ){
 	$Project = $this->Projects->find()->where(['id' => $id , 'user_id' => $this->sUser['id']])->first();
 	$this->set('Project', $Project);
 	
+	$this->loadModel('ProjectComments');	
+	$ProjectComments = $this->ProjectComments->find()->where(['project_id' => $id ,'status'=>'ACTIVE' ])->all();
+	$this->set('ProjectComments', $ProjectComments);
+	
 	
 	}
-	
-	
+
+
+  function saveComment(){
+	    $this->viewBuilder()->setLayout(false);
+		$this->loadModel('ProjectComments');
+		$retrun = 'false';
+		
+		if ($this->request->is('post'))
+		{
+		  $data = $this->request->data;
+		  $data['created_by'] = $this->sUser['id'];
+		  $ProjectComments = $this->ProjectComments->newEntity();
+		  $ProjectComments= $this->ProjectComments->patchEntity($ProjectComments, $data);
+		   
+		   if ($result = $this->ProjectComments->save($ProjectComments))
+			{
+			 // $this->Flash->success(__('Project created successfully.'));
+			  $retrun = $result->id;	
+			 
+			  $ProjectComment = $this->ProjectComments->find()->where(['id' => $result->id ,'status'=>'ACTIVE' ])->first();
+			  $this->set('ProjectComment' , $ProjectComment);
+			  
+			}else{
+				echo $retrun;
+		exit;
+				
+				}
+		}else{
+		echo $retrun;
+		exit;
+		}
+   }
 	
    
  public function detail($id = null)

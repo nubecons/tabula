@@ -59,7 +59,7 @@
             <td><?=$Requirment['title']?></td>
             <td><span class="label bg-danger pull-right m-t-xs">4 Open</span><span class="label bg-primary pull-right m-t-xs">10 in review</span><span class="label bg-warning pull-right m-t-xs">4 in progress</span><span class="label bg-success pull-right m-t-xs">4 left</span></td>
             <td><span class="label bg-danger pull-right m-t-xs">4 Open</span><span class="label bg-primary pull-right m-t-xs">10 in review</span><span class="label bg-warning pull-right m-t-xs">4 in progress</span><span class="label bg-success pull-right m-t-xs">4 left</span></td>
-            <td><span class="label bg-primary pull-right m-t-xs">HR</span></td>
+            <td><span class="label bg-primary pull-right m-t-xs"><?=$Requirment['project']['name']?></span></td>
             <td class="text-success"><i class="fa fa-level-up"></i> 20%</td>
             <td><div class="btn-group dropdown">
 	            <button class="btn btn-default btn-sm btn-bg dropdown-toggle" data-toggle="dropdown" aria-expanded="true">

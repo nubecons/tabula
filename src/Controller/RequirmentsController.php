@@ -117,8 +117,8 @@ class RequirmentsController extends AppController
         $Requirments = $this->paginate($query, array('url' => '/Requirments/'));
         $this->set('Requirments', $Requirments);
 		
-		debug( $Requirments );
-		exit;
+		//debug( $Requirments );
+		//exit;
 	
     }
 	

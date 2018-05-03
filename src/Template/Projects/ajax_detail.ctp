@@ -34,6 +34,10 @@
             Muzammil unassigned from you. <span class="text-danger">9:27pm</span><br>
             </small>
             <br>
+            
+            <?php
+			foreach($ProjectComments as $ProjectComment){
+			?>	
             <div class="m-l-lg">
           <a class="pull-left thumb-sm avatar">
             <img src="<?=$site_url?>img/a5.jpg" alt="...">
@@ -42,58 +46,37 @@
             <div class="panel-heading pos-rlt">
               <span class="arrow left pull-up"></span>
               <span class="text-muted m-l-sm pull-right">
-                10 m ago
+                <?=date('M d, Y h:i a', strtotime($ProjectComment['created']))?>
               </span>
-              <a href>Muzammil</a>
-              good work!!                       
+              <a href></a>
+              <?=$ProjectComment['message']?>                      
             </div>
           </div>
+        </div>
+        <?php } ?>
+        <div id="comments_div">
+        
         </div>
         
-        <div class="m-l-lg">
-          <a class="pull-left thumb-sm avatar">
-            <img src="<?=$site_url?>img/a5.jpg" alt="...">
-          </a>          
-          <div class="m-l-xxl panel b-a">
-            <div class="panel-heading pos-rlt">
-              <span class="arrow left pull-up"></span>
-              <span class="text-muted m-l-sm pull-right">
-                15 m ago
-              </span>
-              <a href>Muzammil</a>
-               this  is helpful                           
-            </div>
-          </div>
-        </div>
-        
-        <div class="m-l-lg">
-          <a class="pull-left thumb-sm avatar">
-            <img src="<?=$site_url?>img/a5.jpg" alt="...">
-          </a>          
-          <div class="m-l-xxl panel b-a">
-            <div class="panel-heading pos-rlt">
-              <span class="arrow left pull-up"></span>
-              <span class="text-muted m-l-sm pull-right">
-                30 m ago
-              </span>
-              <a href>Muzammil</a>
-             test comment 1                         
-            </div>
-          </div>
-        </div>
             <div class="panel panel-default m-t-md m-b-n-sm pos-rlt">
-                <form>
-                  <textarea class="form-control no-border" rows="2" placeholder="Your comment..."></textarea>
-                </form>
+                 <form role="form" id="form_addComment" >
+                 <input type="hidden" class="form-control" name="project_id" value="<?=$Project['id']?>" >
+                  <textarea class="form-control no-border" rows="2" name="message" placeholder="Your comment..."></textarea>
+                
                 <div class="panel-footer bg-light lter">
-                  <button class="btn btn-info pull-right btn-sm">Comment</button>
+                  <button type="button"  class="btn btn-sm btn-warning pull-right btnload"  id="btn_loader">
+                  	<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Working...
+                   </button>
+                  <button type="button"  class="btn btn-info pull-right btn-sm"  id="btn_submit">Comment</button>
+         
                   <ul class="nav nav-pills nav-sm">
                    <li><button class="btn btn-primary btn-addon btn-sm"><i class="fa fa-plus"></i>Followers</button>
-				 </a>   
+				 
 				   <?php /*?><i class="fa fa-camera text-muted"></i><?php */?></li>
-                   <?php /*?>  <li><a href><i class="fa fa-video-camera text-muted"></i></a></li><?php */?>
+                   <?php /*?>  <li><a href><i class="fa fa-video-camera text-muted"></i></li><?php */?>
                   </ul>
                 </div>
+                </form>
               </div>
            </article>
         </div>
@@ -178,6 +161,58 @@ $('#form_addRequirment [id=btn_submit]').click(function(e) {
 	  return false;
 	});
 /* add requirment */	
+
+
+/* add comment */
+$('#form_addComment [id=btn_submit]').click(function(e) {
+	
+	if($('#form_addComment [name=message]').val() == '')
+	   {
+		alert('Pleae enter comment');   
+		return;
+	   }
+		
+  
+  e.preventDefault();
+  var dataString = $( '#form_addComment' ).serialize();
+
+  $.ajax({
+		type:'POST',
+		data:dataString,
+		url:'<?=$site_url?>projects/saveComment',
+		beforeSend: function() {
+			
+			$('#form_addComment [id=btn_submit]').hide();
+			$('#form_addComment [id=btn_loader]').show();
+			
+			},
+			
+		success:function(data) {
+			
+			$('#form_addComment [id=btn_submit]').show();
+			$('#form_addComment [id=btn_loader]').hide();
+			
+			if(data == 'false')
+			   {
+				 alert('Comments could not created');
+			   
+			   }else{
+				   
+				$('#form_addComment [name=message]').val('');
+				$( "#comments_div" ).append( data );
+				
+				//alert('Comments created successfully.');
+				//window.location.href = '<?=$site_url?>Projects/index/'+data; 	   
+			  
+			   }
+		}
+	  });
+	  
+	  return false;
+	  
+	});
+
+    /*add comment*/	
 	
 	});
 	
