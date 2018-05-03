@@ -71,10 +71,13 @@ class UsersController extends AppController {
 
 
     public function index() {
-
-
-
-        return $this->redirect('/');
+   
+        $conditions['created_by'] = $this->sUser['id'];
+		$query = $this->Users->find('all')->where($conditions);
+        $this->paginate['limit'] = 100;
+        $this->paginate['order'] = ['created' => 'DESC', ];
+        $Users = $this->paginate($query, array('url' => '/Users/'));
+        $this->set('Users', $Users);
 
     }
 
@@ -539,6 +542,65 @@ class UsersController extends AppController {
         }
 
         $this->set('user', $user);
+
+    }
+	
+	public function saveData() {
+		
+		
+		$this->viewBuilder()->setLayout(false);
+
+        $return = 'true' ;
+		
+        $user = $this->Users->newEntity();
+
+        if ($this->request->is('post')) {
+
+            $User_email = $this->Users->find()->where(['email' => $this->request->data['email']])->first();
+
+            if ($User_email) {
+
+                $return = 'This email already registered.';
+
+            } else {
+
+                $user->group_id = '2';
+				
+				$user->created_by = $this->sUser['id'];
+
+                $user->confirm_code = md5(time());
+
+                $user->password = $this->request->data['new_password'];
+
+
+                $this->request->data['password_decoded'] = $this->request->data['new_password'];
+
+
+
+                $user = $this->Users->patchEntity($user, $this->request->data);
+
+                if ($this->Users->save($user)) {
+
+                    //$this->Flash->success(__('Your Account has been created successfully.'));
+
+                    //return $this->redirect(['controller' => 'users', 'action' => 'login']);
+
+                } else {
+					
+					 $return = 'The user could not be saved. Please, try again.';
+                    // $this->Flash->error(sprintf(__('The %s could not be saved. Please, try again.', true), 'user'));
+
+                }
+
+            }
+
+        }else{
+			$return = 'Ivalid request!';
+			}
+
+      echo $return;
+	  exit;
+	  // $this->set('user', $user);
 
     }
 

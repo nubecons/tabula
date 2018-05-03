@@ -337,6 +337,13 @@ site_url = '<?=$site_url?>';
                   <span class="font-bold">File list</span>
                 </a>
               </li>
+              <li class="line dk"></li>
+               <li>
+                <a href ="<?=$site_url?>users" class="auto">      
+                  <i class="glyphicon glyphicon-user"></i>
+                  <span class="font-bold">Users</span>
+                </a>
+              </li>
               
               
               
@@ -394,6 +401,12 @@ site_url = '<?=$site_url?>';
               <label>Name</label>
               <input type="name"  name="name"  class="form-control" placeholder="Enter Name" required>
             </div>
+             <div class="form-group">
+              <label>Short Name</label>
+              <input type="name"  name="code"  class="form-control" placeholder="TP" required>
+            </div>
+            
+            
             <div class="form-group">
              <label>Description</label>
              <textarea  name="description"  class="form-control" placeholder="Enter Description" ></textarea>
@@ -410,58 +423,52 @@ site_url = '<?=$site_url?>';
 
   </div>
 </div>
-  <div id="AddUser" class="modal fade" role="dialog">
-          <div class="modal-dialog" style="width:500px">
-        
-            <!-- Modal content-->
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">User</h4>
-              </div>
-              <div class="modal-body">
-               <div class="panel panel-default">
-        <div class="panel-heading font-bold">Add User</div>
-        <div class="panel-body">
-          <form role="form">
+
+<div id="AddUser" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add User</h4>
+      </div>
+      <div class="modal-body">
+        <form role="form" id="form_addUser"  autocomplete="off" >
+          
+          <div class="form-group">
+              <label>First Name</label>
+              <input type="text" name="first_name" class="form-control" placeholder="Enter First Name" autocomplete="first_name" >
+            </div>
+            
+          <div class="form-group">
+              <label>Last Name</label>
+              <input type="text" name="last_name" class="form-control" placeholder="Enter Last Name" autocomplete="last_name">
+            </div>
+                       
+            
             <div class="form-group">
               <label>Email address</label>
-              <input type="email" class="form-control" placeholder="Enter email">
+              <input type="email" name="email" class="form-control" placeholder="Enter email" autocomplete="email">
             </div>
             <div class="form-group">
-              <label>Password</label>
-              <input type="password" class="form-control" placeholder="Password">
+             <label>Password</label>
+              <input type="password" name="new_password"  class="form-control" placeholder="Password" autocomplete="new_password">
             </div>
-            <div class="checkbox">
-              <label class="i-checks">
-                <input type="checkbox" checked disabled><i></i> Check me out
-              </label>
-            </div>
-            <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+           
+            <button type="button"  class="btn btn-sm btn-warning btnload"  id="btn_loader"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Working...</button>
+            <button type="button" class="btn btn-sm btn-primary" id="btn_submit">Submit</button>
           </form>
-        </div>
       </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-        
-          </div>
-        </div>
-  
-  <!-- footer -->
-  <footer id="footer" class="app-footer" role="footer">
-    <div class="wrapper b-t bg-light">
-      <span class="pull-right">2.2.0 <a href ui-scroll="app" class="m-l-sm text-muted"><i class="fa fa-long-arrow-up"></i></a></span>
-      &copy; 2018 Copyright.
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
     </div>
-  </footer>
-  <!-- / footer -->
 
-
-
+  </div>
 </div>
+  
+  
 
 
 <script src="<?=$site_url?>js/ui-load.js"></script>
@@ -471,6 +478,9 @@ site_url = '<?=$site_url?>';
 <script src="<?=$site_url?>js/ui-toggle.js"></script>
 <script src="<?=$site_url?>js/ui-client.js"></script>
 <script>
+$( document ).ready(function() {
+$(".message.success,.message.error").fadeOut(10000);	
+	
 $("#btn_addProject").click(function(e) {
 	
 	if($('#form_addProject [name=name]').val() == '')
@@ -511,8 +521,69 @@ $("#btn_addProject").click(function(e) {
   return false;
 });
 
-$( document ).ready(function() {
-   $(".message.success,.message.error").fadeOut(10000);
+
+   
+   
+ $('#form_addUser [id=btn_submit]').click(function(e) {
+	 
+	 if($('#form_addUser [name=first_name]').val() == '')
+	   {
+		alert('Pleae enter first name');   
+		return;
+	   }
+	   
+	   if($('#form_addUser [name=last_name]').val() == '')
+	   {
+		alert('Pleae enter last name');   
+		return;
+	   }
+	   
+	   if($('#form_addUser [name=email]').val() == '')
+	   {
+		alert('Pleae enter email');   
+		return;
+	   }
+	
+	if($('#form_addUser [name=password]').val() == '')
+	   {
+		alert('Pleae enter password');   
+		return;
+	   }
+		
+  
+  e.preventDefault();
+  var dataString = $( '#form_addUser' ).serialize();
+
+  $.ajax({
+		type:'POST',
+		data:dataString,
+		url:'<?=$site_url?>users/saveData',
+		beforeSend: function() {
+			$('#form_addUser [id=btn_submit]').hide();
+			$('#form_addUser [id=btn_loader]').show();
+			},
+			
+		success:function(data) {
+			
+			$('#form_addUser [id=btn_submit]').show();
+			$('#form_addUser [id=btn_loader]').hide();
+			
+			if(data != 'true')
+			   {
+				 alert(data);
+			   
+			   }else{
+				   
+				$('#AddUser').modal('hide');
+				alert('User created successfully.');
+				
+			   }
+		}
+	  });
+	  
+	  return false;
+	  
+	});
 });
 
 </script>

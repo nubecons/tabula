@@ -100,6 +100,11 @@ class RequirmentsController extends AppController
    public function index($project_id = null)
     {  
 	 	 
+		$this->loadModel('Projects');
+		$pconditions['user_id'] = $this->sUser['id'];
+		$Projects = $this->Projects->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where($pconditions)->toArray();
+		$this->set('Projects', $Projects);
+		 
 		$conditions['created_by'] = $this->sUser['id'];
 		
 		if($project_id){

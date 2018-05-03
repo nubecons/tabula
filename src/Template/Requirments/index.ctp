@@ -125,27 +125,28 @@
                 <h4 class="modal-title">Add Requirment</h4>
               </div>
               <div class="modal-body">
-                <form role="form">
+               <form role="form" id="form_addRequirment" >
             <div class="form-group">
-              <label>Select Project</label>
-               <select class="form-control" >
+              <label>Project</label> <br>
+             <?php /*?>  <select class="form-control" >
                 <option> Project 1 </option>
                 <option> Project 2 </option>
                 <option> Project 2 </option>
-               </select>
+               </select><?php */?>
+               <?php echo $this->Form->input('project_id', ['empty' =>'Select', 'options' => $Projects,  'class'=>'form-control' ,'required' => true ,'dev' => false, 'label' => false]); ?>
              
             </div>
             <div class="form-group">
               <label>Title</label>
-              <input type="text" class="form-control" >
+              <input type="text" class="form-control" name="title" id="req_field1" >
             </div>
             <div class="form-group">
               <label>Description</label>
-              <textarea class="form-control" id="req_field"></textarea>
+              <textarea class="form-control" id="req_field" name="description"></textarea>
             </div>
            
            
-            <div class="form-group">
+          <?php /*?>  <div class="form-group">
               <label>Followres</label>
              <select class="form-control" multiple >
                 <option> User 1 </option>
@@ -153,10 +154,13 @@
                 <option> User 3 </option>
                </select>
             </div>
-           
+           <?php */?>
            
         
-            <button type="submit" class="btn btn-sm btn-primary"  data-dismiss="modal">Submit</button>
+             
+            <button type="button"  class="btn btn-sm btn-warning btnload"  id="btn_loader"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Working...</button>
+            <button type="button" class="btn btn-sm btn-primary" id="btn_submit">Submit</button>
+
           </form>
               </div>
               <div class="modal-footer">
@@ -170,5 +174,54 @@
 <script>
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
+	
+	/* add requirment */
+$('#form_addRequirment [id=btn_submit]').click(function(e) {
+	if($('#form_addRequirment [name=project_id]').val() == '')
+	   {
+		alert('Pleae select project');   
+		return;
+		}
+	if($('#form_addRequirment [name=title]').val() == '')
+	   {
+		alert('Pleae enter title');   
+		return;
+		}
+	if($('#form_addRequirment [name=description]').val() == '')
+	   {
+		alert('Pleae enter description');   
+		return;
+		}	
+		
+  
+  e.preventDefault();
+  var dataString = $( '#form_addRequirment' ).serialize();
+  $.ajax({
+		type:'POST',
+		data:dataString,
+		url:'<?=$site_url?>requirments/saveData',
+		beforeSend: function() {
+			$('#form_addRequirment [id=btn_submit]').hide();
+			$('#form_addRequirment [id=btn_loader]').show();
+			},
+		success:function(data) {
+		if(data == 'false')
+		   {
+				$('#form_addRequirment [id=btn_submit]').show();
+				$('#form_addRequirment [id=btn_loader]').hide();
+				 alert('Requirment could not created');
+		   }else{
+			   
+			   $('#AddReq').modal('hide');
+			  // alert('Requirment created successfully.');
+			   // window.location.href = '<?=$site_url?>requiments/index/'+data; 	   
+			   location.reload();
+	      }
+		  
+		}
+	  });
+	  return false;
+	});
+/* add requirment */	
 });
 </script>
