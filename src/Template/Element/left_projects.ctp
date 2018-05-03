@@ -1,7 +1,7 @@
   <?php 
     $Projects = $this->GetInfo->getProjects(['user_id' => $sUser['id'] , 'status' => 'ACTIVE' , 'name !=' => '']);
    ?>
-  
+  <?php $site_url = $this->Url->build('/',true); ?> 
   
   <a href class="auto">      
                   <span class="pull-right text-muted">
@@ -15,6 +15,11 @@
                 <ul class="nav nav-sub dk">
                   <li class="nav-sub-header">
                       <span>Project 1</span>
+                  </li>
+                   <li>
+                    <a href = "<?=$site_url?>projects" >
+                      <span>All Projects</span>
+                    </a>
                   </li>
                  <?php
 				  foreach($Projects as $Project){?>
