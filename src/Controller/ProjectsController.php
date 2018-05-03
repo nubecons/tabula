@@ -76,9 +76,9 @@ class ProjectsController extends AppController
 		
 		$this->loadComponent('Upload');
 
-		//$this->Auth->allow(['add','index' ,'detail' ,'searchElement' ,'getLocations']);
+		
 
-		$this->set('title', 'Manage Property');
+		$this->set('title', 'Manage Requirments');
 
 	}
 	

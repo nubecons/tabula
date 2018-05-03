@@ -9,7 +9,8 @@
      <div class="panel-heading">
   		<h4> <i class="glyphicon glyphicon-th"></i> <?=$Project['name']?> </h4>                  
 		</div>
-        <div class="panel-body">
+     
+     <div class="panel-body">
   
           
             <i class="glyphicon glyphicon-th"></i> <?=$Project['name']?>  &nbsp;&nbsp;
@@ -96,6 +97,8 @@
               </div>
            </article>
         </div>
+        
+        
      <?php }?>   
         <script>
 		$(document).ready(function() {
@@ -118,11 +121,123 @@
 					return t;
 				}
 			var mytext = x.Selector.getSelected();
-			
+			if(mytext != ''){
+				
+				
+		
 			if(confirm("Do you want to create requirment")){
 				$('#AddReq').modal('show');
 				$('#req_field').val(mytext);
+				$('#req_field1').val(mytext.toString().substring(0, 5));
+				
 				}
+			}
 		});
+		
+		
+/* add requirment */
+$('#form_addRequirment [id=btn_submit]').click(function(e) {
+	
+	if($('#form_addRequirment [name=title]').val() == '')
+	   {
+		alert('Pleae enter title');   
+		return;
+		}
+	if($('#form_addRequirment [name=description]').val() == '')
+	   {
+		alert('Pleae enter description');   
+		return;
+		}	
+		
+  
+  e.preventDefault();
+  var dataString = $( '#form_addRequirment' ).serialize();
+  $.ajax({
+		type:'POST',
+		data:dataString,
+		url:'<?=$site_url?>requirments/saveData',
+		beforeSend: function() {
+			$('#form_addRequirment [id=btn_submit]').hide();
+			$('#form_addRequirment [id=btn_loader]').show();
+			},
+		success:function(data) {
+		if(data == 'false')
+		   {
+				$('#form_addRequirment [id=btn_submit]').show();
+				$('#form_addRequirment [id=btn_loader]').hide();
+				 alert('Requirment could not created');
+		   }else{
+			   
+			   $('#AddReq').modal('hide');
+			   alert('Requirment created successfully.');
+				//window.location.href = '<?=$site_url?>Projects/index/'+data; 	   
+	      }
+		  
+		}
+	  });
+	  return false;
 	});
+/* add requirment */	
+	
+	});
+	
+	
+	
 	</script>
+    <div id="AddReq" class="modal fade" role="dialog">
+          <div class="modal-dialog" style="width:500px">
+        
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Requirment</h4>
+              </div>
+              <div class="modal-body">
+               <form role="form" id="form_addRequirment" >
+            <div class="form-group">
+              <label>Project</label> <br>
+             <?php /*?>  <select class="form-control" >
+                <option> Project 1 </option>
+                <option> Project 2 </option>
+                <option> Project 2 </option>
+               </select><?php */?>
+               <?=$Project['name']?>
+                <input type="hidden" class="form-control" name="project_id" value="<?=$Project['id']?>" >
+             
+            </div>
+            <div class="form-group">
+              <label>Title</label>
+              <input type="text" class="form-control" name="title" id="req_field1" >
+            </div>
+            <div class="form-group">
+              <label>Description</label>
+              <textarea class="form-control" id="req_field" name="description"></textarea>
+            </div>
+           
+           
+          <?php /*?>  <div class="form-group">
+              <label>Followres</label>
+             <select class="form-control" multiple >
+                <option> User 1 </option>
+                <option> User 2 </option>
+                <option> User 3 </option>
+               </select>
+            </div>
+           <?php */?>
+           
+        
+             
+            <button type="button"  class="btn btn-sm btn-warning btnload"  id="btn_loader"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Working...</button>
+            <button type="button" class="btn btn-sm btn-primary" id="btn_submit">Submit</button>
+
+          </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+        
+          </div>
+        </div>
+    

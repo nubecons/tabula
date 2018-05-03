@@ -63,32 +63,64 @@ class RequirmentsController extends AppController
 
 	public function initialize()
 	{
-
+  
 		parent::initialize();
-	    
-		$this->product_file_path = WWW_ROOT . 'img' .DS. 'Products' . DS;
 	}
 
 	public function beforeFilter(Event $event)
 	{
 
 		parent::beforeFilter($event);
-		
-		$this->loadComponent('Upload');
-
-		$this->Auth->allow(['add','index' ,'detail' ,'searchElement' ,'getLocations']);
-
-		$this->set('title', 'Manage Property');
+		$this->set('title', 'Manage Requirments');
 
 	}
 
 
-  public function add(){}
+ function saveData(){
+		$retrun = 'false';
+		if ($this->request->is('post'))
+		{
+		  $data = $this->request->data;
+		  $data['created_by'] = $this->sUser['id'];
+		  $Requirment = $this->Requirments->newEntity();
+		  $Requirment= $this->Requirments->patchEntity($Requirment, $data);
+		   
+		   if ($result = $this->Requirments->save($Requirment))
+			{
+			  //$this->Flash->success(__('Requirment created successfully.'));
+			  $retrun = $result->id;	
+			}
+		}
+		
+		echo $retrun;
+		exit;
+   }
+
+
+   public function index($project_id = null)
+    {  
+	 	 
+		$conditions['created_by'] = $this->sUser['id'];
+		
+		if($project_id){
+		   
+		   $conditions['project_id'] = $project_id;
+			
+			 }
+		$query = $this->Requirments->find('all')
+		->select($this->Requirments)
+		->Select(['Projects.name'])
+		->contain(['Projects'])
+		->where($conditions);
+        $this->paginate['limit'] = 100;
+        $this->paginate['order'] = ['created' => 'DESC', ];
+        $Requirments = $this->paginate($query, array('url' => '/Requirments/'));
+        $this->set('Requirments', $Requirments);
+		
+		debug( $Requirments );
+		exit;
 	
-	
-	
-   public function index()
-    {}
+    }
 	
 
 
