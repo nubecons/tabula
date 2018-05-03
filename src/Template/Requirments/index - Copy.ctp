@@ -34,7 +34,7 @@
       </div>
     </div>-->
     <div class="table-responsive">
-      <table class="table table-striped b-t b-light">
+      <table class="table table-striped b-t b-light" align="center">
         <thead>
           <tr>
 <!--            <th style="width:20px;">
@@ -47,7 +47,7 @@
             <th>QA Tasks</th>
             <th>Project</th>
             <th>Health</th>
-            <th style="width:30px;">Action</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -56,22 +56,38 @@
 	      ?>
           <tr>
             <!--<td><label class="i-checks m-b-none"><input name="post[]" type="checkbox"><i></i></label></td>-->
+<<<<<<< HEAD:src/Template/Requirments/index - Copy.ctp
+            <td>Requiremnt 1</td>
+            <td>                
+            <span class="label bg-danger pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="Open Tasks">4</a></span>
+            <span class="label bg-primary pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="In Review Tasks">10</a></span>
+            <span class="label bg-warning pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="In process Tasks">4</a></span>
+            <span class="label bg-success pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="Left Tasks">4</a></span>
+            </td>
+            <td>                
+            <span class="label bg-danger pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="Open Tasks">4</a></span>
+            <span class="label bg-primary pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="In Review Tasks">10</a></span>
+            <span class="label bg-warning pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="In process Tasks">4</a></span>
+            <span class="label bg-success pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="Left Tasks">4</a></span>
+            </td>
+            <td><span class="label bg-primary pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="Human Resource">HR</a></span></td>
+=======
             <td><?=$Requirment['title']?></td>
             <td><span class="label bg-danger pull-right m-t-xs">4 Open</span><span class="label bg-primary pull-right m-t-xs">10 in review</span><span class="label bg-warning pull-right m-t-xs">4 in progress</span><span class="label bg-success pull-right m-t-xs">4 left</span></td>
             <td><span class="label bg-danger pull-right m-t-xs">4 Open</span><span class="label bg-primary pull-right m-t-xs">10 in review</span><span class="label bg-warning pull-right m-t-xs">4 in progress</span><span class="label bg-success pull-right m-t-xs">4 left</span></td>
+<<<<<<< HEAD:src/Template/Requirments/index.ctp
             <td><span class="label bg-primary pull-right m-t-xs"><?=$Requirment['project']['name']?></span></td>
+=======
+            <td><span class="label bg-primary pull-right m-t-xs">HR</span></td>
+>>>>>>> ee4f5c435993d949709343a68cb170bc8014584d:src/Template/Requirments/index.ctp
+>>>>>>> b7d078e52b5066c2876d1b5d9d786b905dfcfead:src/Template/Requirments/index - Copy.ctp
             <td class="text-success"><i class="fa fa-level-up"></i> 20%</td>
-            <td><div class="btn-group dropdown">
-	            <button class="btn btn-default btn-sm btn-bg dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-	              <span class="dropdown-label">Filter</span>                    
-	              <span class="caret"></span>
-	            </button>
-	            <ul class="dropdown-menu text-left text-sm">
-                        <li><a  href="#">Edit</a></li>
-                      <li><a  href="#">+Create Design Task</a></li>
-                      <li><a  href="#">+Create QA Task</a></li>
-	            </ul>
-	          </div>
+            <td>
+	        <div class="btn-group pull-right">
+                       <a href="#" data-toggle="tooltip" title="Create Task"> <button type="button" class="btn btn-sm btn-bg btn-default"><i class="glyphicon glyphicon-list"></i></button></a>
+                       <a href="#" data-toggle="tooltip" title="Task Detail"><button type="button" class="btn btn-sm btn-bg btn-default"><i class="glyphicon glyphicon-blackboard"></i></button></a>
+	        </div>
+	          
             </td>
           </tr>
           <?php }?>
@@ -79,9 +95,19 @@
           <tr>
             <!--<td><label class="i-checks m-b-none"><input name="post[]" type="checkbox"><i></i></label></td>-->
             <td>Handling VPS Max Sub Layers in Media 1</td>
-            <td><span class="label bg-danger pull-right m-t-xs">4 Open</span><span class="label bg-primary pull-right m-t-xs">10 in review</span><span class="label bg-warning pull-right m-t-xs">4 in progress</span><span class="label bg-success pull-right m-t-xs">4 left</span></td>
-            <td><span class="label bg-danger pull-right m-t-xs">4 Open</span><span class="label bg-primary pull-right m-t-xs">10 in review</span><span class="label bg-warning pull-right m-t-xs">4 in progress</span><span class="label bg-success pull-right m-t-xs">4 left</span></td>
-            <td><span class="label bg-primary pull-right m-t-xs">HR</span></td>
+            <td>                
+              <span class="label bg-danger pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="Open Tasks">4</a></span>
+            <span class="label bg-primary pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="In Review Tasks">10</a></span>
+            <span class="label bg-warning pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="In process Tasks">4</a></span>
+            <span class="label bg-success pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="Left Tasks">4</a></span>
+            </td>
+            <td>                
+             <span class="label bg-danger pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="Open Tasks">4</a></span>
+            <span class="label bg-primary pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="In Review Tasks">10</a></span>
+            <span class="label bg-warning pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="In process Tasks">4</a></span>
+            <span class="label bg-success pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="Left Tasks">4</a></span>
+            </td>
+            <td><span class="label bg-primary pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="Human Resource">HR</a></span></td>
             <td class="text-success"><i class="fa fa-level-up"></i> 20%</td>
             <td><div class="btn-group dropdown">
 	            <button class="btn btn-default btn-sm btn-bg dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
@@ -90,7 +116,7 @@
 	            </button>
 	            <ul class="dropdown-menu text-left text-sm">
                         <li><a  href="#">Edit</a></li>
-                      <li><a  href="#">+Create Design Task</a></li>
+                      <li><a  href="#">+Create Task</a></li>
                       <li><a  href="#">+Create QA Task</a></li>
 	            </ul>
 	          </div>
@@ -99,9 +125,19 @@
                     <tr>
             <!--<td><label class="i-checks m-b-none"><input name="post[]" type="checkbox"><i></i></label></td>-->
             <td>Requiremnt 1</td>
-            <td><span class="label bg-danger pull-right m-t-xs">4 Open</span><span class="label bg-primary pull-right m-t-xs">10 in review</span><span class="label bg-warning pull-right m-t-xs">4 in progress</span><span class="label bg-success pull-right m-t-xs">4 left</span></td>
-            <td><span class="label bg-danger pull-right m-t-xs">4 Open</span><span class="label bg-primary pull-right m-t-xs">10 in review</span><span class="label bg-warning pull-right m-t-xs">4 in progress</span><span class="label bg-success pull-right m-t-xs">4 left</span></td>
-            <td><span class="label bg-primary pull-right m-t-xs">HR</span></td>
+            <td>                
+             <span class="label bg-danger pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="Open Tasks">4</a></span>
+            <span class="label bg-primary pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="In Review Tasks">10</a></span>
+            <span class="label bg-warning pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="In process Tasks">4</a></span>
+            <span class="label bg-success pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="Left Tasks">4</a></span>
+            </td>
+            <td>                
+      <span class="label bg-danger pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="Open Tasks">4</a></span>
+            <span class="label bg-primary pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="In Review Tasks">10</a></span>
+            <span class="label bg-warning pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="In process Tasks">4</a></span>
+            <span class="label bg-success pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="Left Tasks">4</a></span>
+            </td>
+            <td><span class="label bg-primary pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="Human Resource">HR</a></span></td>
             <td class="text-success"><i class="fa fa-level-up"></i> 20%</td>
             <td><div class="btn-group dropdown">
 	            <button class="btn btn-default btn-sm btn-bg dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
@@ -110,30 +146,10 @@
 	            </button>
 	            <ul class="dropdown-menu text-left text-sm">
                         <li><a  href="#">Edit Requirement</a></li>
-                      <li><a  href="#">+Create Design Task</a></li>
+                      <li><a  href="#">+Create Task</a></li>
                       <li><a  href="#">Design Tasks Detail</a></li>
                       <li><a  href="#">+Create QA Task</a></li>
                       <li><a  href="#">QA Task Detail</a></li>
-	            </ul>
-	          </div>
-            </td>
-          </tr>
-                    <tr>
-            <!--<td><label class="i-checks m-b-none"><input name="post[]" type="checkbox"><i></i></label></td>-->
-            <td>Requiremnt 1</td>
-            <td><span class="label bg-danger pull-right m-t-xs">4 Open</span><span class="label bg-primary pull-right m-t-xs">10 in review</span><span class="label bg-warning pull-right m-t-xs">4 in progress</span><span class="label bg-success pull-right m-t-xs">4 left</span></td>
-            <td><span class="label bg-danger pull-right m-t-xs">4 Open</span><span class="label bg-primary pull-right m-t-xs">10 in review</span><span class="label bg-warning pull-right m-t-xs">4 in progress</span><span class="label bg-success pull-right m-t-xs">4 left</span></td>
-            <td><span class="label bg-primary pull-right m-t-xs">HR</span></td>
-            <td class="text-success"><i class="fa fa-level-up"></i> 20%</td>
-            <td><div class="btn-group dropdown">
-	            <button class="btn btn-default btn-sm btn-bg dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-	              <span class="dropdown-label">Filter</span>                    
-	              <span class="caret"></span>
-	            </button>
-	            <ul class="dropdown-menu text-left text-sm">
-                        <li><a  href="#">Edit</a></li>
-                      <li><a  href="#">+Create Design Task</a></li>
-                      <li><a  href="#">+Create QA Task</a></li>
 	            </ul>
 	          </div>
             </td>
@@ -225,4 +241,9 @@
             </div>
         
           </div>
-        </div>     
+        </div>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
