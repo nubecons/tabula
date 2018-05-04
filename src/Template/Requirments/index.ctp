@@ -128,11 +128,7 @@
                <form role="form" id="form_addRequirment" >
             <div class="form-group">
               <label>Project</label> <br>
-             <?php /*?>  <select class="form-control" >
-                <option> Project 1 </option>
-                <option> Project 2 </option>
-                <option> Project 2 </option>
-               </select><?php */?>
+            
                <?php echo $this->Form->input('project_id', ['empty' =>'Select', 'options' => $Projects,  'class'=>'form-control' ,'required' => true ,'dev' => false, 'label' => false]); ?>
              
             </div>

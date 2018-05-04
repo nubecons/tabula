@@ -26,13 +26,13 @@
               <em class="text-xs"> Muzammil Created on <span class="text-danger"><?=date('M d, Y', strtotime($Project['created']))?></span></em>
             </div>
             <br>
-            <small class="block m-t-xs">  
+           <?php /*?> <small class="block m-t-xs">  
             Muzammil created task. <span class="text-danger">9:27pm</span> <br>
             Muzammil added to my test project. <span class="text-danger">9:27pm</span><br>
             Muzammil changed the due date to <span class="text-danger">Apr 19.9:27pm</span><br>
             Muzammil assigned to you.<span class="text-danger">9:27pm</span><br>
             Muzammil unassigned from you. <span class="text-danger">9:27pm</span><br>
-            </small>
+            </small><?php */?>
             <br>
             
             <?php
@@ -68,9 +68,9 @@
                   	<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Working...
                    </button>
                   <button type="button"  class="btn btn-info pull-right btn-sm"  id="btn_submit">Comment</button>
-         
+
                   <ul class="nav nav-pills nav-sm">
-                   <li><button class="btn btn-primary btn-addon btn-sm"><i class="fa fa-plus"></i>Followers</button>
+                   <li><button type="button" class="btn btn-primary btn-addon btn-sm" data-toggle="modal" data-target="#AddFollowers"><i class="fa fa-plus"></i>Followers</button>
 				 
 				   <?php /*?><i class="fa fa-camera text-muted"></i><?php */?></li>
                    <?php /*?>  <li><a href><i class="fa fa-video-camera text-muted"></i></li><?php */?>
@@ -211,6 +211,47 @@ $('#form_addComment [id=btn_submit]').click(function(e) {
 	  return false;
 	  
 	});
+	
+$('#form_AddFollowers [id=btn_submit]').click(function(e) {
+	
+	
+  
+  e.preventDefault();
+  var dataString = $( '#form_AddFollowers' ).serialize();
+  
+  $.ajax({
+		type:'POST',
+		data:dataString,
+		url:'<?=$site_url?>projects/saveFollowers',
+		beforeSend: function() {
+		
+			$('#form_AddFollowers [id=btn_submit]').hide();
+			$('#form_AddFollowers [id=btn_loader]').show();
+			
+			},
+			
+		success:function(data) {
+			
+			$('#form_AddFollowers [id=btn_submit]').show();
+			$('#form_AddFollowers [id=btn_loader]').hide();
+			
+			if(data == 'false')
+			   {
+				 alert('Followers could not updated');
+			   
+			   }else{
+				   
+				//$('#form_AddFollowers [name=message]').val('');
+				
+				 $('#AddFollowers').modal('hide');
+				
+			   }
+		}
+	  });
+	  
+	  return false;
+	  
+	});	
 
     /*add comment*/	
 	
@@ -220,7 +261,7 @@ $('#form_addComment [id=btn_submit]').click(function(e) {
 	
 	</script>
     <div id="AddReq" class="modal fade" role="dialog">
-          <div class="modal-dialog" style="width:500px">
+          <div class="modal-dialog">
         
             <!-- Modal content-->
             <div class="modal-content">
@@ -275,4 +316,41 @@ $('#form_addComment [id=btn_submit]').click(function(e) {
         
           </div>
         </div>
+        
+    <div id="AddFollowers" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+        
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Project Followers</h4>
+              </div>
+              <div class="modal-body">
+               <form role="form" id="form_AddFollowers" >
+            <div class="form-group">
+              <label><strong> Project:  </strong></label>
+            
+               <?=$Project['name']?>
+                <input type="hidden" class="form-control" name="project_id" value="<?=$Project['id']?>" >
+             
+            </div>
+           
+            <div class="form-group">
+              <label><strong>Followers:</strong></label>
+                <?php echo $this->Form->input('follower_id', [ 'multiple' => 'checkbox','default' =>$ProjectFollowers, 'options' => $TeamMembers,  'label' =>false,]); ?>
+            </div>
+          
+            <button type="button"  class="btn btn-sm btn-warning btnload"  id="btn_loader"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Working...</button>
+            <button type="button" class="btn btn-sm btn-primary" id="btn_submit">Save</button>
+
+          </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+        
+          </div>
+        </div>    
     

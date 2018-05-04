@@ -105,7 +105,8 @@ class ProjectsController extends AppController
 
    public function index()
     {  
-	 	 
+	 	
+					 
 		$conditions['user_id'] = $this->sUser['id'];
 		$query = $this->Projects->find('all')->where($conditions);
         $this->paginate['limit'] = 100;
@@ -126,6 +127,16 @@ public function ajaxDetail($id = null ){
 	$this->loadModel('ProjectComments');	
 	$ProjectComments = $this->ProjectComments->find()->where(['project_id' => $id ,'status'=>'ACTIVE' ])->all();
 	$this->set('ProjectComments', $ProjectComments);
+	
+	
+	$this->loadModel('Users');	
+	$TeamMembers = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'email'])->where(['created_by' => $this->sUser['id']])->toArray();
+	$this->set('TeamMembers', $TeamMembers);
+	
+	$this->loadModel('ProjectFollowers');	
+
+	$ProjectFollowers = $this->ProjectFollowers->find('list', ['keyField' => 'follower_id', 'valueField' => 'follower_id'])->where(['project_id' => $id, 'is_updated' => 'YES'])->toArray();
+	$this->set('ProjectFollowers', $ProjectFollowers);
 	
 	
 	}
@@ -160,6 +171,52 @@ public function ajaxDetail($id = null ){
 		echo $retrun;
 		exit;
 		}
+   }
+   
+   function saveFollowers(){
+	    $this->viewBuilder()->setLayout(false);
+		$this->loadModel('ProjectFollowers');
+		$retrun = 'false';
+		
+		if ($this->request->is('post'))
+		{
+			
+		$data = $this->request->data;
+		
+		$this->ProjectFollowers->query()->update()
+					->set(['is_updated' => 'NO'])
+					->where(['project_id' => $data['project_id']])
+					->execute();
+	   
+		
+		 foreach($data['follower_id'] as $follower_id){
+			 echo "<br>" .$follower_id;
+			
+			 $saveData = [];
+			 $ProjectFollower = $this->ProjectFollowers->find()->where(['follower_id' => $follower_id ,'project_id'=> $data['project_id'] ])->first();
+			 
+			 if(!$ProjectFollower){
+				 $ProjectFollower = $this->ProjectFollowers->newEntity();
+				  
+				  $saveData['follower_id'] =  $follower_id;
+  			      $saveData['project_id']  =  $data['project_id'];
+			      $saveData['user_id']     =  $this->sUser['id'];
+				}
+			 
+			
+			 $saveData['is_updated']  =  'YES';
+			 
+			 $ProjectFollower= $this->ProjectFollowers->patchEntity($ProjectFollower, $saveData);
+			 $result = $this->ProjectFollowers->save($ProjectFollower);
+			  
+		       
+			 }
+   	   
+		 $retrun = 'true';
+		}
+		
+		echo $retrun;
+		exit;
    }
 	
    
