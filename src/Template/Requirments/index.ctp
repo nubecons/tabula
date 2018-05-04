@@ -72,7 +72,7 @@
             <td class="text-success"><i class="fa fa-level-up"></i> 20%</td>
             <td>
                  <div class="btn-group pull-right">
-                       <a href="#" data-toggle="tooltip" title="Create Task"> <button type="button" class="btn btn-sm btn-bg btn-default"><i class="glyphicon glyphicon-list"></i></button></a>
+                       <a href="#" data-toggle="tooltip" title="Create Task" > <button type="button"  data-toggle="modal" data-target="#AddTask" class="btn btn-sm btn-bg btn-default"><i class="glyphicon glyphicon-list"></i></button></a>
                        <a href="#" data-toggle="tooltip" title="Task Detail"><button type="button" class="btn btn-sm btn-bg btn-default"><i class="glyphicon glyphicon-blackboard"></i></button></a>
 	        </div>
             </td>
@@ -113,7 +113,64 @@
 
 
 </div>
+<div id="AddTask" class="modal fade" role="dialog">
+          <div class="modal-dialog" >
+        
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Task</h4>
+              </div>
+              <div class="modal-body">
+               <form role="form" id="form_AddTask" >
+            <div class="form-group">
+              <label>Task type</label> <br>
+            
+               <?php echo $this->Form->input('requirment_id', ['empty' =>'Select', 'options' => ['1' => 'Design' , '2' => 'QA'],  'class'=>'form-control' ,'required' => true ,'dev' => false, 'label' => false]); ?>
+             
+            </div>
+            <div class="form-group">
+              <label>Title</label>
+              <input type="text" class="form-control" name="title" id="req_field1" >
+            </div>
+            <div class="form-group">
+              <label>Description</label>
+              <textarea class="form-control"  name="description"></textarea>
+            </div>
+            
+             <div class="form-group">
+              <label>Priority</label>
+             <?php echo $this->Form->input('requirment_id', ['empty' =>'Select', 'options' => ['1' => 'Low' , '2' => 'Meduim'  , '2' => 'Heigh'],  'class'=>'form-control' ,'required' => true ,'dev' => false, 'label' => false]); ?>
+            </div>
+            
+             <div class="form-group">
+              <label>Assign TO</label>
+             <?php echo $this->Form->input('requirment_id', ['empty' =>'Select', 'options' => ['1' => 'User 1' , '2' => 'User 2'  , '2' => 'User 3'],  'class'=>'form-control' ,'required' => true ,'dev' => false, 'label' => false]); ?>
+            </div>
+            
+              <div class="form-group">
+              <label>Due Date</label>
+                <input type="text" class="form-control" name="title" id="req_field1" >
+            </div>
+           
+           
+       
+           
+        
+             
+            <button type="button"  class="btn btn-sm btn-warning btnload"  id="btn_loader"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Working...</button>
+            <button type="button" class="btn btn-sm btn-primary" id="btn_submit"  data-dismiss="modal">Submit</button>
 
+          </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+        
+          </div>
+        </div>
       
  <div id="AddReq" class="modal fade" role="dialog">
           <div class="modal-dialog" style="width:500px">
