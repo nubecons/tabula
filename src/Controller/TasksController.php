@@ -185,8 +185,12 @@ class TasksController extends AppController
         }
 		exit;
 		*/
-	    
-		$this->set('priorityOptions' ,  $this->Tasks->priorityOptions);	
+                    $this->loadModel('Projects');
+	            $this->set('ProjectStatus', $this->Projects->ProjectStatus);
+                    $this->set('PriortyType', $this->Projects->PriortyType);
+                    $this->set('ProjectStatusClass', $this->Projects->ProjectStatusClass);
+                    $this->set('PriortyTypeClass', $this->Projects->PriortyTypeClass);
+                    $this->set('priorityOptions' ,  $this->Tasks->priorityOptions);	
 		
 		$this->loadModel('Users');	
 		$TeamMembers[$this->sUser['id']] = 'You';
@@ -206,9 +210,9 @@ class TasksController extends AppController
 		   $pconditions['user_id'] = $this->sUser['id'];
 		}
 		
-	     
-		$this->loadModel('Projects'); 
-		$Projects = $this->Projects->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where($pconditions)->toArray();
+		 
+		$Projects = $this->Projects->find('list', ['keyField' => 'id', 'valueField' => 'id'])->where($pconditions)->toArray();
+
 		$this->set('Projects' , $Projects);
 		
 		$ProjectIdz = array_keys($Projects);
