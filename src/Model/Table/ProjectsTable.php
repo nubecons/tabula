@@ -41,6 +41,30 @@ public function initialize(array $config)
         ]);
 
     }
+    
+         var $ProjectStatus =  array(
+            'active'=>'Active',
+            'closed'=>'Closed',
+            'pending'=>'Pending',
+         );
+          var $ProjectStatusClass =  array(
+            'active'=>'label-success',
+            'closed'=>'label-default',
+            'pending'=>'label-warning',
+         );
+     
+    var $PriortyType =  array(
+            ''=>'No Priorty',
+            '1' => 'Low' ,
+            '2' => 'Meduim'  ,
+            '3' => 'Heigh'
+         );
+        var $PriortyTypeClass =  array(
+            ''=>'label-danger',
+            '1'=>'label-danger',
+            '2'=>'label-success',
+            '3'=>'label-warning',
+         );
 	
 }
 

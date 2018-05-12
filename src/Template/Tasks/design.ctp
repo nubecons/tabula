@@ -33,7 +33,7 @@
 
             <td><?=$Task['title']?></td>
             <td><?=$priorityOptions[$Task['priority']]?></td>
-            <td><?=$Task['status']?></td>
+            <td><?=$ProjectStatusClass[$Task['status']]?></td>
             <td><?=$Task['project']['name']?></td>
 
             <td class="text-success"><?php /*?><i class="fa fa-level-up"></i> 20%<?php */?>
