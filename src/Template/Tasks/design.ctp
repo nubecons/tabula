@@ -32,8 +32,8 @@
           <tr>
 
             <td><a href="<?=$site_url?>tasks/detail/<?=$Task['id']?>"  ><?=$Task['title']?></a></td>
-            <td><?=$priorityOptions[$Task['priority']]?></td>
-            <td><?=$ProjectStatusClass[$Task['status']]?></td>
+            <td class="<?=$PriortyTypeClass[$Task['priority']]?>"><?=$priorityOptions[$Task['priority']]?></td>
+            <td class="<?=$ProjectStatusClass[$Task['status']]?>"><?=$Task['status']?></td>
             <td><?=$Task['project']['name']?></td>
 
             <td class="text-success"><?php /*?><i class="fa fa-level-up"></i> 20%<?php */?>
