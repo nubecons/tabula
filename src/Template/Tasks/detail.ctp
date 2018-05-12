@@ -1,9 +1,16 @@
 <?php $site_url = $this->Url->build('/',true); ?> 
 <div class="row">
     <div class="col-sm-7">
-  <?php $site_url = $this->Url->build('/',true); ?> 
-   
-     <?php if(!$Task){ ?>
+  
+
+<div class="panel panel-default">
+        <div class="panel-heading">
+          <h4> <?=$Task['title']?> </h4>                  
+        </div>
+        <div class="panel-body">
+      
+      
+           <?php if(!$Task){ ?>
       <div class="alert alert-success">
         <p>No task found!</p>
       </div>
@@ -14,11 +21,6 @@
 		</div>
      
      <div class="panel-body">
-  
-          
-           <?php /*?> <i class="fa fa-cubes"></i> <?=$Task['title']?>  &nbsp;&nbsp;
-            <i class="glyphicon glyphicon-user"></i> Muzammil
-         <?php */?>
           <article class="media">
           <small class="block m-t-xs select_text" >
           <?=$Task['description']?>
@@ -137,62 +139,22 @@ $('#form_addComment .btn_submit').click(function(e) {
 	
 	
 	
-	</script>
-    
+	</script> 
+          
+          
+       
+       
+        </div>
+      </div>
       
       </div>
     
      <div class="col-sm-5">
   
-	 <br> <br>
-      <div class="panel panel-default" id="divRequirmentDetail" <?php /*?>style="display:none"<?php */?>>
-       
-      </div>
+
       
       </div>
 
 </div>
 
  
-      
- <div id="AddReq" class="modal fade" role="dialog">
-          <div class="modal-dialog" style="width:500px">
-        
-            <!-- Modal content-->
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Add Requirment</h4>
-              </div>
-              <div class="modal-body">
-               <form role="form" id="form_addRequirment" >
-            <div class="form-group">
-              <label>Project</label> <br>
-            
-               <?php echo $this->Form->input('project_id', ['empty' =>'Select', 'options' => $Projects,  'class'=>'form-control' ,'required' => true ,'dev' => false, 'label' => false]); ?>
-             
-            </div>
-            <div class="form-group">
-              <label>Title</label>
-              <input type="text" class="form-control" name="title" id="req_field1" >
-            </div>
-            <div class="form-group">
-              <label>Description</label>
-              <textarea class="form-control" id="req_field" name="description"></textarea>
-            </div>
-            <button type="button"  class="btn btn-sm btn-warning btnload btn_loader"  ><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Working...</button>
-            <button type="button" class="btn btn-sm btn-primary btn_submit" >Submit</button>
-
-          </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-        
-          </div>
-        </div>  
- 
-
-      
-      
