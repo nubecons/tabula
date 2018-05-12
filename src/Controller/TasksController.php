@@ -107,19 +107,45 @@ class TasksController extends AppController
    
  function kanban(){
 	 
-	$this->loadModel('ProjectFollowers');	
-	$ProjectFollowIdz = $this->ProjectFollowers->find('list', ['keyField' => 'project_id', 'valueField' => 'project_id'])->where(['follower_id' => $this->sUser['id'], 'is_updated' => 'YES'])->toArray();
-
-	
-	 
-	$this->loadModel('Projects');
-	$pconditions['user_id'] = $this->sUser['id'];
-	$ProjectIdz = $this->Projects->find('list', ['keyField' => 'id', 'valueField' => 'id'])->where($pconditions)->toArray();
-	
-	$ProjectIdz = $ProjectIdz +  $ProjectFollowIdz ;	
+		$this->set('priorityOptions' ,  $this->Tasks->priorityOptions);	
+		
+		$this->loadModel('Users');	
+		$TeamMembers[$this->sUser['id']] = 'You';
+	    $TeamMembers = $TeamMembers + $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'email'])->where( ['created_by' => $this->sUser['id']])->toArray();
+	    $this->set('TeamMembers', $TeamMembers);
+		
+		
+		$this->loadModel('ProjectFollowers');	
+		$ProjectFollowers = $this->ProjectFollowers->find('list', ['keyField' => 'project_id', 'valueField' => 'project_id'])->where(['follower_id' => $this->sUser['id'], 'is_updated' => 'YES'])->toArray();
+	    
+		
 		
 	
+		if($ProjectFollowers){
+		   $pconditions['OR'] = ['user_id'=>$this->sUser['id'], 'id in '=>$ProjectFollowers] ;
+		}else{
+		   $pconditions['user_id'] = $this->sUser['id'];
+		}
+		
+	     
+		$this->loadModel('Projects'); 
+		$Projects = $this->Projects->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where($pconditions)->toArray();
+		$this->set('Projects' , $Projects);
+		
+		$ProjectIdz = array_keys($Projects);
+	
+		if(count($ProjectIdz) == 0){
+		
+		 $this->set('NewTasks', []);
+		 $this->set('InProgressTasks', []);
+		 $this->set('ResolvedTasks', []);
+		 $this->set('CloseTasks', []);
+		
+		}else{
+			
+		
 	 $conditions['project_id IN'] = $ProjectIdz;
+
 	 $conditions['task_type'] = 'DESIGN';
 	 
 	 $Newconditions = $InProgressconditions = $Resolvedconditions =$Closeconditions = $conditions;
@@ -141,6 +167,7 @@ class TasksController extends AppController
 	 $CloseTasks = $this->Tasks->find()->where($Closeconditions)->all();
 	 $this->set('CloseTasks', $CloseTasks);
 	 
+	 }
 	 
 	 }	
 
@@ -183,9 +210,9 @@ class TasksController extends AppController
 		   $pconditions['user_id'] = $this->sUser['id'];
 		}
 		
-	     
 		 
 		$Projects = $this->Projects->find('list', ['keyField' => 'id', 'valueField' => 'id'])->where($pconditions)->toArray();
+
 		$this->set('Projects' , $Projects);
 		
 		$ProjectIdz = array_keys($Projects);
@@ -200,9 +227,7 @@ class TasksController extends AppController
 		$conditions['project_id IN'] = $ProjectIdz;
 		
 		$conditions['task_type'] = 'DESIGN';
-	 	
-	    
-		$conditions['task_type'] = 'DESIGN';
+		
 		$query = $this->Tasks->find('all')->contain(['Projects'])
 		->select($this->Tasks)->select(['Projects.name'])
 		->group('Tasks.id')
