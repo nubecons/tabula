@@ -253,7 +253,7 @@ class TasksController extends AppController
 	
     }
 
-public function detail(){
+public function detail($id = null){
 	
 	$Task = $this->Tasks->find()->where(['id' => $id])->first();
 	$this->set('Task', $Task);
@@ -274,7 +274,7 @@ public function detail(){
 	->select($this->TaskComments)
 	->select(['Users.id' , 'Users.email', 'Users.first_name', 'Users.last_name' ])
 	->join($joins)
-	 ->group('TaskComments.id')	
+	->group('TaskComments.id')	
 	->where(['task_id' => $id  ])->all();
 	$this->set('TaskComments', $TaskComments);
 	

@@ -101,8 +101,8 @@ class RequirmentsController extends AppController
     {  
 	   
 	   
-	     $this->loadModel('ProjectFollowers');	
-		 $ProjectFollowers = $this->ProjectFollowers->find('list', ['keyField' => 'project_id', 'valueField' => 'project_id'])->where(['follower_id' => $this->sUser['id'], 'is_updated' => 'YES'])->toArray();
+	    $this->loadModel('ProjectFollowers');	
+		$ProjectFollowers = $this->ProjectFollowers->find('list', ['keyField' => 'project_id', 'valueField' => 'project_id'])->where(['follower_id' => $this->sUser['id'], 'is_updated' => 'YES'])->toArray();
 	
 		
 	 	 
