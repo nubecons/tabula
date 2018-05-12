@@ -75,6 +75,11 @@ class PagesController extends AppController {
         $this->Auth->allow(['about','contact','privacy', 'home', 'display']);
     }
 
+  function calendar() {
+        $this->set('title', 'Calendar');
+    }
+
+
     function about() {
         $this->set('title', 'About');
     }

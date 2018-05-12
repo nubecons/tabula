@@ -20,6 +20,7 @@ site_url = '<?=$site_url?>';
   
   <script src="<?=$site_url?>libs/jquery/jquery/dist/jquery.js"></script>
   <script src="<?=$site_url?>libs/jquery/bootstrap/dist/js/bootstrap.js"></script>
+    
 
 </head>
 <body>
@@ -62,11 +63,11 @@ site_url = '<?=$site_url?>';
             <i class="glyphicon glyphicon-list"></i> Requirments
           </a>
           
-          <a href="#" class="btn no-shadow navbar-btn" >
+          <a href="<?=$site_url?>tasks/design" class="btn no-shadow navbar-btn" >
             <i class="fa fa-cubes"></i> Design
           </a>
           
-            <a href="#" class="btn no-shadow navbar-btn" >
+            <a href="<?=$site_url?>tasks/qa" class="btn no-shadow navbar-btn" >
             <i class="fa fa-check"></i> QA VARIFICATION
           </a>
         </div>
@@ -318,14 +319,14 @@ site_url = '<?=$site_url?>';
               </li>
               
               <li>
-                <a href class="auto">      
+                <a href="<?=$site_url?>tasks/design" class="auto">      
                   <i class="glyphicon glyphicon-list"></i>
                   <span class="font-bold">My Task</span>
                 </a>
               </li>
               
                <li>
-                <a href class="auto">      
+                <a href="<?=$site_url?>pages/calendar" class="auto">      
                   <i class="glyphicon glyphicon-calendar"></i>
                   <span class="font-bold">Calendar</span>
                 </a>
@@ -479,8 +480,10 @@ site_url = '<?=$site_url?>';
 <script src="<?=$site_url?>js/ui-client.js"></script>
 <script>
 $( document ).ready(function() {
+
 $(".message.success,.message.error").fadeOut(10000);	
-	
+$('[data-toggle="tooltip"]').tooltip();
+ 	
 $("#btn_addProject").click(function(e) {
 	
 	if($('#form_addProject [name=name]').val() == '')

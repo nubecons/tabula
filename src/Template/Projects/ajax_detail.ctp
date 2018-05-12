@@ -13,17 +13,17 @@
      <div class="panel-body">
   
           
-            <i class="glyphicon glyphicon-th"></i> <?=$Project['name']?>  &nbsp;&nbsp;
-            <i class="glyphicon glyphicon-user"></i> Muzammil
+           <?php /*?>  <i class="glyphicon glyphicon-th"></i> <?=$Project['name']?>  &nbsp;&nbsp;
+           <i class="glyphicon glyphicon-user"></i> <?php */?>
          
           <article class="media">
           <small class="block m-t-xs select_text" >
           <?=$Project['description']?>
           </small>
             <div class="media-body">                        
-            
+           
               <small class="block m-t-xs"></small>
-              <em class="text-xs"> Muzammil Created on <span class="text-danger"><?=date('M d, Y', strtotime($Project['created']))?></span></em>
+              <em class="text-xs"> Created on <span class="text-danger"><?=date('M d, Y', strtotime($Project['created']))?></span></em>
             </div>
             <br>
            <?php /*?> <small class="block m-t-xs">  
@@ -35,28 +35,25 @@
             </small><?php */?>
             <br>
             
-            <?php
+            <div class="panel-body">
+          <?php
 			foreach($ProjectComments as $ProjectComment){
-			?>	
-            <div class="m-l-lg">
-          <a class="pull-left thumb-sm avatar">
-            <img src="<?=$site_url?>img/a5.jpg" alt="...">
-          </a>          
-          <div class="m-l-xxl panel b-a">
-            <div class="panel-heading pos-rlt">
-              <span class="arrow left pull-up"></span>
-              <span class="text-muted m-l-sm pull-right">
-                <?=date('M d, Y h:i a', strtotime($ProjectComment['created']))?>
-              </span>
-              <a href></a>
-              <?=$ProjectComment['message']?>                      
-            </div>
-          </div>
-        </div>
-        <?php } ?>
-        <div id="comments_div">
+		 ?>		
+         
+          <?php include('save_comment.ctp');?>
+			
+            
+            <?php
+			 } ?>
+             
+               <div id="comments_div">
         
-        </div>
+        		</div>
+             
+            </div>
+           
+			
+      
         
             <div class="panel panel-default m-t-md m-b-n-sm pos-rlt">
                  <form role="form" id="form_addComment" >
@@ -70,8 +67,10 @@
                   <button type="button"  class="btn btn-info pull-right btn-sm"  id="btn_submit">Comment</button>
 
                   <ul class="nav nav-pills nav-sm">
+                  <?php
+				   if($Project['user_id'] == $sUser['id']){?>
                    <li><button type="button" class="btn btn-primary btn-addon btn-sm" data-toggle="modal" data-target="#AddFollowers"><i class="fa fa-plus"></i>Followers</button>
-				 
+				   <?php }?>
 				   <?php /*?><i class="fa fa-camera text-muted"></i><?php */?></li>
                    <?php /*?>  <li><a href><i class="fa fa-video-camera text-muted"></i></li><?php */?>
                   </ul>
@@ -83,9 +82,15 @@
         
         
      <?php }?>   
-        <script>
-		$(document).ready(function() {
-		$('.select_text').bind("mouseup", function() {
+ 
+ 
+ <script>
+
+/* repeaded funcion which need on this page */
+function ProjectReady(){
+	
+	/* select text */
+	$('.select_text').bind("mouseup", function() {
 
 			if (!window.x) {
 					x = {};
@@ -116,10 +121,24 @@
 				}
 			}
 		});
+	/*end select text*/
+	
+	
+	
+	/*Tool Tip*/	
+	 $('[data-toggle="tooltip"]').tooltip();
+	 /* end Tool Tip*/
+
+  } 
+   
+   $(document).ready(function() {
+	    
+		/* Calling ready function */
+	 	ProjectReady();
 		
 		
-/* add requirment */
-$('#form_addRequirment [id=btn_submit]').click(function(e) {
+	/* add requirment */
+	$('#form_addRequirment [id=btn_submit]').click(function(e) {
 	
 	if($('#form_addRequirment [name=title]').val() == '')
 	   {
@@ -144,10 +163,11 @@ $('#form_addRequirment [id=btn_submit]').click(function(e) {
 			$('#form_addRequirment [id=btn_loader]').show();
 			},
 		success:function(data) {
+			$('#form_addRequirment [id=btn_submit]').show();
+				$('#form_addRequirment [id=btn_loader]').hide();
 		if(data == 'false')
 		   {
-				$('#form_addRequirment [id=btn_submit]').show();
-				$('#form_addRequirment [id=btn_loader]').hide();
+				
 				 alert('Requirment could not created');
 		   }else{
 			   
@@ -160,11 +180,11 @@ $('#form_addRequirment [id=btn_submit]').click(function(e) {
 	  });
 	  return false;
 	});
-/* add requirment */	
-
-
-/* add comment */
-$('#form_addComment [id=btn_submit]').click(function(e) {
+	/* end add requirment */
+	
+	
+	/* add comment */
+	$('#form_addComment [id=btn_submit]').click(function(e) {
 	
 	if($('#form_addComment [name=message]').val() == '')
 	   {
@@ -211,8 +231,10 @@ $('#form_addComment [id=btn_submit]').click(function(e) {
 	  return false;
 	  
 	});
+	/* end add comment*/		
 	
-$('#form_AddFollowers [id=btn_submit]').click(function(e) {
+	/* add Follower */
+	$('#form_AddFollowers [id=btn_submit]').click(function(e) {
 	
 	
   
@@ -252,14 +274,16 @@ $('#form_AddFollowers [id=btn_submit]').click(function(e) {
 	  return false;
 	  
 	});	
-
-    /*add comment*/	
-	
-	});
+	/* end add Follower */
+    
+		
+		});
 	
 	
 	
 	</script>
+    
+  
     <div id="AddReq" class="modal fade" role="dialog">
           <div class="modal-dialog">
         
@@ -317,7 +341,7 @@ $('#form_AddFollowers [id=btn_submit]').click(function(e) {
           </div>
         </div>
         
-    <div id="AddFollowers" class="modal fade" role="dialog">
+   <div id="AddFollowers" class="modal fade" role="dialog">
           <div class="modal-dialog">
         
             <!-- Modal content-->
@@ -352,5 +376,5 @@ $('#form_AddFollowers [id=btn_submit]').click(function(e) {
             </div>
         
           </div>
-        </div>    
+   </div>    
     

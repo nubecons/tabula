@@ -17,7 +17,17 @@ class ProjectCommentsTable extends Table
 
 public function initialize(array $config)
     {
-		 $this->belongsTo('Projects');
+	   
+	 //  $this->belongsTo('Projects');
+	   $this->belongsTo('Projects', [
+			'className' => 'Projects',
+			'foreignKey' => 'project_id',
+		]);
+	   
+	   /*$this->belongsTo('Users', [
+			'className' => 'Users',
+			'foreignKey' => 'created_by',
+		]);*/
 
        $this->addBehavior('Timestamp', [
 
@@ -26,10 +36,6 @@ public function initialize(array $config)
                 'Model.beforeSave' => [
 
 				     'created' => 'new',
-
-                    'dateCreated' => 'new',
-
-                    'last_updated' => 'always',
 
 					'modified' => 'always',
 

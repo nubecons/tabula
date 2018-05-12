@@ -99,19 +99,30 @@ class RequirmentsController extends AppController
 
    public function index($project_id = null)
     {  
+	   
+	   
+	     $this->loadModel('ProjectFollowers');	
+		 $ProjectFollowers = $this->ProjectFollowers->find('list', ['keyField' => 'project_id', 'valueField' => 'project_id'])->where(['follower_id' => $this->sUser['id'], 'is_updated' => 'YES'])->toArray();
+	
+		
 	 	 
 		$this->loadModel('Projects');
 		$pconditions['user_id'] = $this->sUser['id'];
 		$Projects = $this->Projects->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where($pconditions)->toArray();
 		$this->set('Projects', $Projects);
 		 
-		$conditions['created_by'] = $this->sUser['id'];
+	//	
 		
 		if($project_id){
 		   
 		   $conditions['project_id'] = $project_id;
 			
-			 }
+			 }elseif($ProjectFollowers){
+			$conditions['project_id in '] = $ProjectFollowers;	 
+				 
+				 }else{
+			$conditions['created_by'] = $this->sUser['id'];		 
+					 }
 		$query = $this->Requirments->find('all')
 		->select($this->Requirments)
 		->Select(['Projects.name'])
@@ -127,8 +138,114 @@ class RequirmentsController extends AppController
 	
     }
 	
+public function ajaxDetail($id = null ){
+
+	$this->viewBuilder()->setLayout(false);
+	
+	$Requirment = $this->Requirments->find()->where(['id' => $id])->first();
+	$this->set('Requirment', $Requirment);
+	
+	$this->loadModel('RequirmentComments');	
+	
+	$joins = [
+            'users' => [
+                'table' => 'users',
+                'alias' => 'Users',
+                'type' => 'LEFT',
+                'conditions' => 'Users.id = RequirmentComments.created_by'
+            ],
+        ];	
+	
+	
+	$RequirmentComments = $this->RequirmentComments->find()
+	->select($this->RequirmentComments)
+	->select(['Users.id' , 'Users.email', 'Users.first_name', 'Users.last_name' ])
+	->join($joins)
+	 ->group('RequirmentComments.id')
+	->where(['RequirmentComments.requirment_id' => $id ,'RequirmentComments.status'=>'ACTIVE' ])->all();
+	$this->set('RequirmentComments', $RequirmentComments);
+	
+	/*
+	$this->loadModel('Users');	
+	$TeamMembers = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'email'])->where(['created_by' => $this->sUser['id']])->toArray();
+	$this->set('TeamMembers', $TeamMembers);
+	
+	$this->loadModel('ProjectFollowers');	
+
+	$ProjectFollowers = $this->ProjectFollowers->find('list', ['keyField' => 'follower_id', 'valueField' => 'follower_id'])->where(['project_id' => $id, 'is_updated' => 'YES'])->toArray();
+	$this->set('ProjectFollowers', $ProjectFollowers);
+	*/
+	
+	}
 
 
+  function saveComment(){
+	   $this->set('is_ajax' , true);
+	  
+	    $this->viewBuilder()->setLayout(false);
+		$this->loadModel('RequirmentComments');
+		$retrun = 'false';
+		
+		if ($this->request->is('post'))
+		{
+		  $data = $this->request->data;
+		  $data['created_by'] = $this->sUser['id'];
+		  $RequirmentComments = $this->RequirmentComments->newEntity();
+		  $RequirmentComments= $this->RequirmentComments->patchEntity($RequirmentComments, $data);
+		   
+		   if ($result = $this->RequirmentComments->save($RequirmentComments))
+			{
+			 // $this->Flash->success(__('Project created successfully.'));
+			  $retrun = $result->id;	
+			 
+			  $RequirmentComment = $this->RequirmentComments->find()->where(['id' => $result->id  ])->first();
+			  $this->set('RequirmentComment' , $RequirmentComment);
+			  
+			}else{
+				echo $retrun;
+		        exit;
+				
+				}
+		}else{
+		echo $retrun;
+		exit;
+		}
+   }
+   
+  function saveTask(){
+	  
+	    $this->viewBuilder()->setLayout(false);
+		$this->loadModel('Tasks');
+		$retrun = 'false';
+		
+		if ($this->request->is('post'))
+		{
+		  $data = $this->request->data;
+	
+		  $data['created_by'] = $this->sUser['id'];
+		  $Task = $this->Tasks->newEntity();
+		  $Task= $this->Tasks->patchEntity($Task, $data);
+		   
+		   if ($result = $this->Tasks->save($Task))
+			{
+			 // $this->Flash->success(__('Project created successfully.'));
+			  $retrun = $result->id;	
+			 
+			  $Task = $this->Tasks->find()->where(['id' => $result->id])->first();
+			  $this->set('Task' , $Task);
+			  
+			}else{
+				echo $retrun;
+		        exit;
+				
+				}
+		}else{
+		echo $retrun;
+		exit;
+		}
+		
+		exit;
+   }
 
 		
 			

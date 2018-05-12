@@ -12,12 +12,12 @@ use Cake\Validation\Validator;
 
 
 
-class RequirmentsTable extends Table
+class RequirmentCommentsTable extends Table
 {
 
 public function initialize(array $config)
     {
-		 $this->belongsTo('Projects');
+	   $this->belongsTo('Requirment');
 
        $this->addBehavior('Timestamp', [
 
@@ -27,6 +27,9 @@ public function initialize(array $config)
 
 				     'created' => 'new',
 
+                    'dateCreated' => 'new',
+
+                    'last_updated' => 'always',
 
 					'modified' => 'always',
 

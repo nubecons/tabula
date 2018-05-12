@@ -106,8 +106,17 @@ class ProjectsController extends AppController
    public function index()
     {  
 	 	
-					 
-		$conditions['user_id'] = $this->sUser['id'];
+		$this->loadModel('ProjectFollowers');	
+		$ProjectFollowers = $this->ProjectFollowers->find('list', ['keyField' => 'project_id', 'valueField' => 'project_id'])->where(['follower_id' => $this->sUser['id'], 'is_updated' => 'YES'])->toArray();
+		
+		if($ProjectFollowers){
+			
+		   $conditions['OR'] = ['user_id'=>$this->sUser['id'], 'id in '=>$ProjectFollowers] ;
+	
+		}else{
+		   
+		   $conditions['user_id'] = $this->sUser['id'];
+		}
 		$query = $this->Projects->find('all')->where($conditions);
         $this->paginate['limit'] = 100;
         $this->paginate['order'] = ['created' => 'DESC', ];
@@ -121,12 +130,33 @@ public function ajaxDetail($id = null ){
 
 	$this->viewBuilder()->setLayout(false);
 	
-	$Project = $this->Projects->find()->where(['id' => $id , 'user_id' => $this->sUser['id']])->first();
+	$Project = $this->Projects->find()->where(['id' => $id ])->first();
 	$this->set('Project', $Project);
+	$this->loadModel('ProjectComments');
 	
-	$this->loadModel('ProjectComments');	
-	$ProjectComments = $this->ProjectComments->find()->where(['project_id' => $id ,'status'=>'ACTIVE' ])->all();
+	
+	
+   $joins = [
+            'users' => [
+                'table' => 'users',
+                'alias' => 'Users',
+                'type' => 'LEFT',
+                'conditions' => 'Users.id = ProjectComments.created_by'
+            ],
+        ];	
+
+	$ProjectComments = $this->ProjectComments->find()
+    	->select($this->ProjectComments)
+	    ->select(['Users.id' , 'Users.email', 'Users.first_name', 'Users.last_name' ])
+	    ->join($joins)
+	    ->group('ProjectComments.id')
+	    ->where(['ProjectComments.project_id' => $id ,'ProjectComments.status'=>'ACTIVE' ])
+	    ->all();
 	$this->set('ProjectComments', $ProjectComments);
+	
+	//debug($ProjectComments);
+	//exit;
+	
 	
 	
 	$this->loadModel('Users');	
@@ -143,6 +173,9 @@ public function ajaxDetail($id = null ){
 
 
   function saveComment(){
+	  
+	    $this->set('is_ajax' , true);
+	  
 	    $this->viewBuilder()->setLayout(false);
 		$this->loadModel('ProjectComments');
 		$retrun = 'false';

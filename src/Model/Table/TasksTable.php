@@ -12,13 +12,15 @@ use Cake\Validation\Validator;
 
 
 
-class RequirmentsTable extends Table
+class TasksTable extends Table
+
 {
 
 public function initialize(array $config)
     {
-		 $this->belongsTo('Projects');
-
+		
+	   $this->belongsTo('Projects');	
+		//$this->hasOne('Addresses');
        $this->addBehavior('Timestamp', [
 
             'events' => [
@@ -26,9 +28,7 @@ public function initialize(array $config)
                 'Model.beforeSave' => [
 
 				     'created' => 'new',
-
-
-					'modified' => 'always',
+        			 'modified' => 'always',
 
 			    ]
 
@@ -37,6 +37,9 @@ public function initialize(array $config)
         ]);
 
     }
+	
+	
+public $priorityOptions =	['1' => 'Low' , '2' => 'Meduim'  , '3' => 'Heigh'];
 	
 }
 

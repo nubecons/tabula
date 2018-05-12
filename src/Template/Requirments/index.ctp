@@ -1,176 +1,80 @@
 <?php $site_url = $this->Url->build('/',true); ?> 
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-5">
   
-        
 <button class="btn m-b-xs w-xl btn-default" data-toggle="modal" data-target="#AddReq"> <i class="glyphicon glyphicon-plus"></i>Create New Requirement</button>
-<div class="btn-group pull-right">
-	          <button type="button" class="btn btn-sm btn-bg btn-default"><i class="glyphicon glyphicon-list"></i></button>
-	          <button type="button" class="btn btn-sm btn-bg btn-default"><i class="glyphicon glyphicon-blackboard"></i></button>
-	        </div>
-      <div class="panel panel-default">
-    <div class="panel-heading">
-      Requirements
-    </div>
-<!--    <div class="row wrapper">
-      <div class="col-sm-5 m-b-xs">
-        <select class="input-sm form-control w-sm inline v-middle">
-          <option value="0">Bulk action</option>
-          <option value="1">Delete selected</option>
-          <option value="2">Bulk edit</option>
-          <option value="3">Export</option>
-        </select>
-        <button class="btn btn-sm btn-default">Apply</button>                
+<div class="panel panel-default">
+        <div class="panel-heading">
+          <h4> Requirments </h4>                  
+        </div>
+        <div class="panel-body">
+        <?php if(count($Requirments) == 0 ){?>
+        
+      <div class="alert alert-success">
+        <p>No Requirment have been created yet!</p>
       </div>
-      <div class="col-sm-4">
-      </div>
-      <div class="col-sm-3">
-        <div class="input-group">
-          <input class="input-sm form-control" placeholder="Search" type="text">
-          <span class="input-group-btn">
-            <button class="btn btn-sm btn-default" type="button">Go!</button>
-          </span>
+	  
+      <?php }else{?>
+      
+      
+      
+      
+	  <?php 
+	  $color_class = ['1' =>'text-info','2' =>'text-primary','3' =>'text-success','4' =>'text-muted'];
+	  $counter = 0 ;
+	  foreach($Requirments as $Requirment){
+		   $counter =  $counter + 1 ;
+		    
+		  ?>
+            <article class="media">
+              <?php /*?>  <div class="pull-right">
+				
+                    <span class="fa-lg">
+                    <a href = "<?=$site_url?>requirments/index/<?=$Requirment['id']?>" >
+                    Requirments 
+                    </a>
+                    </span>
+                </div><?php */?>
+                <div class="media-body">                        
+                    <a href = "#" class="h4" onClick="getDetail('<?=$Requirment['id']?>')" ><i class="fa fa-fw fa-circle <?=$color_class[$counter]?>"></i><?=$Requirment['title']?></a>
+                    <small class="block m-t-xs"> </small>
+                  
+                    <em class="text-xs">Project: <span class="label bg-primary m-t-xs"><?=$Requirment['project']['name']?></span></em>
+                     &nbsp;
+                    <em class="text-success"><i class="fa fa-level-up"> Heath:</i> 20%</em>
+                     &nbsp;
+                    <em class="text-xs  pull-right">Created on <span class="text-danger"><?=date('M d, Y', strtotime($Requirment['created']))?></span></em>
+                   
+                    
+                </div>
+            </article>
+           <?php 
+		   if($counter >= 4){
+			   $counter = 0 ;
+			  }
+		   }?>
+       <?php }?>    
+          
+          
+       
+       
         </div>
       </div>
-    </div>-->
-    <div class="table-responsive">
-      <table class="table table-striped b-t b-light">
-        <thead>
-          <tr>
-<!--            <th style="width:20px;">
-              <label class="i-checks m-b-none">
-                <input type="checkbox"><i></i>
-              </label>
-            </th>-->
-            <th>Requirement</th>
-            <th>Design Task</th>
-            <th>QA Tasks</th>
-            <th>Project</th>
-            <th>Health</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-        <?php
-		 foreach($Requirments as $Requirment) {
-	      ?>
-          <tr>
-            <!--<td><label class="i-checks m-b-none"><input name="post[]" type="checkbox"><i></i></label></td>-->
-            <td><?=$Requirment['title']?></td>
-            <td>                
-            <span class="label bg-danger pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="Open Tasks">4</a></span>
-            <span class="label bg-primary pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="In Review Tasks">10</a></span>
-            <span class="label bg-warning pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="In process Tasks">4</a></span>
-            <span class="label bg-success pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="Left Tasks">4</a></span>
-            </td>
-            <td>                
-            <span class="label bg-danger pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="Open Tasks">4</a></span>
-            <span class="label bg-primary pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="In Review Tasks">10</a></span>
-            <span class="label bg-warning pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="In process Tasks">4</a></span>
-            <span class="label bg-success pull-right m-t-xs"><a href="#" data-toggle="tooltip" title="Left Tasks">4</a></span>
-            </td><td><span class="label bg-primary pull-right m-t-xs"><?=$Requirment['project']['name']?></span></td>
-            <td class="text-success"><i class="fa fa-level-up"></i> 20%</td>
-            <td>
-                 <div class="btn-group pull-right">
-                       <a href="#" data-toggle="tooltip" title="Create Task" > <button type="button"  data-toggle="modal" data-target="#AddTask" class="btn btn-sm btn-bg btn-default"><i class="glyphicon glyphicon-list"></i></button></a>
-                       <a href="#" data-toggle="tooltip" title="Task Detail"><button type="button" class="btn btn-sm btn-bg btn-default"><i class="glyphicon glyphicon-blackboard"></i></button></a>
-	        </div>
-            </td>
-          </tr>
-          <?php }?>
-        </tbody>
-      </table>
-    </div>
-    <footer class="panel-footer">
-      <div class="row">
-        <div class="col-sm-4 hidden-xs">
-          <select class="input-sm form-control w-sm inline v-middle">
-            <option value="0">Bulk action</option>
-            <option value="1">Delete selected</option>
-            <option value="2">Bulk edit</option>
-            <option value="3">Export</option>
-          </select>
-          <button class="btn btn-sm btn-default">Apply</button>                  
-        </div>
-        <div class="col-sm-4 text-center">
-          <small class="text-muted inline m-t-sm m-b-sm">showing 20-30 of 50 items</small>
-        </div>
-        <div class="col-sm-4 text-right text-center-xs">                
-          <ul class="pagination pagination-sm m-t-none m-b-none">
-            <li><a href=""><i class="fa fa-chevron-left"></i></a></li>
-            <li><a href="">1</a></li>
-            <li><a href="">2</a></li>
-            <li><a href="">3</a></li>
-            <li><a href="">4</a></li>
-            <li><a href="">5</a></li>
-            <li><a href=""><i class="fa fa-chevron-right"></i></a></li>
-          </ul>
-        </div>
+      
       </div>
-    </footer>
-  </div>
+    
+     <div class="col-sm-7">
+  
+<br> <br>
+     <div class="panel panel-default" id="divRequirmentDetail" <?php /*?>style="display:none"<?php */?>>
+       
       </div>
-
+      
+      </div>
 
 </div>
-<div id="AddTask" class="modal fade" role="dialog">
-          <div class="modal-dialog" >
-        
-            <!-- Modal content-->
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Add Task</h4>
-              </div>
-              <div class="modal-body">
-               <form role="form" id="form_AddTask" >
-            <div class="form-group">
-              <label>Task type</label> <br>
-            
-               <?php echo $this->Form->input('requirment_id', ['empty' =>'Select', 'options' => ['1' => 'Design' , '2' => 'QA'],  'class'=>'form-control' ,'required' => true ,'dev' => false, 'label' => false]); ?>
-             
-            </div>
-            <div class="form-group">
-              <label>Title</label>
-              <input type="text" class="form-control" name="title" id="req_field1" >
-            </div>
-            <div class="form-group">
-              <label>Description</label>
-              <textarea class="form-control"  name="description"></textarea>
-            </div>
-            
-             <div class="form-group">
-              <label>Priority</label>
-             <?php echo $this->Form->input('requirment_id', ['empty' =>'Select', 'options' => ['1' => 'Low' , '2' => 'Meduim'  , '2' => 'Heigh'],  'class'=>'form-control' ,'required' => true ,'dev' => false, 'label' => false]); ?>
-            </div>
-            
-             <div class="form-group">
-              <label>Assign TO</label>
-             <?php echo $this->Form->input('requirment_id', ['empty' =>'Select', 'options' => ['1' => 'User 1' , '2' => 'User 2'  , '2' => 'User 3'],  'class'=>'form-control' ,'required' => true ,'dev' => false, 'label' => false]); ?>
-            </div>
-            
-              <div class="form-group">
-              <label>Due Date</label>
-                <input type="text" class="form-control" name="title" id="req_field1" >
-            </div>
-           
-           
-       
-           
-        
-             
-            <button type="button"  class="btn btn-sm btn-warning btnload"  id="btn_loader"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Working...</button>
-            <button type="button" class="btn btn-sm btn-primary" id="btn_submit"  data-dismiss="modal">Submit</button>
 
-          </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-        
-          </div>
-        </div>
+ 
       
  <div id="AddReq" class="modal fade" role="dialog">
           <div class="modal-dialog" style="width:500px">
@@ -197,22 +101,8 @@
               <label>Description</label>
               <textarea class="form-control" id="req_field" name="description"></textarea>
             </div>
-           
-           
-          <?php /*?>  <div class="form-group">
-              <label>Followres</label>
-             <select class="form-control" multiple >
-                <option> User 1 </option>
-                <option> User 2 </option>
-                <option> User 3 </option>
-               </select>
-            </div>
-           <?php */?>
-           
-        
-             
-            <button type="button"  class="btn btn-sm btn-warning btnload"  id="btn_loader"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Working...</button>
-            <button type="button" class="btn btn-sm btn-primary" id="btn_submit">Submit</button>
+            <button type="button"  class="btn btn-sm btn-warning btnload btn_loader"  ><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Working...</button>
+            <button type="button" class="btn btn-sm btn-primary btn_submit" >Submit</button>
 
           </form>
               </div>
@@ -223,13 +113,19 @@
         
           </div>
         </div>  
-
-<script>
+        
+ <?php /*?><script src="<?=$site_url?>libs/jquery/bootstrap/dist/js/daterangepicker.js"></script>
+ <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker1').datetimepicker();
+            });
+        </script><?php */?>
+ <script>
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
 	
 	/* add requirment */
-$('#form_addRequirment [id=btn_submit]').click(function(e) {
+$('#form_addRequirment .btn_submit').click(function(e) {
 	if($('#form_addRequirment [name=project_id]').val() == '')
 	   {
 		alert('Pleae select project');   
@@ -254,14 +150,14 @@ $('#form_addRequirment [id=btn_submit]').click(function(e) {
 		data:dataString,
 		url:'<?=$site_url?>requirments/saveData',
 		beforeSend: function() {
-			$('#form_addRequirment [id=btn_submit]').hide();
-			$('#form_addRequirment [id=btn_loader]').show();
+			$('#form_addRequirment .btn_submit').hide();
+			$('#form_addRequirment .btn_loader').show();
 			},
 		success:function(data) {
 		if(data == 'false')
 		   {
-				$('#form_addRequirment [id=btn_submit]').show();
-				$('#form_addRequirment [id=btn_loader]').hide();
+				$('#form_addRequirment .btn_submit').show();
+				$('#form_addRequirment .btn_loader').hide();
 				 alert('Requirment could not created');
 		   }else{
 			   
@@ -277,4 +173,31 @@ $('#form_addRequirment [id=btn_submit]').click(function(e) {
 	});
 /* add requirment */	
 });
-</script>
+</script>      
+<script>
+	
+function getDetail(id){
+	
+ 
+  $.ajax({
+		type:'POST',
+		
+		url:'<?=$site_url?>requirments/ajax_detail/'+id,
+		beforeSend: function() {
+		//	$('#btn_addProject').hide();
+		//	$('#btn_addProject_load').show();
+			},
+		success:function(data) {
+			$('#divRequirmentDetail').html(data);
+		}
+  });
+  return false;
+
+}
+
+
+</script>  
+
+
+      
+      

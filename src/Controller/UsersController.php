@@ -595,7 +595,7 @@ class UsersController extends AppController {
             }
 
         }else{
-			$return = 'Ivalid request!';
+			$return = 'Invalid request!';
 			}
 
       echo $return;

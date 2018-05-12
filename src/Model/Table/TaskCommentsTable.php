@@ -12,12 +12,12 @@ use Cake\Validation\Validator;
 
 
 
-class RequirmentsTable extends Table
+class TaskCommentsTable extends Table
 {
 
 public function initialize(array $config)
     {
-		 $this->belongsTo('Projects');
+	   $this->belongsTo('Requirment');
 
        $this->addBehavior('Timestamp', [
 
@@ -26,9 +26,7 @@ public function initialize(array $config)
                 'Model.beforeSave' => [
 
 				     'created' => 'new',
-
-
-					'modified' => 'always',
+  					 'modified' => 'always',
 
 			    ]
 

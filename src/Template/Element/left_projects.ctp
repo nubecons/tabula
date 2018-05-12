@@ -1,4 +1,6 @@
   <?php 
+  
+  
     $Projects = $this->GetInfo->getProjects(['user_id' => $sUser['id'] , 'status' => 'ACTIVE' , 'name !=' => '']);
    ?>
   <?php $site_url = $this->Url->build('/',true); ?> 
