@@ -174,7 +174,7 @@ class TasksController extends AppController
 
    public function design()
     { 
-	
+		
 		/*  
 	    $results = $this->Tasks->find('all')->contain(['Projects'])->select($this->Tasks)->select(['Projects.id']);
 		$this->set('Tasks', $results);
@@ -185,16 +185,21 @@ class TasksController extends AppController
         }
 		exit;
 		*/
-                    $this->loadModel('Projects');
-	            $this->set('ProjectStatus', $this->Projects->ProjectStatus);
-                    $this->set('PriortyType', $this->Projects->PriortyType);
-                    $this->set('ProjectStatusClass', $this->Projects->ProjectStatusClass);
-                    $this->set('PriortyTypeClass', $this->Projects->PriortyTypeClass);
-                    $this->set('priorityOptions' ,  $this->Tasks->priorityOptions);	
+		$this->loadModel('Projects');
+		$this->set('ProjectStatus', $this->Projects->ProjectStatus);
+		$this->set('PriortyType', $this->Projects->PriortyType);
+		$this->set('ProjectStatusClass', $this->Projects->ProjectStatusClass);
+		$this->set('PriortyTypeClass', $this->Projects->PriortyTypeClass);
+		$this->set('priorityOptions' ,  $this->Tasks->priorityOptions);	
+		
+		
 		
 		$this->loadModel('Users');	
 		$TeamMembers[$this->sUser['id']] = 'You';
-	    $TeamMembers = $TeamMembers + $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'email'])->where( ['created_by' => $this->sUser['id']])->toArray();
+	    $TeamMembers2 = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'email'])->where( ['created_by' => $this->sUser['id']])->toArray();
+	   if($TeamMembers2){ 
+	    $TeamMembers = $TeamMembers + $TeamMembers2;
+	   }
 	    $this->set('TeamMembers', $TeamMembers);
 		
 		
@@ -237,6 +242,8 @@ class TasksController extends AppController
         $Tasks = $this->paginate($query, array('url' => '/Tasks/'));
         $this->set('Tasks', $Tasks);
 		}
+		
+	
 	
     }
 	
