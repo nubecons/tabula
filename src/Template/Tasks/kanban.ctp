@@ -46,11 +46,12 @@
                     </span>
                 </div>
                 <div class="media-body">                        
-                    <a href = "#" class="h4" onClick="getDetail('<?=$Task['id']?>')" ><i class="fa fa-fw fa-circle <?=$color_class[$counter]?>"></i><?=$Task['title']?></a>
-                    <small class="block m-t-xs"></small>
-                    <em class="text-xs"> Muzammil Created on <span class="text-danger"><?=date('M d, Y', strtotime($Task['created']))?></span></em>
-                </div>
+                    <a  href="<?=$site_url?>tasks/detail/<?=$Task['id']?>"  class="h4"  ><?=$Task['title']?></a>
+                	 <small class="block m-t-xs"><br></small>
+                    <em class="text-xs">Project: <span class="btn-xs btn-primary  m-t-xs"><?=$Task['project']['name']?>a</span></em>
+                    <em class="text-xs pull-right">Priority: <span class=" btn-xs btn-<?=$PriortyTypeClass[$Task['priority']]?> m-t-xs"><?=$priorityOptions[$Task['priority']]?></span></em>                </div>
             </article>
+            <hr>
            <?php 
 		   if($counter >= 4){
 			   $counter = 0 ;
@@ -100,11 +101,11 @@
                     </span>
                 </div>
                 <div class="media-body">                        
-                    <a href = "#" class="h4" onClick="getDetail('<?=$Task['id']?>')" ><i class="fa fa-fw fa-circle <?=$color_class[$counter]?>"></i><?=$Task['title']?></a>
-                    <small class="block m-t-xs"></small>
-                    <em class="text-xs"> Muzammil Created on <span class="text-danger"><?=date('M d, Y', strtotime($Task['created']))?></span></em>
-                </div>
-            </article>
+                   <a  href="<?=$site_url?>tasks/detail/<?=$Task['id']?>"  class="h4"  ><?=$Task['title']?></a>
+ 					<small class="block m-t-xs"><br></small>
+                    <em class="text-xs">Project: <span class="btn-xs btn-primary  m-t-xs"><?=$Task['project']['name']?>a</span></em>
+                    <em class="text-xs pull-right">Priority: <span class=" btn-xs btn-<?=$PriortyTypeClass[$Task['priority']]?> m-t-xs"><?=$priorityOptions[$Task['priority']]?></span></em>                </div>
+            </article><hr>
            <?php 
 		   if($counter >= 4){
 			   $counter = 0 ;
@@ -159,11 +160,11 @@
                     </span>
                 </div>
                 <div class="media-body">                        
-                    <a href = "#" class="h4" onClick="getDetail('<?=$Task['id']?>')" ><i class="fa fa-fw fa-circle <?=$color_class[$counter]?>"></i><?=$Task['title']?></a>
-                    <small class="block m-t-xs"></small>
-                    <em class="text-xs"> Muzammil Created on <span class="text-danger"><?=date('M d, Y', strtotime($Task['created']))?></span></em>
-                </div>
-            </article>
+                   <a  href="<?=$site_url?>tasks/detail/<?=$Task['id']?>"  class="h4"  ><?=$Task['title']?></a>
+                  <small class="block m-t-xs"><br></small>
+                    <em class="text-xs">Project: <span class="btn-xs btn-primary  m-t-xs"><?=$Task['project']['name']?>a</span></em>
+                    <em class="text-xs pull-right">Priority: <span class=" btn-xs btn-<?=$PriortyTypeClass[$Task['priority']]?> m-t-xs"><?=$priorityOptions[$Task['priority']]?></span></em>                </div>
+            </article><hr>
            <?php 
 		   if($counter >= 4){
 			   $counter = 0 ;
@@ -213,11 +214,12 @@
                     </span>
                 </div>
                 <div class="media-body">                        
-                    <a href = "#" class="h4" onClick="getDetail('<?=$Task['id']?>')" ><i class="fa fa-fw fa-circle <?=$color_class[$counter]?>"></i><?=$Task['title']?></a>
-                    <small class="block m-t-xs"></small>
-                    <em class="text-xs"> Muzammil Created on <span class="text-danger"><?=date('M d, Y', strtotime($Task['created']))?></span></em>
+                   <a  href="<?=$site_url?>tasks/detail/<?=$Task['id']?>"  class="h4"  ><?=$Task['title']?></a>
+                    <small class="block m-t-xs"><br></small>
+                    <em class="text-xs">Project: <span class="btn-xs btn-primary  m-t-xs"><?=$Task['project']['name']?>a</span></em>
+                    <em class="text-xs pull-right">Priority: <span class=" btn-xs btn-<?=$PriortyTypeClass[$Task['priority']]?> m-t-xs"><?=$priorityOptions[$Task['priority']]?></span></em>
                 </div>
-            </article>
+            </article><hr>
            <?php 
 		   if($counter >= 4){
 			   $counter = 0 ;

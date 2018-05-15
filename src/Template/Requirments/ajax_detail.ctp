@@ -123,7 +123,9 @@
 		 RequirmentReady();
 		
 		/* add requirment */
-		$('#form_AddTask  .btn_submit').click(function(e) {
+		$('#form_AddTask  .btn_submit').click(
+		 addTask();
+		/*function(e) {
 			
 			if($('#form_AddTask [name=title]').val() == '')
 			   {
@@ -166,7 +168,7 @@
 				}
 			  });
 			  return false;
-			});
+			}*/);
 		/* add requirment */	
 
 		
@@ -227,66 +229,7 @@
 	
 	</script>
     
-    <div id="AddTask" class="modal fade" role="dialog">
-          <div class="modal-dialog" >
-        
-            <!-- Modal content-->
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Add Task</h4>
-              </div>
-              <div class="modal-body">
-               <form role="form" id="form_AddTask" >
-                <input type="hidden" class="form-control" name="requirment_id" value="<?=$Requirment['id']?>" >
-                <input type="hidden" class="form-control" name="project_id"  value="<?=$Requirment['project_id']?>" >
-               
-            <div class="form-group">
-              <label>Task type</label> <br>
-            
-               <?php echo $this->Form->input('task_type', ['empty' =>'Select', 'options' => ['DESIGN' => 'Design' , 'QA' => 'QA'],  'class'=>'form-control' ,'required' => true ,'dev' => false, 'label' => false]); ?>
-             
-            </div>
-            <div class="form-group">
-              <label>Title</label>
-              <input type="text" class="form-control" name="title" id="req_field1" >
-            </div>
-            <div class="form-group">
-              <label>Description</label>
-              <textarea class="form-control"  name="description" id="req_field"></textarea>
-            </div>
-             <div class="form-group">
-              <label>Due Date</label>
-             <div class="input-group date col-sm-5" id="dp3" data-date="2018-06-02-" data-date-format="yyyy-mm-dd">
-                  <input class="form-control" name="due_date" size="16" type="text" value="">
-                  <span class="add-on input-group-addon"> <span class="glyphicon glyphicon-calendar"></span></span>
-                </div>
-          
-            </div>
-             <div class="form-group">
-              <label>Priority</label>
-             <?php echo $this->Form->input('priority', ['empty' =>'Select', 'options' => ['1' => 'Low' , '2' => 'Meduim'  , '3' => 'Heigh'],  'class'=>'form-control' ,'required' => true ,'dev' => false, 'label' => false]); ?>
-            </div>
-            
-             
-             <div class="form-group">
-              <label>Assign To</label>
-             <?php echo $this->Form->input('assign_to', ['empty' =>'Select', 'options' => ['1' => 'User 1' , '2' => 'User 2'  , '2' => 'User 3'],  'class'=>'form-control' ,'required' => true ,'dev' => false, 'label' => false]); ?>
-            </div>
-            
-           
-            <button type="button"  class="btn btn-sm btn-warning btnload btn_loader"  ><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Working...</button>
-            <button type="button" class="btn btn-sm btn-primary btn_submit">Submit</button>
-
-          </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-        
-          </div>
-        </div>
+    
     
     
         

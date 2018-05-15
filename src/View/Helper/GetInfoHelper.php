@@ -31,13 +31,34 @@ class GetInfoHelper extends Helper
      return  $Projects->find()->where($conditions)->all();
 
 	   } 
-   
+  
+  
+  function getReqName($id, $fields =['title']){
+
+		$ObjM = TableRegistry::get('Requirments');
+	    return  $ObjM->find()->select($fields)->where(['id' => $id])->first();
+
+	   } 
+	   
+function getCountTasks($req_id , $status = null){
+
+		$ObjM = TableRegistry::get('Tasks');
+		$conditions['requirment_id'] = $req_id;
+		
+		if($status){
+		  $conditions['status'] = $status;
+		}
+	    return  $ObjM->find()->select([])->where($conditions)->count();
+
+	   } 	   
+	   
   function getCity($id, $fields =[]){
 
 		$ObjCities = TableRegistry::get('Cities');
-	    return  $ObjCities->find()->select($fields)->where(['id' => $id])->first();
+	    return  $ObjCities->find()->select($fields)->where(['id' => $id])->count();
 
 	   } 
+	   
 
   function getLocation($id, $fields =[]){
 

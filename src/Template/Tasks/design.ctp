@@ -27,14 +27,35 @@
         </thead>
         <tbody>
         <?php
+		$req_id = '';
 		 foreach($Tasks as $Task) {
+			 if($req_id != $Task['requirment_id'])
+			   {
+				  $req_id = $Task['requirment_id'];  
+				  $req_name = $this->GetInfo->getReqName($Task['requirment_id']);
+			 ?>
+             <tr>
+             <td colspan="5">
+             <b>  <?=$req_name['title']?> </b>
+             </td>
+             </tr>
+             
+             <?php
+			   }
 	      ?>
           <tr>
 
-            <td><a href="<?=$site_url?>tasks/detail/<?=$Task['id']?>"  ><?=$Task['title']?></a></td>
-            <td><?=$priorityOptions[$Task['priority']]?></td>
-            <td><?=$Task['status']?></td>
-            <td><?=$Task['project']['name']?></td>
+            <td><a href="<?=$site_url?>tasks/detail/<?=$Task['id']?>"  ><?=$Task['requirment_id']?> <?=$Task['title']?></a></td>
+
+            <td >
+			<span class="btn btn-xs btn-<?=$PriortyTypeClass[$Task['priority']]?> m-t-xs"><?=$priorityOptions[$Task['priority']]?></span>
+			</td>
+            <td>  
+            <span class="btn btn-xs btn-<?=$ProjectStatusClass[$Task['status']]?> m-t-xs"><?=$Task['status']?></span>
+		
+			</td>
+
+            <td><span class="btn btn-xs btn-primary  m-t-xs"> <b><?=$Task['project']['name']?></b></span></td>
 
             <td class="text-success"><?php /*?><i class="fa fa-level-up"></i> 20%<?php */?>
 			<?=isset($TeamMembers[$Task['assign_to']])?$TeamMembers[$Task['assign_to']]:'N/A'?></td>

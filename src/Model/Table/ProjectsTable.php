@@ -42,15 +42,17 @@ public function initialize(array $config)
 
     }
     
-         var $ProjectStatus =  array(
-            'active'=>'Active',
-            'closed'=>'Closed',
-            'pending'=>'Pending',
+      var $ProjectStatus =  array(
+            'Close'=>'Close',
+            'Resolve'=>'Resolve',
+            'In Progress'=>'In Progress',
+            'New' =>'New'
          );
           var $ProjectStatusClass =  array(
-            'active'=>'label-success',
-            'closed'=>'label-default',
-            'pending'=>'label-warning',
+            'Close'=>'primary',
+            'Resolve'=>'success',
+            'In Progress'=>'warning',
+            'New'=>'info',
          );
      
     var $PriortyType =  array(
@@ -60,10 +62,10 @@ public function initialize(array $config)
             '3' => 'Heigh'
          );
         var $PriortyTypeClass =  array(
-            ''=>'label-danger',
-            '1'=>'label-danger',
-            '2'=>'label-success',
-            '3'=>'label-warning',
+            ''=>'info',
+            '1'=>'success',
+            '2'=>'warning',
+            '3'=>'danger',
          );
 	
 }

@@ -107,6 +107,15 @@ class TasksController extends AppController
    
  function kanban(){
 	 
+	 		
+		$this->loadModel('Projects');
+		$this->set('ProjectStatus', $this->Projects->ProjectStatus);
+		$this->set('PriortyType', $this->Projects->PriortyType);
+		$this->set('ProjectStatusClass', $this->Projects->ProjectStatusClass);
+		$this->set('PriortyTypeClass', $this->Projects->PriortyTypeClass);
+		$this->set('priorityOptions' ,  $this->Tasks->priorityOptions);	
+		
+	 
 		$this->set('priorityOptions' ,  $this->Tasks->priorityOptions);	
 		
 		$this->loadModel('Users');	
@@ -150,21 +159,36 @@ class TasksController extends AppController
 	 
 	 $Newconditions = $InProgressconditions = $Resolvedconditions =$Closeconditions = $conditions;
 	 
-	 $Newconditions['status'] = 'New';
-	 $NewTasks = $this->Tasks->find()->where($Newconditions)->all();
+	 $Newconditions['Tasks.status'] = 'New';
+	 $NewTasks = $this->Tasks->find()
+				->contain(['Projects'])
+				->select($this->Tasks)->select(['Projects.name'])
+				->group('Tasks.id')->where($Newconditions)->all();
 	 $this->set('NewTasks', $NewTasks);
 	 
-	 $InProgressconditions['status'] = 'In Progress';
-	 $InProgressTasks = $this->Tasks->find()->where($InProgressconditions)->all();
+	 $InProgressconditions['Tasks.status'] = 'In Progress';
+	 $InProgressTasks = $this->Tasks->find()
+						->contain(['Projects'])
+						->select($this->Tasks)->select(['Projects.name'])
+						->group('Tasks.id')
+	 ->where($InProgressconditions)->all();
 	 $this->set('InProgressTasks', $InProgressTasks);
 	 
-	 $Resolvedconditions['status'] = 'Resolve';
-	 $ResolvedTasks = $this->Tasks->find()->where($Resolvedconditions)->all();
+	 $Resolvedconditions['Tasks.status'] = 'Resolve';
+	 $ResolvedTasks = $this->Tasks->find()
+     				->contain(['Projects'])
+		           ->select($this->Tasks)->select(['Projects.name'])
+		           ->group('Tasks.id')	 
+					 ->where($Resolvedconditions)->all();
 	 $this->set('ResolvedTasks', $ResolvedTasks);
 	 
 
-	 $Closeconditions['status'] = 'Close';
-	 $CloseTasks = $this->Tasks->find()->where($Closeconditions)->all();
+	 $Closeconditions['Tasks.status'] = 'Close';
+	 $CloseTasks = $this->Tasks->find()
+	               ->contain(['Projects'])
+		           ->select($this->Tasks)->select(['Projects.name'])
+		           ->group('Tasks.id')
+		           ->where($Closeconditions)->all();
 	 $this->set('CloseTasks', $CloseTasks);
 	 
 	 }
@@ -172,7 +196,7 @@ class TasksController extends AppController
 	 }	
 
 
-   public function design()
+   public function design($req_id = null)
     { 
 		
 		/*  
@@ -185,6 +209,7 @@ class TasksController extends AppController
         }
 		exit;
 		*/
+		
 		$this->loadModel('Projects');
 		$this->set('ProjectStatus', $this->Projects->ProjectStatus);
 		$this->set('PriortyType', $this->Projects->PriortyType);
@@ -228,6 +253,10 @@ class TasksController extends AppController
 		
 		}else{
 			
+		if($req_id){
+			
+			$conditions['requirment_id'] = $req_id;
+			}
 		
 		$conditions['project_id IN'] = $ProjectIdz;
 		
@@ -238,7 +267,7 @@ class TasksController extends AppController
 		->group('Tasks.id')
 		->where($conditions);
         $this->paginate['limit'] = 100;
-        $this->paginate['order'] = ['created' => 'DESC', ];
+        $this->paginate['order'] = ['Tasks.requirment_id' => 'DESC', 'Tasks.created' => 'DESC', ];
         $Tasks = $this->paginate($query, array('url' => '/Tasks/'));
         $this->set('Tasks', $Tasks);
 		}
@@ -262,7 +291,13 @@ class TasksController extends AppController
 
 public function detail($id = null){
 	
-	$Task = $this->Tasks->find()->where(['id' => $id])->first();
+	$Task = $this->Tasks->find()
+				 ->contain(['Projects'])
+		         ->select($this->Tasks)
+				 ->select(['Projects.name'])
+		         ->group('Tasks.id')
+	             ->where(['Tasks.id' => $id])->first();
+	
 	$this->set('Task', $Task);
 	
 	$this->loadModel('TaskComments');	

@@ -16,10 +16,6 @@
       </div>
       <?php }else{?>
      
-     <div class="panel-heading">
-  		<h4> <i class="fa fa-cubes"></i> <?=$Task['title']?> </h4>                  
-		</div>
-     
      <div class="panel-body">
           <article class="media">
           <small class="block m-t-xs select_text" >
@@ -51,8 +47,11 @@
              
             </div>
         
+         <div class="panel b-a bg-light ">
+        
             <div class="panel panel-default m-t-md m-b-n-sm pos-rlt">
                  <form role="form" id="form_addComment" >
+                 <select><option>asdad</option></select>
                  <input type="hidden" class="form-control" name="task_id" value="<?=$Task['id']?>" >
                  <input type="hidden" class="form-control" name="project_id" value="<?=$Task['project_id']?>" >
                  <input type="hidden" class="form-control" name="requirment_id" value="<?=$Task['id']?>" >
@@ -64,16 +63,14 @@
                   	<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Working...
                    </button>
                   <button type="button"  class="btn btn-info pull-right btn-sm btn_submit"  >Comment</button>
-
-                  <ul class="nav nav-pills nav-sm">
-                   
-				 
-				   <?php /*?><i class="fa fa-camera text-muted"></i><?php */?></li>
-                   <?php /*?>  <li><a href><i class="fa fa-video-camera text-muted"></i></li><?php */?>
-                  </ul>
+                  <br> <br>
                 </div>
                 </form>
               </div>
+              
+        </div>      
+              
+              
            </article>
         </div>
         
