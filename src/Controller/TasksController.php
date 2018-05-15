@@ -81,6 +81,45 @@ class TasksController extends AppController
 		$this->set('title', 'Manage Tasks');
 
 	}
+        
+   public function design($project_id = null)
+    {  
+       
+         $this->loadModel('ProjectFollowers');	
+		$ProjectFollowers = $this->ProjectFollowers->find('list', ['keyField' => 'project_id', 'valueField' => 'project_id'])->where(['follower_id' => $this->sUser['id'], 'is_updated' => 'YES'])->toArray();
+	
+		
+	 	 
+		$this->loadModel('Projects');
+		$pconditions['user_id'] = $this->sUser['id'];
+		$Projects = $this->Projects->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where($pconditions)->toArray();
+		$this->set('Projects', $Projects);
+                
+		if($project_id){
+		   
+		   $conditions['project_id'] = $project_id;
+			
+			 }elseif($ProjectFollowers){
+			$conditions['project_id in '] = $ProjectFollowers;	 
+				 
+				 }else{
+			$conditions['created_by'] = $this->sUser['id'];		 
+					 }
+
+		$query = $this->Tasks->find('all')
+		->select($this->Tasks)
+		->Select(['Projects.name'])
+		->contain(['Projects'])
+		->where($conditions);
+        $this->paginate['limit'] = 100;
+        $this->paginate['order'] = ['created' => 'DESC', ];
+        $Tasks = $this->paginate($query, array('url' => '/Requirments/'));
+        $this->set('Tasks', $Tasks);
+		
+		//debug( $Requirments );
+		//exit;
+	
+    }
 	
 	function saveData(){
 		$retrun = 'false';
@@ -196,7 +235,7 @@ class TasksController extends AppController
 	 }	
 
 
-   public function design($req_id = null)
+   public function designList($req_id = null)
     { 
 		
 		/*  

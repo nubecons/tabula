@@ -13,81 +13,93 @@
       <strong> Design Tasks </strong>
     </div>
 
-        <div class="panel-body">
-        <?php if(count($Tasks) == 0 ){?>
-        
-      <div class="alert alert-success">
-        <p>No Design Task have been created yet!</p>
-      </div>
-	  
-      <?php }else{?>
-      
-      
-      
-      
-	  <?php 
-	  $color_class = ['1' =>'text-info','2' =>'text-primary','3' =>'text-success','4' =>'text-muted'];
-	  $counter = 0 ;
-	  foreach($Tasks as $task){
-		     
-			    $counter =  $counter + 1 ;
-		   
-				$New_tasks = $this->GetInfo->getCountTasks($task['id'] , 'New');
-				$InProgress_tasks = $this->GetInfo->getCountTasks($task['id'] , 'In Progress');
-				$Close_tasks = $this->GetInfo->getCountTasks($task['id'] , 'Close');
-				$Resolve_tasks = $this->GetInfo->getCountTasks($task['id'] , 'Resolve');
-		    
-		  ?>
-            <article class="media">
-                <div class="pull-right">
-				 <small class="m-t-xs">
-                 
-                 </small>
-                    
-                </div>
-                <div class="media-body">                        
-                    <a href = "#" class="h4" onClick="getDetail('<?=$task['id']?>')" ><i class="fa fa-fw fa-circle <?=$color_class[$counter]?>"></i><?=$task['title']?></a>
-                    <small class="block m-t-xs"> </small>
-                  
-                    <em class="text-xs">Project: <span class="label bg-primary m-t-xs"><?=$task['project']['name']?></span></em>
-                     &nbsp;
-                    <em class="text-success"><i class="fa fa-level-up"> Heath:</i> 20%</em>
-                     &nbsp;
-                    <em class="text-xs  pull-right">Created on <span class="text-danger"><?=date('M d, Y', strtotime($task['created']))?></span></em>
-                    <br> <br>
-                   <small class="m-t-xs">
-                    
-                    <span class="label bg-info m-t-xs"><a href="#" data-toggle="tooltip" title="New Tasks(<?=$New_tasks?>)">New Tasks(<?=$New_tasks?>)</a></span>
-                    <span class="label bg-warning m-t-xs"><a href="#" data-toggle="tooltip" title="In Progress Tasks(<?=$InProgress_tasks?>)">In Progress Tasks(<?=$InProgress_tasks?>)</a></span>
-                    <span class="label bg-primary m-t-xs"><a href="#" data-toggle="tooltip" title="Close Tasks(<?=$Close_tasks?>)">Close Tasks(<?=$Close_tasks?>)</a></span>
-                    <span class="label bg-success m-t-xs"><a href="#" data-toggle="tooltip" title="Resolve Tasks(<?=$Resolve_tasks?>)">Resolve Tasks(<?=$Resolve_tasks?>)</a></span>
-            
-                   
-                    </small>
-                    <br> <br>
-                    <small class="text-xs">
-                      <a  href="<?=$site_url?>tasks/designList/<?=$task['id']?>">LIST VIEW </a> &nbsp; | &nbsp; 
-                      <a  href="<?=$site_url?>tasks/kanban/<?=$task['id']?>">BOARD VIEW </a> &nbsp; | &nbsp;  
-                      <a onClick="addTaskModel('<?=$task['id']?>' ,'<?=$task['project_id']?>')">CREATE QA Task</a>
-                     </small>
-                    
-                </div>
-                <hr>
-            </article>
-           <?php 
-		   if($counter >= 4){
-			   $counter = 0 ;
-			  }
-		   }?>
-       <?php }?>    
-          
-          
-       
-       
+    <div class="table-responsive">
+      <table class="table table-striped b-t b-light" >
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Project</th>
+            <th>Assign To</th>
+           <?php /*?> <th>Action</th><?php */?>
+          </tr>
+        </thead>
+        <tbody>
+        <?php
+		$req_id = '';
+		 foreach($Tasks as $Task) {
+			 if($req_id != $Task['requirment_id'])
+			   {
+				  $req_id = $Task['requirment_id'];  
+				  $req_name = $this->GetInfo->getReqName($Task['requirment_id']);
+			 ?>
+             <tr>
+             <td colspan="5">
+             <b>  <?=$req_name['title']?> </b>
+             </td>
+             </tr>
+             
+             <?php
+			   }
+	      ?>
+          <tr>
+
+            <td><a href="<?=$site_url?>tasks/detail/<?=$Task['id']?>"  ><?=$Task['requirment_id']?> <?=$Task['title']?></a></td>
+
+            <td >
+			<span class="btn btn-xs btn-<?=$PriortyTypeClass[$Task['priority']]?> m-t-xs"><?=$priorityOptions[$Task['priority']]?></span>
+			</td>
+            <td>  
+            <span class="btn btn-xs btn-<?=$ProjectStatusClass[$Task['status']]?> m-t-xs"><?=$Task['status']?></span>
+		
+			</td>
+
+            <td><span class="btn btn-xs btn-primary  m-t-xs"> <b><?=$Task['project']['name']?></b></span></td>
+
+            <td class="text-success"><?php /*?><i class="fa fa-level-up"></i> 20%<?php */?>
+			<?=isset($TeamMembers[$Task['assign_to']])?$TeamMembers[$Task['assign_to']]:'N/A'?></td>
+           <?php /*?> <td>
+	        <div class="btn-group pull-right">
+                       <a href="#" data-toggle="tooltip" title="Create Task"> <button type="button" class="btn btn-sm btn-bg btn-default"><i class="glyphicon glyphicon-list"></i></button></a>
+                       <a href="#" data-toggle="tooltip" title="Task Detail"><button type="button" class="btn btn-sm btn-bg btn-default"><i class="glyphicon glyphicon-blackboard"></i></button></a>
+	        </div>
+	          
+            </td><?php */?>
+          </tr>
+          <?php }?>
+
+        </tbody>
+      </table>
+    </div>
+    <?php /*?><footer class="panel-footer">
+      <div class="row">
+        <div class="col-sm-4 hidden-xs">
+          <select class="input-sm form-control w-sm inline v-middle">
+            <option value="0">Bulk action</option>
+            <option value="1">Delete selected</option>
+            <option value="2">Bulk edit</option>
+            <option value="3">Export</option>
+          </select>
+          <button class="btn btn-sm btn-default">Apply</button>                  
+        </div>
+        <div class="col-sm-4 text-center">
+          <small class="text-muted inline m-t-sm m-b-sm">showing 20-30 of 50 items</small>
+        </div>
+        <div class="col-sm-4 text-right text-center-xs">                
+          <ul class="pagination pagination-sm m-t-none m-b-none">
+            <li><a href=""><i class="fa fa-chevron-left"></i></a></li>
+            <li><a href="">1</a></li>
+            <li><a href="">2</a></li>
+            <li><a href="">3</a></li>
+            <li><a href="">4</a></li>
+            <li><a href="">5</a></li>
+            <li><a href=""><i class="fa fa-chevron-right"></i></a></li>
+          </ul>
         </div>
       </div>
-      
-      </div>
+    </footer><?php */?>
+  </div>
       </div>
 
 
