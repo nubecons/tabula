@@ -5,9 +5,9 @@
         
 <button class="btn m-b-xs w-xl btn-default" data-toggle="modal" data-target="#AddTask"> <i class="glyphicon glyphicon-plus"></i>Create New Task</button>
 <div class="btn-group pull-right">
-	         <?php /*?> <button type="button" class="btn btn-sm btn-bg btn-default"><i class="glyphicon glyphicon-list"></i></button><?php */?>
-             <a href="<?=$site_url?>tasks/kanban" data-toggle="tooltip" title="Kanban View"> <button type="button" class="btn btn-sm btn-bg btn-default"><i class="glyphicon glyphicon-blackboard"></i></button></a>
-	        </div>
+	        <a href="<?=$site_url?>tasks/designList/<?=$requirement_id?>" data-toggle="tooltip" title="List View">  <button type="button" class="btn btn-sm btn-bg btn-default"><i class="glyphicon glyphicon-list"></i></button></a>
+             <a href="<?=$site_url?>tasks/kanban/<?=$requirement_id?>" data-toggle="tooltip" title="Kanban View"> <button type="button" class="btn btn-sm btn-bg btn-default"><i class="glyphicon glyphicon-blackboard"></i></button></a>
+	         </div>
       <div class="panel panel-default">
     <div class="panel-heading">
       <strong> Design Tasks </strong>
@@ -22,6 +22,7 @@
             <th>Status</th>
             <th>Project</th>
             <th>Assign To</th>
+            <th>Due Date</th>
            <?php /*?> <th>Action</th><?php */?>
           </tr>
         </thead>
@@ -59,6 +60,8 @@
 
             <td class="text-success"><?php /*?><i class="fa fa-level-up"></i> 20%<?php */?>
 			<?=isset($TeamMembers[$Task['assign_to']])?$TeamMembers[$Task['assign_to']]:'N/A'?></td>
+            
+            <td><?=$Task['due_date'];?></td>
            <?php /*?> <td>
 	        <div class="btn-group pull-right">
                        <a href="#" data-toggle="tooltip" title="Create Task"> <button type="button" class="btn btn-sm btn-bg btn-default"><i class="glyphicon glyphicon-list"></i></button></a>

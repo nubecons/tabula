@@ -5,13 +5,13 @@
 <button class="btn m-b-xs w-xl btn-default" data-toggle="modal" data-target="#AddReq"> <i class="glyphicon glyphicon-plus"></i>Create New Requirement</button>
 <div class="panel panel-default">
         <div class="panel-heading">
-          <h4> Requirments </h4>                  
+          <h4> Requirements </h4>                  
         </div>
         <div class="panel-body">
         <?php if(count($Requirments) == 0 ){?>
         
       <div class="alert alert-success">
-        <p>No Requirment have been created yet!</p>
+        <p>No Requirement have been created yet!</p>
       </div>
 	  
       <?php }else{?>
@@ -36,7 +36,7 @@
                     
                 </div>
                 <div class="media-body">                        
-                    <a href = "#" class="h4" onClick="getDetail('<?=$Requirment['id']?>')" ><i class="fa fa-fw fa-circle <?=$color_class[$counter]?>"></i><?=$Requirment['title']?></a>
+                    <a href = "javascript:void(0)" class="h4" onClick="getDetail('<?=$Requirment['id']?>','<?=$Requirment['project']['id']?>')"><i class="fa fa-fw fa-circle <?=$color_class[$counter]?>"></i><?=$Requirment['title']?></a>
                     <small class="block m-t-xs"> </small>
                   
                     <em class="text-xs">Project: <span class="label bg-primary m-t-xs"><?=$Requirment['project']['name']?></span></em>
@@ -84,7 +84,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Add Requirment</h4>
+                <h4 class="modal-title">Add Requirement</h4>
               </div>
               <div class="modal-body">
                <form role="form" id="form_addRequirment" >
@@ -185,7 +185,7 @@
  <script>
 $(document).ready(function(){
       $('[data-toggle="tooltip"]').tooltip();
-		$('#form_AddTask  .btn_submit').click(function(e) {
+		$('#form_AddTask  .btn_submit').click(function() {
 		
 		 addTask();
 			});
@@ -241,10 +241,6 @@ $('#form_addRequirment .btn_submit').click(function(e) {
 /* add requirment */	
 });
 
-
-</script>      
-<script>
-
 function addTaskModel(req_id , project_id){
 	   
 	    $('#AddTask').modal('show');
@@ -268,7 +264,6 @@ function addTask()
 				}	
 				
 		  
-		  e.preventDefault();
 		  var dataString = $( '#form_AddTask' ).serialize();
 		  $.ajax({
 				type:'POST',
@@ -299,19 +294,21 @@ function addTask()
 			  return false;
 			}
 	
-function getDetail(id){
+function getDetail(id,project_id){
 	
  
   $.ajax({
 		type:'POST',
 		
 		url:'<?=$site_url?>requirments/ajax_detail/'+id,
-		beforeSend: function() {
-		//	$('#btn_addProject').hide();
-		//	$('#btn_addProject_load').show();
-			},
+//		beforeSend: function() {
+//		//	$('#btn_addProject').hide();
+//		//	$('#btn_addProject_load').show();
+//			},
 		success:function(data) {
 			$('#divRequirmentDetail').html(data);
+                        $('#requirment_id_field').val(id);
+                        $('#project_id_field').val(project_id);
 		}
   });
   return false;

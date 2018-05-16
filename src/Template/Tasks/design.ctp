@@ -5,16 +5,16 @@
         
 <button class="btn m-b-xs w-xl btn-default" data-toggle="modal" data-target="#AddTask"> <i class="glyphicon glyphicon-plus"></i>Create New Task</button>
 <div class="btn-group pull-right">
-	      <a href="<?=$site_url?>tasks/designList" data-toggle="tooltip" title="List View">  <button type="button" class="btn btn-sm btn-bg btn-default"><i class="glyphicon glyphicon-list"></i></button></a>
-             <a href="<?=$site_url?>tasks/kanban" data-toggle="tooltip" title="Kanban View"> <button type="button" class="btn btn-sm btn-bg btn-default"><i class="glyphicon glyphicon-blackboard"></i></button></a>
-	        </div>
+	         <a href="<?=$site_url?>tasks/designList/<?=$requirement_id?>" data-toggle="tooltip" title="List View">  <button type="button" class="btn btn-sm btn-bg btn-default"><i class="glyphicon glyphicon-list"></i></button></a>
+             <a href="<?=$site_url?>tasks/kanban/<?=$requirement_id?>" data-toggle="tooltip" title="Kanban View"> <button type="button" class="btn btn-sm btn-bg btn-default"><i class="glyphicon glyphicon-blackboard"></i></button></a>
+	         </div>
       <div class="panel panel-default">
     <div class="panel-heading">
       <strong> Design Tasks </strong>
     </div>
 
         <div class="panel-body">
-        <?php if(count($Tasks) == 0 ){?>
+        <?php if(count($Requirments) == 0 ){?>
         
       <div class="alert alert-success">
         <p>No Design Task have been created yet!</p>
@@ -28,14 +28,14 @@
 	  <?php 
 	  $color_class = ['1' =>'text-info','2' =>'text-primary','3' =>'text-success','4' =>'text-muted'];
 	  $counter = 0 ;
-	  foreach($Tasks as $task){
+	  foreach($Requirments as $Requirment){
 		     
 			    $counter =  $counter + 1 ;
 		   
-				$New_tasks = $this->GetInfo->getCountTasks($task['id'] , 'New');
-				$InProgress_tasks = $this->GetInfo->getCountTasks($task['id'] , 'In Progress');
-				$Close_tasks = $this->GetInfo->getCountTasks($task['id'] , 'Close');
-				$Resolve_tasks = $this->GetInfo->getCountTasks($task['id'] , 'Resolve');
+				$New_tasks = $this->GetInfo->getCountTasks($Requirment['id'] , 'New');
+				$InProgress_tasks = $this->GetInfo->getCountTasks($Requirment['id'] , 'In Progress');
+				$Close_tasks = $this->GetInfo->getCountTasks($Requirment['id'] , 'Close');
+				$Resolve_tasks = $this->GetInfo->getCountTasks($Requirment['id'] , 'Resolve');
 		    
 		  ?>
             <article class="media">
@@ -46,14 +46,14 @@
                     
                 </div>
                 <div class="media-body">                        
-                    <a href = "#" class="h4" onClick="getDetail('<?=$task['id']?>')" ><i class="fa fa-fw fa-circle <?=$color_class[$counter]?>"></i><?=$task['title']?></a>
+                    <a  href="<?=$site_url?>tasks/designList/<?=$Requirment['id']?>" class="h4" ><i class="fa fa-fw fa-circle <?=$color_class[$counter]?>"></i><?=$Requirment['title']?></a>
                     <small class="block m-t-xs"> </small>
                   
-                    <em class="text-xs">Project: <span class="label bg-primary m-t-xs"><?=$task['project']['name']?></span></em>
+                    <em class="text-xs">Project: <span class="label bg-primary m-t-xs"><?=$Requirment['project']['name']?></span></em>
                      &nbsp;
                     <em class="text-success"><i class="fa fa-level-up"> Heath:</i> 20%</em>
                      &nbsp;
-                    <em class="text-xs  pull-right">Created on <span class="text-danger"><?=date('M d, Y', strtotime($task['created']))?></span></em>
+                    <em class="text-xs  pull-right">Created on <span class="text-danger"><?=date('M d, Y', strtotime($Requirment['created']))?></span></em>
                     <br> <br>
                    <small class="m-t-xs">
                     
@@ -66,9 +66,10 @@
                     </small>
                     <br> <br>
                     <small class="text-xs">
-                      <a  href="<?=$site_url?>tasks/designList/<?=$task['id']?>">LIST VIEW </a> &nbsp; | &nbsp; 
-                      <a  href="<?=$site_url?>tasks/kanban/<?=$task['id']?>">BOARD VIEW </a> &nbsp; | &nbsp;  
-                      <a onClick="addTaskModel('<?=$task['id']?>' ,'<?=$task['project_id']?>')">CREATE QA Task</a>
+                      <a  href="<?=$site_url?>tasks/designList/<?=$Requirment['id']?>">LIST VIEW </a> &nbsp; | &nbsp; 
+                      <a  href="<?=$site_url?>tasks/kanban/<?=$Requirment['id']?>">BOARD VIEW </a> &nbsp; | &nbsp; 
+                      <a onClick="addTaskModel('<?=$Requirment['id']?>' ,'<?=$Requirment['project_id']?>')">CREATE DESIGN TASK</a> &nbsp; | &nbsp; 
+                      <a onClick="addTaskModel('<?=$Requirment['id']?>' ,'<?=$Requirment['project_id']?>')">CREATE QA</a>
                      </small>
                     
                 </div>
@@ -79,10 +80,7 @@
 			   $counter = 0 ;
 			  }
 		   }?>
-       <?php }?>    
-          
-          
-       
+       <?php }?> 
        
         </div>
       </div>

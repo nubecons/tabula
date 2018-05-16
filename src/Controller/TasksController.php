@@ -84,8 +84,9 @@ class TasksController extends AppController
         
    public function design($project_id = null)
     {  
-       
-         $this->loadModel('ProjectFollowers');	
+	   
+	   
+	    $this->loadModel('ProjectFollowers');	
 		$ProjectFollowers = $this->ProjectFollowers->find('list', ['keyField' => 'project_id', 'valueField' => 'project_id'])->where(['follower_id' => $this->sUser['id'], 'is_updated' => 'YES'])->toArray();
 	
 		
@@ -94,7 +95,10 @@ class TasksController extends AppController
 		$pconditions['user_id'] = $this->sUser['id'];
 		$Projects = $this->Projects->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where($pconditions)->toArray();
 		$this->set('Projects', $Projects);
-                
+                $this->loadModel('Requirments');
+		 
+	//	
+		
 		if($project_id){
 		   
 		   $conditions['project_id'] = $project_id;
@@ -105,16 +109,16 @@ class TasksController extends AppController
 				 }else{
 			$conditions['created_by'] = $this->sUser['id'];		 
 					 }
-
-		$query = $this->Tasks->find('all')
-		->select($this->Tasks)
-		->Select(['Projects.name'])
+		$query = $this->Requirments->find('all')
+		->select($this->Requirments)
+		->Select(['Projects.name','Projects.id'])
 		->contain(['Projects'])
 		->where($conditions);
         $this->paginate['limit'] = 100;
         $this->paginate['order'] = ['created' => 'DESC', ];
-        $Tasks = $this->paginate($query, array('url' => '/Requirments/'));
-        $this->set('Tasks', $Tasks);
+        $Requirments = $this->paginate($query, array('url' => '/Requirments/'));
+        $this->set('Requirments', $Requirments);
+        $this->set('requirement_id','');	
 		
 		//debug( $Requirments );
 		//exit;
@@ -144,9 +148,9 @@ class TasksController extends AppController
    
    
    
- function kanban(){
+ function kanban($req_id=null){
 	 
-	 		
+	 	  $this->set('requirement_id',$req_id);	
 		$this->loadModel('Projects');
 		$this->set('ProjectStatus', $this->Projects->ProjectStatus);
 		$this->set('PriortyType', $this->Projects->PriortyType);
@@ -195,6 +199,9 @@ class TasksController extends AppController
 	 $conditions['project_id IN'] = $ProjectIdz;
 
 	 $conditions['task_type'] = 'DESIGN';
+         if($req_id !=null){
+            $conditions['requirment_id'] = $req_id; 
+         }
 	 
 	 $Newconditions = $InProgressconditions = $Resolvedconditions =$Closeconditions = $conditions;
 	 
@@ -309,6 +316,7 @@ class TasksController extends AppController
         $this->paginate['order'] = ['Tasks.requirment_id' => 'DESC', 'Tasks.created' => 'DESC', ];
         $Tasks = $this->paginate($query, array('url' => '/Tasks/'));
         $this->set('Tasks', $Tasks);
+        $this->set('requirement_id',$req_id);
 		}
 		
 	

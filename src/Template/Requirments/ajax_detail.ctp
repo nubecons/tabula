@@ -122,56 +122,6 @@
 		
 		 RequirmentReady();
 		
-		/* add requirment */
-		$('#form_AddTask  .btn_submit').click(
-		 addTask();
-		/*function(e) {
-			
-			if($('#form_AddTask [name=title]').val() == '')
-			   {
-				alert('Pleae enter title');   
-				return;
-				}
-			if($('#form_AddTask [name=description]').val() == '')
-			   {
-				alert('Pleae enter description');   
-				return;
-				}	
-				
-		  
-		  e.preventDefault();
-		  var dataString = $( '#form_AddTask' ).serialize();
-		  $.ajax({
-				type:'POST',
-				data:dataString,
-				url:'<?=$site_url?>requirments/saveTask',
-				beforeSend: function() {
-					$('#form_AddTask .btn_submit').hide();
-					$('#form_AddTask .btn_loader').show();
-					},
-				success:function(data) {
-					
-					$('#form_AddTask .btn_submit').show();
-						$('#form_AddTask .btn_loader').hide();
-					
-				if(data == 'false')
-				   {
-						
-						 alert('Task could not created');
-				   }else{
-					   
-					   $('#AddTask').modal('hide');
-					   alert('Task created successfully.');
-						//window.location.href = '<?=$site_url?>Projects/index/'+data; 	   
-				  }
-				  
-				}
-			  });
-			  return false;
-			}*/);
-		/* add requirment */	
-
-		
 		/* add comment */
 		$('#form_addComment .btn_submit').click(function(e) {
 			
@@ -182,7 +132,7 @@
 			   }
 				
 		  
-		  e.preventDefault();
+		 // e.preventDefault();
 		  var dataString = $( '#form_addComment' ).serialize();
 		
 		  $.ajax({
@@ -225,7 +175,7 @@
 	
 	});
 	
-	
+        
 	
 	</script>
     

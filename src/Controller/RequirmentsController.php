@@ -125,7 +125,7 @@ class RequirmentsController extends AppController
 					 }
 		$query = $this->Requirments->find('all')
 		->select($this->Requirments)
-		->Select(['Projects.name'])
+		->Select(['Projects.name','Projects.id'])
 		->contain(['Projects'])
 		->where($conditions);
         $this->paginate['limit'] = 100;
