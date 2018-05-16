@@ -26,10 +26,6 @@
 		     
 			    $counter =  $counter + 1 ;
 		   
-				$New_tasks = $this->GetInfo->getCountTasks($Requirment['id'] , 'New');
-				$InProgress_tasks = $this->GetInfo->getCountTasks($Requirment['id'] , 'In Progress');
-				$Close_tasks = $this->GetInfo->getCountTasks($Requirment['id'] , 'Close');
-				$Resolve_tasks = $this->GetInfo->getCountTasks($Requirment['id'] , 'Resolve');
 		    
 		  ?>
             <article class="media">
@@ -48,23 +44,7 @@
                     <em class="text-success"><i class="fa fa-level-up"> Heath:</i> 20%</em>
                      &nbsp;
                     <em class="text-xs  pull-right">Created on <span class="text-danger"><?=date('M d, Y', strtotime($Requirment['created']))?></span></em>
-                    <br> <br>
-                   <small class="m-t-xs">
-                    
-                    <span class="label bg-info m-t-xs"><a href="#" data-toggle="tooltip" title="New Tasks(<?=$New_tasks?>)">New Tasks(<?=$New_tasks?>)</a></span>
-                    <span class="label bg-warning m-t-xs"><a href="#" data-toggle="tooltip" title="In Progress Tasks(<?=$InProgress_tasks?>)">In Progress Tasks(<?=$InProgress_tasks?>)</a></span>
-                    <span class="label bg-primary m-t-xs"><a href="#" data-toggle="tooltip" title="Close Tasks(<?=$Close_tasks?>)">Close Tasks(<?=$Close_tasks?>)</a></span>
-                    <span class="label bg-success m-t-xs"><a href="#" data-toggle="tooltip" title="Resolve Tasks(<?=$Resolve_tasks?>)">Resolve Tasks(<?=$Resolve_tasks?>)</a></span>
-            
                    
-                    </small>
-                    <br> <br>
-                    <small class="text-xs">
-                      <a  href="<?=$site_url?>tasks/design/<?=$Requirment['id']?>">LIST VIEW </a> &nbsp; | &nbsp; 
-                      <a  href="<?=$site_url?>tasks/kanban/<?=$Requirment['id']?>">BOARD VIEW </a> &nbsp; | &nbsp; 
-                      <a onClick="addTaskModel('<?=$Requirment['id']?>' ,'<?=$Requirment['project_id']?>')">CREATE DESIGN TASK</a> &nbsp; | &nbsp; 
-                      <a onClick="addTaskModel('<?=$Requirment['id']?>' ,'<?=$Requirment['project_id']?>')">CREATE QA</a>
-                     </small>
                     
                 </div>
                 <hr>
@@ -204,11 +184,12 @@
         </script><?php */?>
  <script>
 $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();
 		$('#form_AddTask  .btn_submit').click(function(e) {
-		alert('asdsad');
+		
 		 addTask();
-			)}
-    $('[data-toggle="tooltip"]').tooltip();
+			});
+  
 	
 	/* add requirment */
 $('#form_addRequirment .btn_submit').click(function(e) {
