@@ -59,32 +59,37 @@ use App\View\Helper\GetInfoHelper;
 class TasksController extends AppController
 {
 
-	
-
 	public function initialize()
 	{
-
 		parent::initialize();
-	    
 		$this->product_file_path = WWW_ROOT . 'img' .DS. 'Products' . DS;
 	}
 
-	public function beforeFilter(Event $event)
+ public function beforeFilter(Event $event)
 	{
-
 		parent::beforeFilter($event);
-		
 		$this->loadComponent('Upload');
-
-		
-
 		$this->set('title', 'Manage Tasks');
-
 	}
         
-   public function design($project_id = null)
+  public function design($project_id = null)
     {  
 	   
+	   
+	    $this->loadModel('Projects');
+		$this->set('ProjectStatus', $this->Projects->ProjectStatus);
+		$this->set('PriortyType', $this->Projects->PriortyType);
+		$this->set('ProjectStatusClass', $this->Projects->ProjectStatusClass);
+		$this->set('PriortyTypeClass', $this->Projects->PriortyTypeClass);
+		$this->set('priorityOptions' ,  $this->Projects->PriortyType);	
+		
+	 
+		$this->set('priorityOptions' ,  $this->Tasks->priorityOptions);	
+		
+		$this->loadModel('Users');	
+		$TeamMembers[$this->sUser['id']] = 'You';
+	    $TeamMembers = $TeamMembers + $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'email'])->where( ['created_by' => $this->sUser['id']])->toArray();
+	    $this->set('TeamMembers', $TeamMembers);
 	   
 	    $this->loadModel('ProjectFollowers');	
 		$ProjectFollowers = $this->ProjectFollowers->find('list', ['keyField' => 'project_id', 'valueField' => 'project_id'])->where(['follower_id' => $this->sUser['id'], 'is_updated' => 'YES'])->toArray();
@@ -95,7 +100,9 @@ class TasksController extends AppController
 		$pconditions['user_id'] = $this->sUser['id'];
 		$Projects = $this->Projects->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where($pconditions)->toArray();
 		$this->set('Projects', $Projects);
-                $this->loadModel('Requirments');
+        
+		
+		$this->loadModel('Requirments');
 		 
 	//	
 		
@@ -125,7 +132,7 @@ class TasksController extends AppController
 	
     }
 	
-	function saveData(){
+  public function saveData(){
 		$retrun = 'false';
 		if ($this->request->is('post'))
 		{
@@ -145,12 +152,10 @@ class TasksController extends AppController
 		exit;
    }
    
-   
-   
-   
- function kanban($req_id=null){
+  public function kanban($req_id=null){
 	 
-	 	  $this->set('requirement_id',$req_id);	
+	 	$this->set('requirement_id',$req_id);	
+		
 		$this->loadModel('Projects');
 		$this->set('ProjectStatus', $this->Projects->ProjectStatus);
 		$this->set('PriortyType', $this->Projects->PriortyType);
@@ -240,9 +245,102 @@ class TasksController extends AppController
 	 }
 	 
 	 }	
+  
+  public function qakanban($req_id=null){
+	 
+	 	$this->set('requirement_id',$req_id);	
+		
+		$this->loadModel('Projects');
+		$this->set('ProjectStatus', $this->Projects->ProjectStatus);
+		$this->set('PriortyType', $this->Projects->PriortyType);
+		$this->set('ProjectStatusClass', $this->Projects->ProjectStatusClass);
+		$this->set('PriortyTypeClass', $this->Projects->PriortyTypeClass);
+		$this->set('priorityOptions' ,  $this->Tasks->priorityOptions);	
+		
+	 
+		$this->set('priorityOptions' ,  $this->Tasks->priorityOptions);	
+		
+		$this->loadModel('Users');	
+		$TeamMembers[$this->sUser['id']] = 'You';
+	    $TeamMembers = $TeamMembers + $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'email'])->where( ['created_by' => $this->sUser['id']])->toArray();
+	    $this->set('TeamMembers', $TeamMembers);
+		
+		
+		$this->loadModel('ProjectFollowers');	
+		$ProjectFollowers = $this->ProjectFollowers->find('list', ['keyField' => 'project_id', 'valueField' => 'project_id'])->where(['follower_id' => $this->sUser['id'], 'is_updated' => 'YES'])->toArray();
+	    
+		
+		
+	
+		if($ProjectFollowers){
+		   $pconditions['OR'] = ['user_id'=>$this->sUser['id'], 'id in '=>$ProjectFollowers] ;
+		}else{
+		   $pconditions['user_id'] = $this->sUser['id'];
+		}
+		
+	     
+		$this->loadModel('Projects'); 
+		$Projects = $this->Projects->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where($pconditions)->toArray();
+		$this->set('Projects' , $Projects);
+		
+		$ProjectIdz = array_keys($Projects);
+	
+		if(count($ProjectIdz) == 0){
+		
+		 $this->set('NewTasks', []);
+		 $this->set('InProgressTasks', []);
+		 $this->set('ResolvedTasks', []);
+		 $this->set('CloseTasks', []);
+		
+		}else{
+			
+		
+	 $conditions['project_id IN'] = $ProjectIdz;
 
+	 $conditions['task_type'] = 'QA';
+         if($req_id !=null){
+            $conditions['requirment_id'] = $req_id; 
+         }
+	 
+	 $Newconditions = $InProgressconditions = $Resolvedconditions =$Closeconditions = $conditions;
+	 
+	 $Newconditions['Tasks.status'] = 'New';
+	 $NewTasks = $this->Tasks->find()
+				->contain(['Projects'])
+				->select($this->Tasks)->select(['Projects.name'])
+				->group('Tasks.id')->where($Newconditions)->all();
+	 $this->set('NewTasks', $NewTasks);
+	 
+	 $InProgressconditions['Tasks.status'] = 'In Progress';
+	 $InProgressTasks = $this->Tasks->find()
+						->contain(['Projects'])
+						->select($this->Tasks)->select(['Projects.name'])
+						->group('Tasks.id')
+	 ->where($InProgressconditions)->all();
+	 $this->set('InProgressTasks', $InProgressTasks);
+	 
+	 $Resolvedconditions['Tasks.status'] = 'Resolve';
+	 $ResolvedTasks = $this->Tasks->find()
+     				->contain(['Projects'])
+		           ->select($this->Tasks)->select(['Projects.name'])
+		           ->group('Tasks.id')	 
+					 ->where($Resolvedconditions)->all();
+	 $this->set('ResolvedTasks', $ResolvedTasks);
+	 
 
-   public function designList($req_id = null)
+	 $Closeconditions['Tasks.status'] = 'Close';
+	 $CloseTasks = $this->Tasks->find()
+	               ->contain(['Projects'])
+		           ->select($this->Tasks)->select(['Projects.name'])
+		           ->group('Tasks.id')
+		           ->where($Closeconditions)->all();
+	 $this->set('CloseTasks', $CloseTasks);
+	 
+	 }
+	 
+	 }		 
+
+  public function designList($req_id = null)
     { 
 		
 		/*  
@@ -322,21 +420,163 @@ class TasksController extends AppController
 	
 	
     }
+  
+  public function qaList($req_id = null)
+    { 
+		
+		/*  
+	    $results = $this->Tasks->find('all')->contain(['Projects'])->select($this->Tasks)->select(['Projects.id']);
+		$this->set('Tasks', $results);
+		
+		foreach ($results as $article) {
+         //echo $article->projects[0]->text;
+        debug($article);
+        }
+		exit;
+		*/
+		
+		$this->loadModel('Projects');
+		$this->set('ProjectStatus', $this->Projects->ProjectStatus);
+		$this->set('PriortyType', $this->Projects->PriortyType);
+		$this->set('ProjectStatusClass', $this->Projects->ProjectStatusClass);
+		$this->set('PriortyTypeClass', $this->Projects->PriortyTypeClass);
+		$this->set('priorityOptions' ,  $this->Tasks->priorityOptions);	
+		
+		
+		
+		$this->loadModel('Users');	
+		$TeamMembers[$this->sUser['id']] = 'You';
+	    $TeamMembers2 = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'email'])->where( ['created_by' => $this->sUser['id']])->toArray();
+	   if($TeamMembers2){ 
+	    $TeamMembers = $TeamMembers + $TeamMembers2;
+	   }
+	    $this->set('TeamMembers', $TeamMembers);
+		
+		
+		$this->loadModel('ProjectFollowers');	
+		$ProjectFollowers = $this->ProjectFollowers->find('list', ['keyField' => 'project_id', 'valueField' => 'project_id'])->where(['follower_id' => $this->sUser['id'], 'is_updated' => 'YES'])->toArray();
+	    
+		
+		
 	
-	public function qa()
+		if($ProjectFollowers){
+		   $pconditions['OR'] = ['user_id'=>$this->sUser['id'], 'id in '=>$ProjectFollowers] ;
+		}else{
+		   $pconditions['user_id'] = $this->sUser['id'];
+		}
+		
+		 
+		$Projects = $this->Projects->find('list', ['keyField' => 'id', 'valueField' => 'id'])->where($pconditions)->toArray();
+
+		$this->set('Projects' , $Projects);
+		
+		$ProjectIdz = array_keys($Projects);
+	
+		if(count($ProjectIdz) == 0){
+		
+		 $this->set('Tasks', []);
+		
+		}else{
+			
+		if($req_id){
+			
+			$conditions['requirment_id'] = $req_id;
+			}
+		
+		$conditions['project_id IN'] = $ProjectIdz;
+		
+		$conditions['task_type'] = 'QA';
+		
+		$query = $this->Tasks->find('all')->contain(['Projects'])
+		->select($this->Tasks)->select(['Projects.name'])
+		->group('Tasks.id')
+		->where($conditions);
+        $this->paginate['limit'] = 100;
+        $this->paginate['order'] = ['Tasks.requirment_id' => 'DESC', 'Tasks.created' => 'DESC', ];
+        $Tasks = $this->paginate($query, array('url' => '/Tasks/'));
+        $this->set('Tasks', $Tasks);
+        $this->set('requirement_id',$req_id);
+		}
+		
+	
+	
+    }	
+	
+  public function qa($project_id = null)
     {  
 	 	
 					 
-		$conditions['task_type'] = 'QA';
-		$query = $this->Tasks->find('all')->where($conditions);
+			   
+	    $this->loadModel('Projects');
+		$this->set('ProjectStatus', $this->Projects->ProjectStatus);
+		$this->set('PriortyType', $this->Projects->PriortyType);
+		$this->set('ProjectStatusClass', $this->Projects->ProjectStatusClass);
+		$this->set('PriortyTypeClass', $this->Projects->PriortyTypeClass);
+		$this->set('priorityOptions' ,  $this->Projects->PriortyType);	
+		
+	 
+		$this->set('priorityOptions' ,  $this->Tasks->priorityOptions);	
+		
+		$this->loadModel('Users');	
+		$TeamMembers[$this->sUser['id']] = 'You';
+	    $TeamMembers = $TeamMembers + $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'email'])->where( ['created_by' => $this->sUser['id']])->toArray();
+	    $this->set('TeamMembers', $TeamMembers);
+	   
+	    $this->loadModel('ProjectFollowers');	
+		$ProjectFollowers = $this->ProjectFollowers->find('list', ['keyField' => 'project_id', 'valueField' => 'project_id'])->where(['follower_id' => $this->sUser['id'], 'is_updated' => 'YES'])->toArray();
+	
+		
+	 	 
+		$this->loadModel('Projects');
+		$pconditions['user_id'] = $this->sUser['id'];
+		$Projects = $this->Projects->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where($pconditions)->toArray();
+		$this->set('Projects', $Projects);
+        
+		
+		$this->loadModel('Requirments');
+		 
+	//	
+		
+		if($project_id){
+		   
+		   $conditions['project_id'] = $project_id;
+			
+			 }elseif($ProjectFollowers){
+			$conditions['project_id in '] = $ProjectFollowers;	 
+				 
+				 }else{
+			$conditions['created_by'] = $this->sUser['id'];		 
+					 }
+		$query = $this->Requirments->find('all')
+		->select($this->Requirments)
+		->Select(['Projects.name','Projects.id'])
+		->contain(['Projects'])
+		->where($conditions);
         $this->paginate['limit'] = 100;
         $this->paginate['order'] = ['created' => 'DESC', ];
-        $Tasks = $this->paginate($query, array('url' => '/Tasks/'));
-        $this->set('Tasks', $Tasks);
+        $Requirments = $this->paginate($query, array('url' => '/Requirments/'));
+        $this->set('Requirments', $Requirments);
+        $this->set('requirement_id','');
 	
     }
 
-public function detail($id = null){
+  public function detail($id = null){
+	
+	
+	    $this->loadModel('Projects');
+		$this->set('ProjectStatus', $this->Projects->ProjectStatus);
+		$this->set('PriortyType', $this->Projects->PriortyType);
+		$this->set('ProjectStatusClass', $this->Projects->ProjectStatusClass);
+		$this->set('PriortyTypeClass', $this->Projects->PriortyTypeClass);
+		$this->set('priorityOptions' ,  $this->Tasks->priorityOptions);	
+		
+	 
+		$this->set('priorityOptions' ,  $this->Tasks->priorityOptions);	
+		
+		$this->loadModel('Users');	
+		$TeamMembers[$this->sUser['id']] = 'You';
+	    $TeamMembers = $TeamMembers + $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'email'])->where( ['created_by' => $this->sUser['id']])->toArray();
+	    $this->set('TeamMembers', $TeamMembers);
 	
 	$Task = $this->Tasks->find()
 				 ->contain(['Projects'])
@@ -344,6 +584,28 @@ public function detail($id = null){
 				 ->select(['Projects.name'])
 		         ->group('Tasks.id')
 	             ->where(['Tasks.id' => $id])->first();
+	
+	
+	if ($this->request->is('post') || $this->request->is('put'))
+		{
+		 $data = $this->request->data;
+		 $Task= $this->Tasks->patchEntity($Task, $data);
+		 $this->Tasks->save($Task);
+		 
+		 if($data['message'] != ''){
+		  unset($data['id']);
+		  $data['created_by'] = $this->sUser['id'];
+		  
+		  $this->loadModel('TaskComments');
+		  $TaskComments = $this->TaskComments->newEntity();
+		  $TaskComments= $this->TaskComments->patchEntity($TaskComments, $data);
+		   $this->TaskComments->save($TaskComments);
+		 }
+		 
+		 return $this->redirect(['action' => 'detail',$id]);
+			
+		}
+		
 	
 	$this->set('Task', $Task);
 	
@@ -371,7 +633,7 @@ public function detail($id = null){
 	
 	
 
-public function ajaxDetail($id = null ){
+  public function ajaxDetail($id = null ){
 
 	$this->viewBuilder()->setLayout(false);
 	
@@ -414,7 +676,7 @@ public function ajaxDetail($id = null ){
 
   function saveComment(){
 	  
-	     $this->set('is_ajax' , true);
+	    $this->set('is_ajax' , true);
 	    $this->viewBuilder()->setLayout(false);
 		$this->loadModel('TaskComments');
 		$retrun = 'false';
@@ -436,7 +698,7 @@ public function ajaxDetail($id = null ){
 			  
 			}else{
 				echo $retrun;
-		exit;
+		        exit;
 				
 				}
 		}else{

@@ -208,7 +208,7 @@ public function findAuth(\Cake\ORM\Query $query, array $options)
 
 		$query
 
-			->select(['id', 'first_name', 'last_name', 'email', 'password' ,'group_id']);
+			->select(['id', 'first_name', 'last_name', 'email', 'password' ,'group_id' ,'image']);
 
 		
 

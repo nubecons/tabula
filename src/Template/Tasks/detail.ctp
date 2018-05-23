@@ -48,25 +48,57 @@
             </div>
         
          <div class="panel b-a bg-light ">
-        
-            <div class="panel panel-default m-t-md m-b-n-sm pos-rlt">
-                 <form role="form" id="form_addComment" >
-                 <select><option>asdad</option></select>
-                 <input type="hidden" class="form-control" name="task_id" value="<?=$Task['id']?>" >
-                 <input type="hidden" class="form-control" name="project_id" value="<?=$Task['project_id']?>" >
-                 <input type="hidden" class="form-control" name="requirment_id" value="<?=$Task['id']?>" >
-                 
-                 <textarea class="form-control no-border" rows="2" name="message" placeholder="Your comment..."></textarea>
-                
-                <div class="panel-footer bg-light lter">
-                  <button type="button"  class="btn btn-sm btn-warning pull-right btnload btn_loader"  >
-                  	<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Working...
-                   </button>
-                  <button type="button"  class="btn btn-info pull-right btn-sm btn_submit"  >Comment</button>
-                  <br> <br>
+          <div class="panel-body">
+          <?php /*?><form role="form" id="form_AddTask" ><?php */?>
+            <?php echo $this->Form->create($Task ,['enctype' => 'multipart/form-data' ] ); ?>
+            <div class="form-group">
+              <label>Status</label>
+              <?php echo $this->Form->input('status', ['empty' =>'Select', 'options' => $ProjectStatus,  'class'=>'form-control' ,'required' => true ,'dev' => false, 'label' => false]); ?>
+            </div>
+            <?php
+			 if($Task['created_by'] == $sUser['id']){ ?>
+             <div class="form-group">
+              <label>Priority</label>
+             <?php echo $this->Form->input('priority', ['empty' =>'Select', 'options' => $PriortyType,  'class'=>'form-control' ,'required' => true ,'dev' => false, 'label' => false]); ?>
+             </div>
+             <div class="form-group">
+              <label>Due Date</label>
+              <?php
+			  $due_date = '';
+			  if($Task['due_date'] != '' && $Task['due_date'] != '0000-00-00'){
+				  $due_date = date("Y-m-d", strtotime($Task['due_date']));
+				  }
+			 ?>
+              
+             <div class="input-group date col-sm-5" id="dp3" data-date="<?=$due_date?>" data-date-format="yyyy-mm-dd">
+              <?php echo $this->Form->input('due_date', ['type' =>'text', "value" => $due_date,   'class'=>'form-control' ,'dev' => false, 'label' => false]); ?>
+                  <span class="add-on input-group-addon"> <span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
-                </form>
-              </div>
+          
+            </div>
+            
+             
+            <div class="form-group">
+              <label>Assign To</label>
+             <?php echo $this->Form->input('assign_to', ['empty' =>'Select', 'options' => $TeamMembers ,  'class'=>'form-control' ,'required' => true ,'dev' => false, 'label' => false]); ?>
+            </div>
+            <?php }?>
+             <div class="form-group">
+              <label>Reply</label>
+             <?php echo $this->Form->input('message', ['type' =>'textarea',  'class'=>'form-control' ,'dev' => false, 'label' => false]); ?>
+            </div>
+            
+           
+            <button type="button"  class="btn btn-sm btn-warning btnload btn_loader"  ><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Working...</button>
+            <button type="submit" class="btn btn-sm btn-primary btn_submit">Submit</button>
+
+			 <input type="hidden" class="form-control" name="task_id" value="<?=$Task['id']?>" >
+             <input type="hidden" class="form-control" name="project_id" value="<?=$Task['project_id']?>" >
+             <input type="hidden" class="form-control" name="requirment_id" value="<?=$Task['requirment_id']?>" >
+                 
+          </form>
+      
+          </div>    
               
         </div>      
               
@@ -79,7 +111,7 @@
         <script>
 		$(document).ready(function() {
 		
-
+		$('#dp3').datepicker();
 
 /* add comment */
 $('#form_addComment .btn_submit').click(function(e) {
@@ -132,11 +164,10 @@ $('#form_addComment .btn_submit').click(function(e) {
 
     /*add comment*/	
 	
+	
+	
 	});
-	
-	
-	
-	</script> 
+	    </script> 
           
           
        
@@ -146,8 +177,79 @@ $('#form_addComment .btn_submit').click(function(e) {
       
       </div>
     
-     <div class="col-sm-5">
-  <div class="col">
+  <div class="col-sm-5">
+
+  			<div class="panel panel-default">
+             <div class="panel-body">
+               <div class="tl-content panel bg-success padder">
+              <span class="arrow arrow-success right pull-up hidden-left"></span>
+              <span class="arrow arrow-success right pull-up visible-left"></span>
+              <div class="text-lt"><strong><i class=" glyphicon glyphicon-th "></i> Project</strong></div>
+            </div>
+             &nbsp; &nbsp; &nbsp; &nbsp;
+             <?=isset($Task['project']['name'])?$Task['project']['name']:'N/A'?>
+             </div>
+     		 </div>
+             
+             <div class="panel panel-default">
+             <div class="panel-body">
+               <div class="tl-content panel bg-primary padder">
+              <span class="arrow arrow-primary right pull-up hidden-left"></span>
+              <span class="arrow arrow-primary right pull-up visible-left"></span>
+              <div class="text-lt"><strong><i class=" fa fa-user "></i> Assign To</strong></div>
+            </div>
+             &nbsp; &nbsp; &nbsp; &nbsp;
+             <?php
+			  if($Task['assign_to']){
+				 $assign_to = $this->GetInfo->getUserData($Task['assign_to'],['id','first_name' ,'last_name','email']);
+				 echo $assign_to['first_name'].' '.$assign_to['last_name'].' '.$assign_to['email'];
+				  }else{
+				  echo "N/A";	  
+					  }
+			 ?>
+             </div>
+     		 </div>
+             
+               <div class="panel panel-default">
+             <div class="panel-body">
+               <div class="tl-content panel bg-info padder">
+              <span class="arrow arrow-info right pull-up hidden-left"></span>
+              <span class="arrow arrow-info right pull-up visible-left"></span>
+              <div class="text-lt"><strong><i class=" glyphicon glyphicon-calendar "></i> Due Date</strong></div>
+            </div>
+             &nbsp; &nbsp; &nbsp; &nbsp;
+             <?php
+			  if($Task['due_date'] != '' && $Task['due_date'] != '0000-00-00'){
+				  echo date("M d, Y", strtotime($Task['due_date']));
+				  }
+			 ?>
+             </div>
+     		 </div>
+             
+             
+           <div class="panel panel-default">
+                <div class="panel-heading">
+                <strong><i class=" glyphicon glyphicon-paperclip "></i>  Files</strong>
+                </div>
+            
+            <div class="panel-body">
+                    <em class="text-xs text-danger">No Files in this Task</em>
+             </div>
+     		 </div>
+             
+             <div class="panel panel-default">
+                <div class="panel-heading">
+                <strong><i class=" fa fa-bars "></i>  Activities</strong>
+                </div>
+            
+            <div class="panel-body">
+                   <em class="text-xs">Created: <span class="text-danger"><?=date('M d, Y h:i A', strtotime($Task['created']))?></span></em> <br>
+                   <em class="text-xs">Last Updated: <span class="text-danger"><?=date('M d, Y h:i A', strtotime($Task['modified']))?></span></em>
+             </div>
+     		 </div>
+  
+  
+  <?php /*?><div class="col">
     <div class="wrapper">
       <ul class="timeline">
         <li class="tl-header">
@@ -276,7 +378,7 @@ $('#form_addComment .btn_submit').click(function(e) {
         </li>
       </ul>
     </div>
-  </div>
+  </div><?php */?>
 
       
       </div>

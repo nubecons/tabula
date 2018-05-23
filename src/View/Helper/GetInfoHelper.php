@@ -40,19 +40,22 @@ class GetInfoHelper extends Helper
 
 	   } 
 	   
-function getCountTasks($req_id , $status = null){
+ function getCountTasks($req_id , $status = null, $task_type = 'DESIGN'){
 
 		$ObjM = TableRegistry::get('Tasks');
+		
 		$conditions['requirment_id'] = $req_id;
+		$conditions['task_type'] = $task_type;
 		
 		if($status){
 		  $conditions['status'] = $status;
 		}
+
 	    return  $ObjM->find()->select([])->where($conditions)->count();
 
 	   } 	   
 	   
-  function getCity($id, $fields =[]){
+ function getCity($id, $fields =[]){
 
 		$ObjCities = TableRegistry::get('Cities');
 	    return  $ObjCities->find()->select($fields)->where(['id' => $id])->count();
@@ -60,7 +63,7 @@ function getCountTasks($req_id , $status = null){
 	   } 
 	   
 
-  function getLocation($id, $fields =[]){
+ function getLocation($id, $fields =[]){
 
 		$ObjLocations = TableRegistry::get('Locations');
 	    return  $ObjLocations->find()->select($fields)->where(['id' => $id])->first();
@@ -69,13 +72,13 @@ function getCountTasks($req_id , $status = null){
 
 
 
- function getLocationCount($conditions = []) {
+function getLocationCount($conditions = []) {
 
         $Locations = TableRegistry::get('Locations');
         return $Locations->find()->where($conditions)->count();
     }
 
-    function getProductCityCount($conditions = []){
+ function getProductCityCount($conditions = []){
 
 	 $Products = TableRegistry::get('Products');
 
@@ -114,7 +117,6 @@ function getProductLocationCount($conditions = []){
 		->order(['count' => 'DESC'])
 		->limit(150)
 		->toArray();
-         
 		//  return  $Products->find()->where($conditions)->count();
 
 	   } 	   

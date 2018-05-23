@@ -21,7 +21,8 @@ site_url = '<?=$site_url?>';
   <script src="<?=$site_url?>libs/jquery/jquery/dist/jquery.js"></script>
   <script src="<?=$site_url?>libs/jquery/bootstrap/dist/js/bootstrap.js"></script>
     
-
+ <link rel="stylesheet" href="<?=$site_url?>css/datepicker.css" type="text/css" />
+ <script src="<?=$site_url?>libs/jquery/bootstrap-datepicker/bootstrap-datepicker.js"></script> 
 </head>
 <body>
 <div class="app app-header-fixed ">
@@ -60,7 +61,7 @@ site_url = '<?=$site_url?>';
           </a>
           
            <a href="<?=$site_url?>Requirments" class="btn no-shadow navbar-btn" >
-            <i class="glyphicon glyphicon-list"></i> Requirments
+            <i class="glyphicon glyphicon-list"></i> Requirements
           </a>
           
           <a href="<?=$site_url?>tasks/design" class="btn no-shadow navbar-btn" >
@@ -165,33 +166,49 @@ site_url = '<?=$site_url?>';
           <li class="dropdown">
             <a href="#" data-toggle="dropdown" class="dropdown-toggle clear" data-toggle="dropdown">
               <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
+				<?php
+                if($sUser['image'] != ''){?>
+             
+                <img src="<?=$site_url?>img/profile_pics/<?=$sUser['image']?>">
+            
+                <?php }else{?>
                 <img src="<?=$site_url?>img/a0.jpg" alt="...">
+                <?php }?>
                 <i class="on md b-white bottom"></i>
               </span>
-              <span class="hidden-sm hidden-md">John.Smith</span> <b class="caret"></b>
+              <span class="hidden-sm hidden-md">
+              <?php
+			   if($sUser['first_name'] != '' || $sUser['last_name'] != ''){
+				   echo $sUser['first_name']. ' '.$sUser['last_name'];
+			   }else{
+				   echo $sUser['email'];
+				   }
+			   ?>
+              </span> <b class="caret"></b>
             </a>
             <!-- dropdown -->
             <ul class="dropdown-menu animated fadeInRight w">
               <li class="wrapper b-b m-b-sm bg-light m-t-n-xs">
-                <div>
+                <?php /*?><div>
                   <p>300mb of 500mb used</p>
                 </div>
                 <div class="progress progress-xs m-b-none dker">
                   <div class="progress-bar progress-bar-info" data-toggle="tooltip" data-original-title="50%" style="width: 50%"></div>
-                </div>
+                </div><?php */?>
               </li>
-              <li>
-                <a href>
-                  <span class="badge bg-danger pull-right">30%</span>
-                  <span>Settings</span>
+             <?php /*?> <li>
+                <a href="<?=$site_url?>users/help">
+                  <span>Help</span>
                 </a>
+              </li><?php */?>
+              <li>
+                <a href="<?=$site_url?>users/profile" >Profile</a>
+              </li>
+               <li>
+                <a href="<?=$site_url?>users/change_password" >Change Password</a>
               </li>
               <li>
-                <a ui-sref="app.page.profile">Profile</a>
-              </li>
-              <li>
-                <a ui-sref="app.docs">
-                  <span class="label bg-info pull-right">new</span>
+                <a href="<?=$site_url?>users/help">
                   Help
                 </a>
               </li>
@@ -219,44 +236,49 @@ site_url = '<?=$site_url?>';
             <div class="dropdown wrapper">
               <a href="app.page.profile">
                 <span class="thumb-lg w-auto-folded avatar m-t-sm">
-                  <img src="<?=$site_url?>img/a0.jpg" class="img-full" alt="...">
+                <?php
+                if($sUser['image'] != ''){?>
+             
+                <img src="<?=$site_url?>img/profile_pics/<?=$sUser['image']?>" class="img-full">
+            
+                <?php }else{?>
+                 <img src="<?=$site_url?>img/a0.jpg" class="img-full" alt="...">
+                <?php }?>
+                 
                 </span>
               </a>
               <a href="#" data-toggle="dropdown" class="dropdown-toggle hidden-folded">
                 <span class="clear">
                   <span class="block m-t-sm">
-                    <strong class="font-bold text-lt">John.Smith</strong> 
+                    <strong class="font-bold text-lt">
+					<?php
+			   if($sUser['first_name'] != '' || $sUser['last_name'] != ''){
+				   echo $sUser['first_name']. ' '.$sUser['last_name'];
+			   }else{
+				   echo $sUser['email'];
+				   }
+			   ?></strong> 
                     <b class="caret"></b>
                   </span>
-                  <span class="text-muted text-xs block">Art Director</span>
+                
                 </span>
               </a>
               <!-- dropdown -->
               <ul class="dropdown-menu animated fadeInRight w hidden-folded">
                 <li class="wrapper b-b m-b-sm bg-info m-t-n-xs">
-                  <span class="arrow top hidden-folded arrow-info"></span>
-                  <div>
-                    <p>300mb of 500mb used</p>
-                  </div>
-                  <div class="progress progress-xs m-b-none dker">
-                    <div class="progress-bar bg-white" data-toggle="tooltip" data-original-title="50%" style="width: 50%"></div>
-                  </div>
+                 
+                
+                 
                 </li>
-                <li>
-                  <a href>Settings</a>
-                </li>
-                <li>
-                  <a href="page_profile.html">Profile</a>
-                </li>
-                <li>
-                  <a href>
-                    <span class="badge bg-danger pull-right">3</span>
-                    Notifications
-                  </a>
-                </li>
+                 <li>
+                <a href="<?=$site_url?>users/profile" >Profile</a>
+              </li>
+               <li>
+                <a href="<?=$site_url?>users/change_password" >Change Password</a>
+              </li>
                 <li class="divider"></li>
                 <li>
-                  <a href="page_signin.html">Logout</a>
+                  <a href="<?=$site_url?>users/logout"  ui-sref="access.signin">Logout</a>
                 </li>
               </ul>
               <!-- / dropdown -->
@@ -354,7 +376,7 @@ site_url = '<?=$site_url?>';
           <!-- nav -->
 
           <!-- aside footer -->
-          <div class="wrapper m-t">
+   <?php /*?>       <div class="wrapper m-t">
             <div class="text-center-folded">
               <span class="pull-right pull-none-folded">60%</span>
               <span class="hidden-folded">Milestone</span>
@@ -371,7 +393,7 @@ site_url = '<?=$site_url?>';
               <div class="progress-bar progress-bar-primary" style="width: 35%;">
               </div>
             </div>
-          </div>
+          </div><?php */?>
           <!-- / aside footer -->
         </div>
       </div>

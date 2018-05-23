@@ -59,7 +59,7 @@ public function initialize(array $config)
             ''=>'No Priorty',
             '1' => 'Low' ,
             '2' => 'Meduim'  ,
-            '3' => 'Heigh'
+            '3' => 'High'
          );
         var $PriortyTypeClass =  array(
             ''=>'info',

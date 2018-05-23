@@ -39,7 +39,7 @@ public function initialize(array $config)
     }
 	
 	
-public $priorityOptions =	['1' => 'Low' , '2' => 'Meduim'  , '3' => 'Heigh'];
+public $priorityOptions =	['1' => 'Low' , '2' => 'Meduim'  , '3' => 'High'];
 	
 }
 

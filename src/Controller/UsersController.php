@@ -38,21 +38,15 @@ class UsersController extends AppController {
 
     public function initialize() {
 
-
-
-        parent::initialize();
-
-        /* $this->loadComponent('Sendgrid');
+          parent::initialize();
 
           $this->loadComponent('Upload');
 
           $this->profile_file_path = WWW_ROOT . 'img' .DS. 'profile_pics' . DS;
 
-          $this->user_documents_file_path = WWW_ROOT . 'img' .DS. 'user_documents' . DS;
+          $this->allowedImages = array('jpg','jpeg','png','gif','JPG','JPEG','PNG','GIF'); 
 
-          $this->allowedImages = array('jpg','jpeg','png','gif','JPG','JPEG','PNG','GIF'); */
-
-        $this->Session = $this->request->Session();
+          $this->Session = $this->request->Session();
 
     }
 
@@ -604,7 +598,11 @@ class UsersController extends AppController {
 
     }
 
-
+ public function help() {
+	
+		
+		
+		}
     public function dashboard() {
 	
 		
@@ -618,14 +616,16 @@ class UsersController extends AppController {
 		$user = $this->Users->get($this->sUser['id']);
 		$this->set('user' ,$user);
 		
+		/*
 		$this->loadModel('Countries');
 		$Countries = $this->Countries->find('list', ['keyField' => 'id', 'valueField' => 'title'])->where(['status'=>'ACTIVE'])->toArray();
-		$this->set('Countries', $Countries);
+		$this->set('Countries', $Countries);*/
 		
-		if($this->request->is('put')) {
+		if ($this->request->is(['post', 'put']))
+	    	{
+			 
+			  $User_email = $this->Users->find()->where([ 'id !=' => $this->sUser['id'] , 'email' => $this->request->data['email']])->first();
 			
-			  $User_email = $this->Users->find()->where([ 'id' != $this->sUser['id'] , 'email' => $this->request->data['email']])->first();
-
             if ($User_email) {
 
                 $this->Flash->error(__('This email already registered.'));
@@ -633,6 +633,22 @@ class UsersController extends AppController {
 			}
 
 
+             
+			 if (!empty($this->request->data['image_file']['name']))
+			{
+				$result = $this->Upload->upload($this->request->data['image_file'], $this->profile_file_path, null,  null ,$this->allowedImages);
+				
+				if(count($this->Upload->errors) > 0)
+				{
+					unset($this->request->data['image_file']);
+				}
+				else
+				{
+					$this->request->data['image'] = $this->Upload->result; 
+					
+				}
+			}
+			
             $user =  $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
  				

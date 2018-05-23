@@ -100,7 +100,7 @@ class RequirmentsController extends AppController
    public function index($project_id = null)
     {  
 	   
-	   
+	   	$this->set('priorityOptions' ,  $this->Projects->PriortyType);	
 	    $this->loadModel('ProjectFollowers');	
 		$ProjectFollowers = $this->ProjectFollowers->find('list', ['keyField' => 'project_id', 'valueField' => 'project_id'])->where(['follower_id' => $this->sUser['id'], 'is_updated' => 'YES'])->toArray();
 	
@@ -221,6 +221,18 @@ public function ajaxDetail($id = null ){
 		if ($this->request->is('post'))
 		{
 		  $data = $this->request->data;
+		  
+		   if(isset($data['requirment_id']))
+		   {
+			   $Requirment = $this->Requirments->find()->select(['project_id'])->where(['id' => $data['requirment_id']])->first();
+			 
+			    if(isset($Requirment['project_id'])){
+				
+				 $data['project_id'] = $Requirment['project_id']; 
+				
+				   }
+		   
+		   }
 	
 		  $data['created_by'] = $this->sUser['id'];
 		  $Task = $this->Tasks->newEntity();
