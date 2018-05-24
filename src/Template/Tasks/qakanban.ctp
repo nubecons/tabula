@@ -2,8 +2,8 @@
 <div class="row" style="padding:15px;">
 <button class="btn m-b-xs w-xl btn-default" data-toggle="modal" data-target="#AddTask"> <i class="glyphicon glyphicon-plus"></i>Create New Task</button>
 <div class="btn-group pull-right">
-	           <a href="<?=$site_url?>tasks/designList/<?=$requirement_id?>" data-toggle="tooltip" title="List View">  <button type="button" class="btn btn-sm btn-bg btn-default"><i class="glyphicon glyphicon-list"></i></button></a>
-             <a href="<?=$site_url?>tasks/kanban/<?=$requirement_id?>" data-toggle="tooltip" title="Kanban View"> <button type="button" class="btn btn-sm btn-bg btn-default"><i class="glyphicon glyphicon-blackboard"></i></button></a>
+	           <a href="<?=$site_url?>tasks/qaList/<?=$requirement_id?>" data-toggle="tooltip" title="List View">  <button type="button" class="btn btn-sm btn-bg btn-default"><i class="glyphicon glyphicon-list"></i></button></a>
+             <a href="<?=$site_url?>tasks/qakanban/<?=$requirement_id?>" data-toggle="tooltip" title="Kanban View"> <button type="button" class="btn btn-sm btn-bg btn-default"><i class="glyphicon glyphicon-blackboard"></i></button></a>
 	        
 	        </div>
  </div>           
@@ -310,7 +310,7 @@
               <div class="modal-body">
                <form role="form" id="form_AddTask" >
                <?php /*?> <input type="hidden" class="form-control" name="requirment_id" value="<?=$Requirment['id']?>" ><?php */?>
-                <input type="hidden" class="form-control" name="task_type"  value="DESIGN" >
+                <input type="hidden" class="form-control" name="task_type"  value="QA" >
             
             <div class="form-group">
               <label>Project </label> <br>

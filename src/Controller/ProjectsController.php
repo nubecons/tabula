@@ -117,6 +117,20 @@ class ProjectsController extends AppController
 		   
 		   $conditions['user_id'] = $this->sUser['id'];
 		}
+		
+		if ($this->request->is('post'))
+		{
+			if(isset($this->request->data['search']) && $this->request->data['search'] != ''){
+				
+				$search = $this->request->data['search']; 
+				
+				$conditions[] = "( (id LIKE  '%".$search."%' )OR (name LIKE  '%".$search."%') OR (description LIKE  '%".$search."%' ))";
+				
+				}
+		
+		}
+		
+		
 		$query = $this->Projects->find('all')->where($conditions);
         $this->paginate['limit'] = 100;
         $this->paginate['order'] = ['created' => 'DESC', ];
@@ -154,8 +168,7 @@ public function ajaxDetail($id = null ){
 	    ->all();
 	$this->set('ProjectComments', $ProjectComments);
 	
-	//debug($ProjectComments);
-	//exit;
+	
 	
 	
 	
@@ -189,11 +202,19 @@ public function ajaxDetail($id = null ){
 		   
 		   if ($result = $this->ProjectComments->save($ProjectComments))
 			{
-			 // $this->Flash->success(__('Project created successfully.'));
-			  $retrun = $result->id;	
-			 
-			  $ProjectComment = $this->ProjectComments->find()->where(['id' => $result->id ,'status'=>'ACTIVE' ])->first();
-			  $this->set('ProjectComment' , $ProjectComment);
+			
+			$retrun = $result->id;
+			
+			$edata['user_id'] = $this->sUser['id'] ;
+			$edata['project_id'] = $result->project_id ;
+			$edata['type'] = 'Project' ;
+			$edata['comment_id'] = $result->id;
+			$edata['summary'] = 'Commented' ;
+			$edata['description'] = 'Commented' ;
+			$this->AppEvents->create_event($edata);	 	
+			
+			$ProjectComment = $this->ProjectComments->find()->where(['id' => $result->id ])->first();
+			$this->set('ProjectComment' , $ProjectComment);
 			  
 			}else{
 				echo $retrun;
@@ -223,18 +244,31 @@ public function ajaxDetail($id = null ){
 	   
 		
 		 foreach($data['follower_id'] as $follower_id){
-			 echo "<br>" .$follower_id;
-			
+		
 			 $saveData = [];
+			 
 			 $ProjectFollower = $this->ProjectFollowers->find()->where(['follower_id' => $follower_id ,'project_id'=> $data['project_id'] ])->first();
 			 
 			 if(!$ProjectFollower){
-				 $ProjectFollower = $this->ProjectFollowers->newEntity();
+				 
+				$ProjectFollower = $this->ProjectFollowers->newEntity();
+				$saveData['follower_id'] =  $follower_id;
+				$saveData['project_id']  =  $data['project_id'];
+				$saveData['user_id']     =  $this->sUser['id'];
+				
+				$edata['user_id']     = $this->sUser['id'] ;
+				$edata['project_id']  = $data['project_id'];
+				$edata['follower_id'] = $follower_id;
+				$edata['type'] = 'Project' ;
+				$edata['comment_id'] = $result->id;
+				$edata['summary'] = 'Follower added' ;
+				$edata['description'] = 'Follower added' ;
+				$this->AppEvents->create_event($edata);	 
 				  
-				  $saveData['follower_id'] =  $follower_id;
-  			      $saveData['project_id']  =  $data['project_id'];
-			      $saveData['user_id']     =  $this->sUser['id'];
-				}
+				}elseif($ProjectFollower && $ProjectFollower['is_updated'] == 'NO'){
+					
+					
+					}
 			 
 			
 			 $saveData['is_updated']  =  'YES';

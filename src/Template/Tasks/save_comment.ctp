@@ -27,7 +27,16 @@
  	if($TaskComment['created_by'] == $sUser['id']){
 			?>	
             <div class="m-b mt-5">
-            <a  class="pull-right thumb-sm avatar"  data-toggle="tooltip" title="You"><button class="btn btn-rounded btn-lg btn-icon btn-default"><?=strtoupper($short_name)?></button></a>
+            <a  class="pull-right thumb-sm avatar"  data-toggle="tooltip" title="You">
+            <?php
+			  if($TaskComment['Users']['image'] != ''){
+			 ?>	  
+             <img src="<?=$site_url?>img/profile_pics/<?=$TaskComment['Users']['image']?>">
+            <?php }else{ ?> 
+            <button class="btn btn-rounded btn-lg btn-icon btn-default"><?=strtoupper($short_name)?></button>
+            <?php }?>
+            
+            </a>
             <div class="m-r-xxl">
               <div class="pos-rlt wrapper bg-light r r-2x">
                 <span class="arrow right pull-up arrow-light"></span>
@@ -40,8 +49,13 @@
           <?php }else{ ?>
           <div class="m-b mt-5">
             <a  class="pull-left thumb-sm avatar"  data-toggle="tooltip" title="<?=$commenter?>" >
+            <?php
+			  if($TaskComment['Users']['image'] != ''){
+			 ?>	  
+             <img src="<?=$site_url?>img/profile_pics/<?=$TaskComment['Users']['image']?>">
+            <?php }else{ ?> 
             <button class="btn btn-rounded btn-lg btn-icon btn-default"><?=strtoupper($short_name)?></button>
-           <?php /*?> <img src="img/a2.jpg" alt="..."><?php */?>
+            <?php }?>
         
             </a>
             <div class="m-l-xxl">

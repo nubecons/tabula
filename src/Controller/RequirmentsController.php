@@ -100,13 +100,15 @@ class RequirmentsController extends AppController
    public function index($project_id = null)
     {  
 	   
+	    $this->loadModel('Projects');
+	   
 	   	$this->set('priorityOptions' ,  $this->Projects->PriortyType);	
 	    $this->loadModel('ProjectFollowers');	
 		$ProjectFollowers = $this->ProjectFollowers->find('list', ['keyField' => 'project_id', 'valueField' => 'project_id'])->where(['follower_id' => $this->sUser['id'], 'is_updated' => 'YES'])->toArray();
 	
 		
 	 	 
-		$this->loadModel('Projects');
+		
 		$pconditions['user_id'] = $this->sUser['id'];
 		$Projects = $this->Projects->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where($pconditions)->toArray();
 		$this->set('Projects', $Projects);

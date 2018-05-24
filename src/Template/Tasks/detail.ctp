@@ -53,13 +53,13 @@
             <?php echo $this->Form->create($Task ,['enctype' => 'multipart/form-data' ] ); ?>
             <div class="form-group">
               <label>Status</label>
-              <?php echo $this->Form->input('status', ['empty' =>'Select', 'options' => $ProjectStatus,  'class'=>'form-control' ,'required' => true ,'dev' => false, 'label' => false]); ?>
+              <?php echo $this->Form->input('status', ['empty' =>'Select', 'options' => $ProjectStatus,  'class'=>'form-control' ,'dev' => false, 'label' => false]); ?>
             </div>
             <?php
-			 if($Task['created_by'] == $sUser['id']){ ?>
+			 if($Task['created_by'] == $sUser['id'] || $Task['project']['user_id'] == $sUser['id']){ ?>
              <div class="form-group">
               <label>Priority</label>
-             <?php echo $this->Form->input('priority', ['empty' =>'Select', 'options' => $PriortyType,  'class'=>'form-control' ,'required' => true ,'dev' => false, 'label' => false]); ?>
+             <?php echo $this->Form->input('priority', ['empty' =>'Select', 'options' => $PriortyType,  'class'=>'form-control' ,'dev' => false, 'label' => false]); ?>
              </div>
              <div class="form-group">
               <label>Due Date</label>
@@ -80,7 +80,7 @@
              
             <div class="form-group">
               <label>Assign To</label>
-             <?php echo $this->Form->input('assign_to', ['empty' =>'Select', 'options' => $TeamMembers ,  'class'=>'form-control' ,'required' => true ,'dev' => false, 'label' => false]); ?>
+             <?php echo $this->Form->input('assign_to', ['empty' =>'Select', 'options' => $ProjectFollowers ,  'class'=>'form-control' ,'dev' => false, 'label' => false]); ?>
             </div>
             <?php }?>
              <div class="form-group">
@@ -92,9 +92,9 @@
             <button type="button"  class="btn btn-sm btn-warning btnload btn_loader"  ><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Working...</button>
             <button type="submit" class="btn btn-sm btn-primary btn_submit">Submit</button>
 
-			 <input type="hidden" class="form-control" name="task_id" value="<?=$Task['id']?>" >
-             <input type="hidden" class="form-control" name="project_id" value="<?=$Task['project_id']?>" >
-             <input type="hidden" class="form-control" name="requirment_id" value="<?=$Task['requirment_id']?>" >
+			<input type="hidden" class="form-control" name="task_id" value="<?=$Task['id']?>" >
+            <input type="hidden" class="form-control" name="project_id" value="<?=$Task['project_id']?>" >
+            <input type="hidden" class="form-control" name="requirment_id" value="<?=$Task['requirment_id']?>" >
                  
           </form>
       
@@ -244,7 +244,24 @@ $('#form_addComment .btn_submit').click(function(e) {
             
             <div class="panel-body">
                    <em class="text-xs">Created: <span class="text-danger"><?=date('M d, Y h:i A', strtotime($Task['created']))?></span></em> <br>
-                   <em class="text-xs">Last Updated: <span class="text-danger"><?=date('M d, Y h:i A', strtotime($Task['modified']))?></span></em>
+                   <?php
+				   if(count($AppEvents) > 0){
+					   
+					   foreach($AppEvents as $AppEvent){
+						
+						$eventBY = trim($AppEvent['Users']['first_name']. ' '. $AppEvent['Users']['last_name']);
+
+						if($eventBY == ''){
+						  $eventBY = trim($AppEvent['Users']['email']);
+						}   
+						    
+				   ?>
+                    <em class="text-xs"><?=$AppEvent['description']?> by  <span class="label bg-primary m-t-xs"><?=$eventBY?></span> at <span class="text-danger"><?=date('M d, Y h:i A', strtotime($AppEvent['modified']))?></span></em>
+                    <br>
+                   <?php }
+				     }else{?>
+                      <em class="text-xs">Last Updated: <span class="text-danger"><?=date('M d, Y h:i A', strtotime($Task['modified']))?></span></em>
+                   <?php }?>
              </div>
      		 </div>
   

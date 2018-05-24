@@ -42,6 +42,8 @@ class AppController extends Controller
 				]
         	]
         ]);
+		
+		$this->loadModel('AppEvents');
     }
 
 
@@ -103,7 +105,7 @@ class AppController extends Controller
 
 	
 
-	function validate_phone_number($phone)
+	public function validate_phone_number($phone)
 	{
 			$ext = '';
 			if(strstr($phone, "x") != FALSE)
