@@ -50,7 +50,7 @@
                     <a  href="<?=$site_url?>tasks/detail/<?=$Task['id']?>"  class="h4"  ><?=$Task['title']?></a>
                 	 <small class="block m-t-xs"><br></small>
                     <em class="text-xs">Project: <span class="btn-xs btn-primary  m-t-xs"><?=$Task['project']['name']?>a</span></em>
-                    <em class="text-xs pull-right">Priority: <span class=" btn-xs btn-<?=$PriortyTypeClass[$Task['priority']]?> m-t-xs"><?=$priorityOptions[$Task['priority']]?></span></em>                </div>
+                    <em class="text-xs pull-right">Priority: <span class=" btn-xs btn-<?=$PriortyTypeClass[$Task['priority']]?> m-t-xs"><?=$PriortyType[$Task['priority']]?></span></em>                </div>
             </article>
             <hr>
            <?php 
@@ -105,7 +105,7 @@
                    <a  href="<?=$site_url?>tasks/detail/<?=$Task['id']?>"  class="h4"  ><?=$Task['title']?></a>
  					<small class="block m-t-xs"><br></small>
                     <em class="text-xs">Project: <span class="btn-xs btn-primary  m-t-xs"><?=$Task['project']['name']?>a</span></em>
-                    <em class="text-xs pull-right">Priority: <span class=" btn-xs btn-<?=$PriortyTypeClass[$Task['priority']]?> m-t-xs"><?=$priorityOptions[$Task['priority']]?></span></em>                </div>
+                    <em class="text-xs pull-right">Priority: <span class=" btn-xs btn-<?=$PriortyTypeClass[$Task['priority']]?> m-t-xs"><?=$PriortyType[$Task['priority']]?></span></em>                </div>
             </article><hr>
            <?php 
 		   if($counter >= 4){
@@ -164,7 +164,7 @@
                    <a  href="<?=$site_url?>tasks/detail/<?=$Task['id']?>"  class="h4"  ><?=$Task['title']?></a>
                   <small class="block m-t-xs"><br></small>
                     <em class="text-xs">Project: <span class="btn-xs btn-primary  m-t-xs"><?=$Task['project']['name']?>a</span></em>
-                    <em class="text-xs pull-right">Priority: <span class=" btn-xs btn-<?=$PriortyTypeClass[$Task['priority']]?> m-t-xs"><?=$priorityOptions[$Task['priority']]?></span></em>                </div>
+                    <em class="text-xs pull-right">Priority: <span class=" btn-xs btn-<?=$PriortyTypeClass[$Task['priority']]?> m-t-xs"><?=$PriortyType[$Task['priority']]?></span></em>                </div>
             </article><hr>
            <?php 
 		   if($counter >= 4){
@@ -218,7 +218,7 @@
                    <a  href="<?=$site_url?>tasks/detail/<?=$Task['id']?>"  class="h4"  ><?=$Task['title']?></a>
                     <small class="block m-t-xs"><br></small>
                     <em class="text-xs">Project: <span class="btn-xs btn-primary  m-t-xs"><?=$Task['project']['name']?>a</span></em>
-                    <em class="text-xs pull-right">Priority: <span class=" btn-xs btn-<?=$PriortyTypeClass[$Task['priority']]?> m-t-xs"><?=$priorityOptions[$Task['priority']]?></span></em>
+                    <em class="text-xs pull-right">Priority: <span class=" btn-xs btn-<?=$PriortyTypeClass[$Task['priority']]?> m-t-xs"><?=$PriortyType[$Task['priority']]?></span></em>
                 </div>
             </article><hr>
            <?php 
@@ -341,7 +341,7 @@
             </div>
              <div class="form-group">
               <label>Priority</label>
-             <?php echo $this->Form->input('priority', ['empty' =>'Select', 'options' => ['1' => 'Low' , '2' => 'Meduim'  , '3' => 'Heigh'],  'class'=>'form-control' ,'required' => true ,'dev' => false, 'label' => false]); ?>
+             <?php echo $this->Form->input('priority', ['empty' =>'Select', 'options' => $PriortyType,  'class'=>'form-control' ,'required' => true ,'dev' => false, 'label' => false]); ?>
             </div>
             
              

@@ -215,7 +215,7 @@
             </div>
              <div class="form-group">
               <label>Priority</label>
-             <?php echo $this->Form->input('priority', ['empty' =>'Select', 'options' => ['1' => 'Low' , '2' => 'Meduim'  , '3' => 'Heigh'],  'class'=>'form-control' ,'required' => true ,'dev' => false, 'label' => false]); ?>
+             <?php echo $this->Form->input('priority', ['empty' =>'Select', 'options' => $PriortyType,  'class'=>'form-control' ,'required' => true ,'dev' => false, 'label' => false]); ?>
             </div>
             
              
