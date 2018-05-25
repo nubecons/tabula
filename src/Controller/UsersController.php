@@ -498,6 +498,7 @@ class UsersController extends AppController {
         $Projects = $this->Projects->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where(['user_id =' => $this->sUser['id'], 'status' => 'ACTIVE'])->toArray();
         $ProjectIdz = array_keys($Projects);
         $this->set('ProjectIdz', $ProjectIdz);
+		
 		if(count($ProjectIdz) >0){
 		
 		
