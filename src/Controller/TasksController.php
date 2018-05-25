@@ -333,6 +333,7 @@ public function myTasks(){
         $Projects = $this->Projects->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where(['user_id =' => $this->sUser['id'], 'status' => 'ACTIVE'])->toArray();
         $ProjectIdz = array_keys($Projects);
         $this->set('ProjectIdz', $ProjectIdz);
+        if(count($ProjectIdz) >0){
         $conditions['Tasks.project_id IN'] = $ProjectIdz;
         $conditions['Tasks.status !='] = 'Close';
         $conditions['Tasks.assign_to'] =$this->sUser['id'];
@@ -344,6 +345,10 @@ public function myTasks(){
 
         $MyDueTasks =$this->Tasks->find()->where($conditions)->count();
         $this->set('MyDueTasks', $MyDueTasks);
+        }else{
+             $this->set('Tasks', []);
+             $this->set('MyDueTasks', 0);
+        }
 }
   public function designList($req_id = null)
     { 
