@@ -324,7 +324,27 @@ class TasksController extends AppController
 	 }
 	 
 	 }		 
+public function myTasks(){
+    
+        $this->loadModel('Projects');
+        $this->loadModel('Requirments');
+        $this->set('PriortyType', $this->Projects->PriortyType);
+	$this->set('PriortyTypeClass', $this->Projects->PriortyTypeClass);
+        $Projects = $this->Projects->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where(['user_id =' => $this->sUser['id'], 'status' => 'ACTIVE'])->toArray();
+        $ProjectIdz = array_keys($Projects);
+        $this->set('ProjectIdz', $ProjectIdz);
+        $conditions['Tasks.project_id IN'] = $ProjectIdz;
+        $conditions['Tasks.status !='] = 'Close';
+        $conditions['Tasks.assign_to'] =$this->sUser['id'];
 
+        $Tasks =$this->Tasks->find()->where($conditions)->all();
+        $this->set('Tasks', $Tasks);
+        
+        $conditions['Tasks.due_date <'] =date('Y-m-d');
+
+        $MyDueTasks =$this->Tasks->find()->where($conditions)->count();
+        $this->set('MyDueTasks', $MyDueTasks);
+}
   public function designList($req_id = null)
     { 
 		

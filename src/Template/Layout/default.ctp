@@ -347,7 +347,7 @@ site_url = '<?=$site_url?>';
               </li>
               
               <li>
-                <a href="<?=$site_url?>tasks/design" class="auto">      
+                <a href="<?=$site_url?>tasks/myTasks" class="auto">      
                   <i class="glyphicon glyphicon-list"></i>
                   <span class="font-bold">My Task</span>
                 </a>
