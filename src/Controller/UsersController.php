@@ -491,13 +491,16 @@ class UsersController extends AppController {
         $this->loadModel('Tasks');
         
         $this->set('PriortyType', $this->Projects->PriortyType);
-	$this->set('PriortyTypeClass', $this->Projects->PriortyTypeClass);
+	     $this->set('PriortyTypeClass', $this->Projects->PriortyTypeClass);
         
         $ProjectsCount = $this->Projects->find()->where(['user_id =' => $this->sUser['id'], 'status' => 'Active'])->count();
         $this->set('ProjectsCount', $ProjectsCount);
         $Projects = $this->Projects->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where(['user_id =' => $this->sUser['id'], 'status' => 'ACTIVE'])->toArray();
         $ProjectIdz = array_keys($Projects);
         $this->set('ProjectIdz', $ProjectIdz);
+		if(count($ProjectIdz) >0){
+		
+		
         $RequirementCount = $this->Requirments->find()->where(['project_id IN' => $ProjectIdz])->count();
         $this->set('RequirementCount', $RequirementCount);
 
@@ -518,6 +521,16 @@ class UsersController extends AppController {
 
         $MyDueTasks =$this->Tasks->find()->where($conditions)->count();
         $this->set('MyDueTasks', $MyDueTasks);
+		}else{
+			
+		  $this->set('RequirementCount', 0);
+	 	  $this->set('DesignTasksCount', 0);	
+		  $this->set('QATasksCount', 0);
+		  $this->set('Tasks', []);
+		  $this->set('MyDueTasks', 0);
+			
+			}
+		
     }
     public  function notifications(){
         
