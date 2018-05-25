@@ -21,7 +21,6 @@
             <th>Title</th>
             <th>Priority</th>
             <th>Status</th>
-            <th>Project</th>
             <th>Assign To</th>
             <th>Due Date</th>
            <?php /*?> <th>Action</th><?php */?>
@@ -43,7 +42,7 @@
 		
 			</td>
 
-            <td><span class="btn btn-xs btn-primary  m-t-xs"> <b><?=$Task['project']['name']?></b></span></td>
+            
 
             <td class="text-success"><?php /*?><i class="fa fa-level-up"></i> 20%<?php */?>
 			<?=isset($TeamMembers[$Task['assign_to']])?$TeamMembers[$Task['assign_to']]:'N/A'?></td>
