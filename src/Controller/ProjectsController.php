@@ -170,8 +170,6 @@ public function ajaxDetail($id = null ){
 	
 	
 	
-	
-	
 	$this->loadModel('Users');	
 	$TeamMembers = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'email'])->where(['created_by' => $this->sUser['id']])->toArray();
 	$this->set('TeamMembers', $TeamMembers);
@@ -228,14 +226,19 @@ public function ajaxDetail($id = null ){
    }
    
    function saveFollowers(){
+	   
 	    $this->viewBuilder()->setLayout(false);
 		$this->loadModel('ProjectFollowers');
+		$this->loadModel('AppEvents');
+		
 		$retrun = 'false';
 		
 		if ($this->request->is('post'))
 		{
 			
 		$data = $this->request->data;
+		
+		$ProjectFollowers = $this->ProjectFollowers->find('list', ['keyField' => 'follower_id', 'valueField' => 'follower_id'])->where(['project_id' => $data['project_id'], 'is_updated' => 'YES'])->toArray();
 		
 		$this->ProjectFollowers->query()->update()
 					->set(['is_updated' => 'NO'])
@@ -260,15 +263,11 @@ public function ajaxDetail($id = null ){
 				$edata['project_id']  = $data['project_id'];
 				$edata['follower_id'] = $follower_id;
 				$edata['type'] = 'Project' ;
-				$edata['comment_id'] = $result->id;
 				$edata['summary'] = 'Follower added' ;
 				$edata['description'] = 'Follower added' ;
 				$this->AppEvents->create_event($edata);	 
 				  
-				}elseif($ProjectFollower && $ProjectFollower['is_updated'] == 'NO'){
-					
-					
-					}
+				}
 			 
 			
 			 $saveData['is_updated']  =  'YES';
@@ -278,7 +277,24 @@ public function ajaxDetail($id = null ){
 			  
 		       
 			 }
-   	   
+   	     
+		 if(count($ProjectFollowers) > 0)
+		 {
+			$RemovedFollowers = $this->ProjectFollowers->find('list', ['keyField' => 'follower_id', 'valueField' => 'follower_id'])->where(['project_id' => $data['project_id'] , 'follower_id in' => $ProjectFollowers, 'is_updated' => 'NO'])->toArray(); 
+			foreach($RemovedFollowers as $follower_id) {
+			 
+			 	$edata['user_id']     = $this->sUser['id'] ;
+				$edata['project_id']  = $data['project_id'];
+				$edata['follower_id'] = $follower_id;
+				$edata['type'] = 'Project' ;
+				$edata['summary'] = 'Follower removed' ;
+				$edata['description'] = 'Follower removed' ;
+				$this->AppEvents->create_event($edata);	 	
+				
+				}
+			 
+		  }
+	   
 		 $retrun = 'true';
 		}
 		

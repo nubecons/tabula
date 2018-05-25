@@ -50,7 +50,7 @@
             <td><a href="<?=$site_url?>tasks/detail/<?=$Task['id']?>"  ><?=$Task['title']?></a></td>
 
             <td >
-			<span class="btn btn-xs btn-<?=$PriortyTypeClass[$Task['priority']]?> m-t-xs"><?=$priorityOptions[$Task['priority']]?></span>
+			<span class="btn btn-xs btn-<?=$PriortyTypeClass[$Task['priority']]?> m-t-xs"><?=$PriortyType[$Task['priority']]?></span>
 			</td>
             <td>  
             <span class="btn btn-xs btn-<?=$ProjectStatusClass[$Task['status']]?> m-t-xs"><?=$Task['status']?></span>
@@ -207,7 +207,7 @@
             </div>
              <div class="form-group">
               <label>Priority</label>
-             <?php echo $this->Form->input('priority', ['empty' =>'Select', 'options' => ['1' => 'Low' , '2' => 'Meduim'  , '3' => 'Heigh'],  'class'=>'form-control' ,'required' => true ,'dev' => false, 'label' => false]); ?>
+             <?php echo $this->Form->input('priority', ['empty' =>'Select', 'options' =>$PriortyType,  'class'=>'form-control' ,'required' => true ,'dev' => false, 'label' => false]); ?>
             </div>
             
              

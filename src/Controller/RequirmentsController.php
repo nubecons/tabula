@@ -77,6 +77,7 @@ class RequirmentsController extends AppController
 
 
  function saveData(){
+	 
 		$retrun = 'false';
 		if ($this->request->is('post'))
 		{
@@ -87,8 +88,16 @@ class RequirmentsController extends AppController
 		   
 		   if ($result = $this->Requirments->save($Requirment))
 			{
-			  //$this->Flash->success(__('Requirment created successfully.'));
-			  $retrun = $result->id;	
+			    $retrun = $result->id;
+			    
+				$edata['user_id'] = $this->sUser['id'] ;
+				$edata['project_id'] = $result->project_id ;
+				$edata['requirement_id'] = $result->id;
+				
+				$edata['type'] = 'Requirement' ;
+				$edata['summary'] = 'Requirement Created' ;
+				$edata['description'] = 'Requirement Created' ;
+				$this->AppEvents->create_event($edata);		
 			}
 		}
 		
@@ -101,42 +110,46 @@ class RequirmentsController extends AppController
     {  
 	   
 	    $this->loadModel('Projects');
-	   
-	   	$this->set('priorityOptions' ,  $this->Projects->PriortyType);	
 	    $this->loadModel('ProjectFollowers');	
-		$ProjectFollowers = $this->ProjectFollowers->find('list', ['keyField' => 'project_id', 'valueField' => 'project_id'])->where(['follower_id' => $this->sUser['id'], 'is_updated' => 'YES'])->toArray();
-	
+	   
+	   	$this->set('PriortyType' ,  $this->Projects->PriortyType);	
 		
-	 	 
+	    
+		$ProjectFollowers = $this->ProjectFollowers->find('list', ['keyField' => 'project_id', 'valueField' => 'project_id'])->where(['follower_id' => $this->sUser['id'], 'is_updated' => 'YES'])->toArray();
 		
 		$pconditions['user_id'] = $this->sUser['id'];
 		$Projects = $this->Projects->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where($pconditions)->toArray();
 		$this->set('Projects', $Projects);
 		 
-	//	
+		
 		
 		if($project_id){
-		   
+		
 		   $conditions['project_id'] = $project_id;
-			
-			 }elseif($ProjectFollowers){
-			$conditions['project_id in '] = $ProjectFollowers;	 
-				 
-				 }else{
-			$conditions['created_by'] = $this->sUser['id'];		 
-					 }
+		
+		}
+		
+		if($ProjectFollowers){
+		 
+		  $conditions['OR'] = ['project_id in ' => $ProjectFollowers , 'created_by' => $this->sUser['id'] ];	 
+	  	 
+		 }else{
+		
+		  $conditions['created_by'] = $this->sUser['id'];		 
+		}
+		
+		
 		$query = $this->Requirments->find('all')
-		->select($this->Requirments)
-		->Select(['Projects.name','Projects.id'])
-		->contain(['Projects'])
-		->where($conditions);
+			->select($this->Requirments)
+			->Select(['Projects.name','Projects.id'])
+			->contain(['Projects'])
+			->where($conditions);
         $this->paginate['limit'] = 100;
         $this->paginate['order'] = ['created' => 'DESC', ];
         $Requirments = $this->paginate($query, array('url' => '/Requirments/'));
         $this->set('Requirments', $Requirments);
 		
-		//debug( $Requirments );
-		//exit;
+		
 	
     }
 	
@@ -167,16 +180,7 @@ public function ajaxDetail($id = null ){
 	->where(['RequirmentComments.requirment_id' => $id ,'RequirmentComments.status'=>'ACTIVE' ])->all();
 	$this->set('RequirmentComments', $RequirmentComments);
 	
-	/*
-	$this->loadModel('Users');	
-	$TeamMembers = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'email'])->where(['created_by' => $this->sUser['id']])->toArray();
-	$this->set('TeamMembers', $TeamMembers);
 	
-	$this->loadModel('ProjectFollowers');	
-
-	$ProjectFollowers = $this->ProjectFollowers->find('list', ['keyField' => 'follower_id', 'valueField' => 'follower_id'])->where(['project_id' => $id, 'is_updated' => 'YES'])->toArray();
-	$this->set('ProjectFollowers', $ProjectFollowers);
-	*/
 	
 	}
 
@@ -197,7 +201,17 @@ public function ajaxDetail($id = null ){
 		   
 		   if ($result = $this->RequirmentComments->save($RequirmentComments))
 			{
-			 // $this->Flash->success(__('Project created successfully.'));
+			 	
+				$edata['user_id'] = $this->sUser['id'] ;
+				$edata['project_id'] = $result->project_id ;
+				$edata['requirement_id'] = $result->requirment_id;
+				$edata['type'] = 'Requirement' ;
+				$edata['comment_id'] = $result->id;
+				$edata['summary'] = 'Commented' ;
+				$edata['description'] = 'Commented' ;
+				$this->AppEvents->create_event($edata);	
+				
+			 
 			  $retrun = $result->id;	
 			 
 			  $RequirmentComment = $this->RequirmentComments->find()->where(['id' => $result->id  ])->first();
@@ -242,8 +256,17 @@ public function ajaxDetail($id = null ){
 		   
 		   if ($result = $this->Tasks->save($Task))
 			{
-			 // $this->Flash->success(__('Project created successfully.'));
-			  $retrun = $result->id;	
+			    $edata['user_id'] = $this->sUser['id'] ;
+				$edata['project_id'] = $result->project_id ;
+				$edata['requirement_id'] = $result->requirment_id;
+				$edata['task_id'] = $result->id;
+				$edata['type'] = 'Requirement' ;
+			
+				$edata['summary'] = 'Task Created' ;
+				$edata['description'] = 'Task Created' ;
+				$this->AppEvents->create_event($edata);	
+			    
+				$retrun = $result->id;	
 			 
 			  $Task = $this->Tasks->find()->where(['id' => $result->id])->first();
 			  $this->set('Task' , $Task);
