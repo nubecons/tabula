@@ -537,10 +537,13 @@ class UsersController extends AppController {
         
         $user = $this->Users->get($this->sUser['id']);
         $this->set('user', $user);
-
+	
         if ($this->request->is(['post', 'put'])) {
-
+            
+			
+		
             $user = $this->Users->patchEntity($user, $this->request->data);
+			
             if ($this->Users->save($user)) {
 
                 $this->Flash->success(__('Notifications updated successfully.'));
