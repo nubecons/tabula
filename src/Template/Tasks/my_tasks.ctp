@@ -12,17 +12,56 @@
                 <i class="fa fa-circle text-success m-r-xs m-l-sm"></i>Resolve(<?=$this->GetInfo->getCountTasks(null, 'Resolve',null,$sUser['id'],$ProjectIdz);?>)
               </span>
             </h4>
-            <?php if(count($Tasks) >0){ foreach($Tasks as $Task) {?>
-              <div class="m-b">
-                <span class="label text-base bg-<?=$PriortyTypeClass[$Task['priority']]?> pos-rlt m-r"><i class="arrow right arrow-<?=$PriortyTypeClass[$Task['priority']]?>"></i><?=$PriortyType[$Task['priority']]?></span>
-                <a href="<?=$site_url?>tasks/detail/<?=$Task['id']?>"><?=$Task['title'];?></a>
-                <span class="label text-base bg-info pos-rlt m-r" style=" float: right;">
-                    <i class=" glyphicon glyphicon-calendar "></i> <?=($Task['due_date'] == null)?'N/A':$Task['due_date'];?></span>
-            </div>
- 
-            <?php }}else{?>
-              <div class="block panel padder-v bg-primary item" style=" text-align: center;">No Task Assign Yet!</div>
-           <?php }?>
+            
+    <div class="table-responsive">
+      <table class="table table-striped b-t b-light" >
+        <thead>
+          <tr>
+             <th>Id</th>
+            <th>Title</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Project</th>
+            <th>Assign To</th>
+            <th>Due Date</th>
+           <?php /*?> <th>Action</th><?php */?>
+          </tr>
+        </thead>
+        <tbody>
+        <?php
+		$req_id = '';
+		 foreach($Tasks as $Task) {?>
+          <tr>
+		    <td><a href="<?=$site_url?>tasks/detail/<?=$Task['id']?>"  ><?=$Task['id']?></a></td>
+            <td><a href="<?=$site_url?>tasks/detail/<?=$Task['id']?>"  ><?=$Task['title']?></a></td>
+
+            <td >
+			<span class="btn btn-xs btn-<?=$PriortyTypeClass[$Task['priority']]?> m-t-xs"><?=$PriortyType[$Task['priority']]?></span>
+			</td>
+            <td>  
+            <span class="btn btn-xs btn-<?=$ProjectStatusClass[$Task['status']]?> m-t-xs"><?=$Task['status']?></span>
+		
+			</td>
+
+            <td><span class="btn btn-xs btn-primary  m-t-xs"> <b><?=$Task['project']['name']?></b></span></td>
+
+            <td class="text-success"><?php /*?><i class="fa fa-level-up"></i> 20%<?php */?>
+			<?=isset($TeamMembers[$Task['assign_to']])?$TeamMembers[$Task['assign_to']]:'N/A'?></td>
+            
+            <td><?=$Task['due_date'];?></td>
+           <?php /*?> <td>
+	        <div class="btn-group pull-right">
+                       <a href="#" data-toggle="tooltip" title="Create Task"> <button type="button" class="btn btn-sm btn-bg btn-default"><i class="glyphicon glyphicon-list"></i></button></a>
+                       <a href="#" data-toggle="tooltip" title="Task Detail"><button type="button" class="btn btn-sm btn-bg btn-default"><i class="glyphicon glyphicon-blackboard"></i></button></a>
+	        </div>
+	          
+            </td><?php */?>
+          </tr>
+          <?php }?>
+
+        </tbody>
+      </table>
+    </div>
           </div>
         </div>
       </div>

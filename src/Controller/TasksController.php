@@ -326,10 +326,27 @@ class TasksController extends AppController
 	 }		 
 public function myTasks(){
     
-        $this->loadModel('Projects');
-        $this->loadModel('Requirments');
-        $this->set('PriortyType', $this->Projects->PriortyType);
-	$this->set('PriortyTypeClass', $this->Projects->PriortyTypeClass);
+     		
+		$this->loadModel('Projects');
+		$this->loadModel('Users');
+		$this->loadModel('ProjectFollowers');		
+		
+		$this->set('ProjectStatus', $this->Projects->ProjectStatus);
+		$this->set('PriortyType', $this->Projects->PriortyType);
+		$this->set('ProjectStatusClass', $this->Projects->ProjectStatusClass);
+		$this->set('PriortyTypeClass', $this->Projects->PriortyTypeClass);
+                	
+		$TeamMembers[$this->sUser['id']] = 'You';
+	    $TeamMembers2 = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'email'])->where( ['created_by' => $this->sUser['id']])->toArray();
+	    
+		if($TeamMembers2){ 
+	       
+		   $TeamMembers = $TeamMembers + $TeamMembers2;
+	     
+		 }
+	    
+		$this->set('TeamMembers', $TeamMembers);
+		
         $Projects = $this->Projects->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where(['user_id =' => $this->sUser['id'], 'status' => 'ACTIVE'])->toArray();
         $ProjectIdz = array_keys($Projects);
         $this->set('ProjectIdz', $ProjectIdz);
