@@ -534,6 +534,22 @@ class UsersController extends AppController {
     }
     public  function notifications(){
         
+        $user = $this->Users->get($this->sUser['id']);
+        $this->set('user', $user);
+
+        if ($this->request->is(['post', 'put'])) {
+
+            $user = $this->Users->patchEntity($user, $this->request->data);
+            if ($this->Users->save($user)) {
+
+                $this->Flash->success(__('Notifications updated successfully.'));
+
+                return $this->redirect(array('controller' => '/Users', 'action' => 'notifications'));
+            } else {
+                $this->Flash->error(__('Changes could not saved.'));
+                $this->set('errors', $user->errors());
+            }
+        }
     }
     public function profile() {
 
