@@ -605,14 +605,18 @@ class UsersController extends AppController {
 		}
     public function dashboard() {
 	
-		$this->loadModel('Projects');
-                $query = $this->Projects->find('all');
-$Projects = $query->select([ 'user_id',
-    'count' => $query->func()->count('*'),
-    
-])->where(['user_id =' => $this->sUser['id'] , 
-    'status' => 'ACTIVE'])->group('user_id');
-		echo '<pre>';print_r($Projects);exit;
+			$this->loadModel('Projects');
+			echo  $this->Projects->find()->where(['user_id =' => $this->sUser['id']])->count();
+			
+			/*$query = $this->Projects->find('all');
+			
+			$Projects = $query->select([ 'user_id',
+					'count' => $query->func()->count('*'),
+					])->where(['user_id =' => $this->sUser['id'] , 
+			
+			'status' => 'ACTIVE'])->group('user_id');*/
+			
+			exit;
 		}
 	
 	
