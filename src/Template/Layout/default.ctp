@@ -213,6 +213,11 @@ site_url = '<?=$site_url?>';
                   Help
                 </a>
               </li>
+                <li>
+                <a href="<?=$site_url?>users/notifications">
+                  Notifications Settings
+                </a>
+              </li>
               <li class="divider"></li>
               <li>
                 <a href="<?=$site_url?>users/logout"  ui-sref="access.signin">Logout</a>
@@ -296,7 +301,7 @@ site_url = '<?=$site_url?>';
               </li>
             
               <li>
-                <a href class="auto">      
+                <a href="<?=$site_url?>users/dashboard" class="auto">      
                 
                   <i class="glyphicon glyphicon-stats icon text-primary-dker"></i>
                   <span class="font-bold">Dashboard</span>

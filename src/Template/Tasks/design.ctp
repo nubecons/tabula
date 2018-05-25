@@ -27,10 +27,10 @@
 		     
 			    $counter =  $counter + 1 ;
 		   
-				$New_tasks = $this->GetInfo->getCountTasks($Requirment['id'] , 'New');
-				$InProgress_tasks = $this->GetInfo->getCountTasks($Requirment['id'] , 'In Progress');
-				$Close_tasks = $this->GetInfo->getCountTasks($Requirment['id'] , 'Close');
-				$Resolve_tasks = $this->GetInfo->getCountTasks($Requirment['id'] , 'Resolve');
+				$New_tasks = $this->GetInfo->getCountTasks($Requirment['id'] , 'New','DESIGN');
+				$InProgress_tasks = $this->GetInfo->getCountTasks($Requirment['id'] , 'In Progress','DESIGN');
+				$Close_tasks = $this->GetInfo->getCountTasks($Requirment['id'] , 'Close','DESIGN');
+				$Resolve_tasks = $this->GetInfo->getCountTasks($Requirment['id'] , 'Resolve','DESIGN');
 		    
 		  ?>
             <div class="panel panel-default">

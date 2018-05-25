@@ -40,15 +40,23 @@ class GetInfoHelper extends Helper
 
 	   } 
 	   
- function getCountTasks($req_id , $status = null, $task_type = 'DESIGN'){
+ function getCountTasks($req_id =null, $status = null, $task_type = null,$assign_to=null,$ProjectIdz= null){
 
 		$ObjM = TableRegistry::get('Tasks');
-		
+		if($req_id !=null){
 		$conditions['requirment_id'] = $req_id;
+                }
+                if($task_type !=null){
 		$conditions['task_type'] = $task_type;
-		
-		if($status){
+                }
+		if($status !=null){
 		  $conditions['status'] = $status;
+		}
+                if($assign_to !=null){
+		  $conditions['assign_to'] = $assign_to;
+		}
+                if($ProjectIdz !=null){
+		  $conditions['project_id IN'] = $ProjectIdz;
 		}
 
 	    return  $ObjM->find()->select([])->where($conditions)->count();
