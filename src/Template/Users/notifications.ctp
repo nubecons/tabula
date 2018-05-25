@@ -16,7 +16,7 @@ $site_url = $this->Url->build('/',true); ?>
             <div class="form-group">
                 <div class="checkbox">
                     <label>
-                                                    <?php echo $this->Form->checkbox('new_project', ['hiddenField' => false]);?>
+                        <?php echo $this->Form->checkbox('new_project', ['hiddenField' => false]);?>
                         <small> Notify me when new Project Created.</small>
                     </label>
                 </div>
@@ -25,7 +25,7 @@ $site_url = $this->Url->build('/',true); ?>
             <div class="form-group">
                 <div class="checkbox">
                     <label>
-                                                    <?php echo $this->Form->checkbox('new_req', ['hiddenField' => false]);?>
+                        <?php echo $this->Form->checkbox('new_req', ['hiddenField' => false]);?>
                         <small> Notify me when new Requirement Created.</small>
                     </label>
                 </div>
@@ -34,7 +34,7 @@ $site_url = $this->Url->build('/',true); ?>
             <div class="form-group">
                 <div class="checkbox">
                     <label>
-                                                    <?php echo $this->Form->checkbox('new_task', ['hiddenField' => false]);?>
+                        <?php echo $this->Form->checkbox('new_task', ['hiddenField' => false]);?>
                         <small> Notify me when new Task Created.</small>
                     </label>
                 </div>
