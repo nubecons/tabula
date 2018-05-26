@@ -1,84 +1,42 @@
 <?php
-
-/**
-
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
-
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
-
- *
-
- * Licensed under The MIT License
-
- * For full copyright and license information, please see the LICENSE.txt
-
- * Redistributions of files must retain the above copyright notice.
-
- *
-
- * @copyright Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
-
- * @link      https://cakephp.org CakePHP(tm) Project
-
- * @since     0.2.9
-
- * @license   https://opensource.org/licenses/mit-license.php MIT License
-
- */
-
 namespace App\Controller;
-
 use Cake\Core\Configure;
 use Cake\Network\Exception\ForbiddenException;
 use Cake\Network\Exception\NotFoundException;
 use Cake\View\Exception\MissingTemplateException;
 use Cake\Event\Event;
 
-/**
-
- * Static content controller
-
- *
-
- * This controller will render views from Template/Pages/
-
- *
-
- * @link https://book.cakephp.org/3.0/en/controllers/pages-controller.html
-
- */
 class PagesController extends AppController {
 
     public function initialize() {
 
         parent::initialize();
-
-        /* $this->loadComponent('Sendgrid');
-
-          $this->loadComponent('Upload');
-
-          $this->profile_file_path = WWW_ROOT . 'img' .DS. 'profile_pics' . DS;
-
-          $this->user_documents_file_path = WWW_ROOT . 'img' .DS. 'user_documents' . DS;
-
-          $this->allowedImages = array('jpg','jpeg','png','gif','JPG','JPEG','PNG','GIF');
-
-          $this->Session = $this->request->Session(); */
     }
 
     public function beforeFilter(Event $event) {
 
         parent::beforeFilter($event);
 
-
-
-        $this->Auth->allow(['about','contact','privacy', 'home', 'display']);
+        $this->Auth->allow(['about', 'contact', 'privacy', 'home', 'display']);
     }
 
-  function calendar() {
+    function calendar() {
+
         $this->set('title', 'Calendar');
+        $this->viewBuilder()->setLayout(false);
+        $TasksArray = [];
+        $this->loadModel('Tasks');
+        $Tasks = $this->Tasks->find()->all();
+        foreach ($Tasks as $tData) {
+            $edata['id'] = $tData->id;
+            $edata['title'] = $tData->title;
+            $edata['due_date'] = $tData->due_date;
+            $TasksArray[] = $edata;
+        }
+        $TasksJson = json_encode($TasksArray);
+        $this->set('TasksJson', $TasksJson);
+      
     }
-
 
     function about() {
         $this->set('title', 'About');
@@ -93,38 +51,19 @@ class PagesController extends AppController {
     }
 
     function home() {
-		
-		if($this->sUser){
-			
-			return $this->redirect('/users/dashboard');
-			} 
-		
-		$this->viewBuilder()->setLayout(false);
 
-       
+        if ($this->sUser) {
+
+            return $this->redirect('/users/dashboard');
+        }
+
+        $this->viewBuilder()->setLayout(false);
     }
 
-    /**
-
-     * Displays a view
-
-     *
-
-     * @param array ...$path Path segments.
-
-     * @return \Cake\Http\Response|null
-
-     * @throws \Cake\Network\Exception\ForbiddenException When a directory traversal attempt.
-
-     * @throws \Cake\Network\Exception\NotFoundException When the view file could not
-
-     *   be found or \Cake\View\Exception\MissingTemplateException in debug mode.
-
-     */
     public function display(...$path) {
 
 
-		return $this->redirect('/');
+        return $this->redirect('/');
         $count = count($path);
 
         if (!$count) {
