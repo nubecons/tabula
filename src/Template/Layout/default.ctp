@@ -127,7 +127,7 @@ site_url = '<?=$site_url?>';
               <span class="visible-xs-inline"  >Add User</span>
             </a>
             </li>
-          <li class="dropdown">
+          <?php /*?><li class="dropdown">
             <a href="#" data-toggle="dropdown" class="dropdown-toggle">
               <i class="icon-bell fa-fw"></i>
               <span class="visible-xs-inline">Notifications</span>
@@ -163,7 +163,7 @@ site_url = '<?=$site_url?>';
               </div>
             </div>
             <!-- / dropdown -->
-          </li>
+          </li><?php */?>
           <li class="dropdown">
             <a href="#" data-toggle="dropdown" class="dropdown-toggle clear" data-toggle="dropdown">
               <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
@@ -499,13 +499,13 @@ site_url = '<?=$site_url?>';
   
   
 
-
 <script src="<?=$site_url?>js/ui-load.js"></script>
 <script src="<?=$site_url?>js/ui-jp.config.js"></script>
 <script src="<?=$site_url?>js/ui-jp.js"></script>
 <script src="<?=$site_url?>js/ui-nav.js"></script>
 <script src="<?=$site_url?>js/ui-toggle.js"></script>
 <script src="<?=$site_url?>js/ui-client.js"></script>
+ 
 <script>
 $( document ).ready(function() {
 

@@ -19,22 +19,36 @@ class PagesController extends AppController {
 
         $this->Auth->allow(['about', 'contact', 'privacy', 'home', 'display']);
     }
+	
+	function test(){
+		
+		
+		}
 
     function calendar() {
 
         $this->set('title', 'Calendar');
-        $this->viewBuilder()->setLayout(false);
+        //$this->viewBuilder()->setLayout(false);
         $TasksArray = [];
         $this->loadModel('Tasks');
-        $Tasks = $this->Tasks->find()->all();
+        $Tasks = $this->Tasks->find()->where(['due_date !=' => '','due_date is not null'])->all();
         foreach ($Tasks as $tData) {
+			
+			if(!$tData->due_date){
+				continue;
+				}
+			
             $edata['id'] = $tData->id;
             $edata['title'] = $tData->title;
-            $edata['due_date'] = $tData->due_date;
+            $edata['start'] = $tData->due_date;
+		    $edata['end'] = $tData->due_date;
             $TasksArray[] = $edata;
+		
         }
-        $TasksJson = json_encode($TasksArray);
-        $this->set('TasksJson', $TasksJson);
+		
+		
+       // $TasksJson = json_encode($TasksArray);
+        $this->set('TasksJson', $TasksArray);
       
     }
 

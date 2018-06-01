@@ -847,6 +847,152 @@ public function myTasks(){
 		exit;
 		}
    }
+   
+  function updateStatus(){
+	  
+	    $this->set('is_ajax' , true);
+	    $this->viewBuilder()->setLayout(false);
+		
+		$retrun = 'false';
+			
+	  if($this->request->is('post') || $this->request->is('put'))
+		{
+			
+		    $data = $this->request->data;
+			$tData = $this->Tasks->find()
+				 ->group('Tasks.id')
+	             ->where(['Tasks.id' => $data['id']])->first();
+			
+			$Task = $this->Tasks->find()
+				 ->group('Tasks.id')
+	             ->where(['Tasks.id' =>  $data['id']])->first();			 		
+			
+			$Task = $this->Tasks->patchEntity($Task, $data);
+			$this->Tasks->save($Task);
+			
+			$edata['user_id'] = $this->sUser['id'] ;
+			$edata['project_id'] = $tData->project_id ;
+			$edata['requirement_id'] = $tData->requirment_id ;
+			$edata['task_id'] = $tData->id ;
+			$edata['type'] = 'Task' ;
+			
+			
+			if($tData['status']!=  $Task['status'] ){
+			
+			 $edata['description'] = $edata['summary'] = 'Status changed from "'.$tData['status'].'" to "'.$Task['status'].'"';
+			 $this->AppEvents->create_event($edata);	
+			
+			}
+	   }
+	   
+	   exit;
+   } 
 
+  function updateField(){
+	  
+		$this->set('is_ajax' , true);
+		$this->viewBuilder()->setLayout(false);
+		
+		$retrun = 'false';
+			
+		
+		
+		if($this->request->is('post') || $this->request->is('put'))
+			{
+				
+				//$data = $this->request->data;
+				
+				
+				$data['id'] = $this->request->data['md_field_id'];
+				
+				$data[$this->request->data['md_field_name']] = $this->request->data[$this->request->data['md_field_name']];
+				
+	            $tData = $this->Tasks->find()
+				 ->group('Tasks.id')
+	             ->where(['Tasks.id' => $data['id']])->first();		
+				
+				$Task = $this->Tasks->find()->where(['id' => $data['id'] ])->first();
+				$Task = $this->Tasks->patchEntity($Task, $data);
+				$this->Tasks->save($Task);
+				
+				$edata['user_id'] = $this->sUser['id'] ;
+				$edata['project_id'] = $tData->project_id ;
+				$edata['requirement_id'] = $tData->requirment_id ;
+				$edata['task_id'] = $tData->id ;
+				$edata['type'] = 'Task' ;
+				
+				
+				if($tData['status']!=  $Task['status'] ){
+				
+				 $edata['description'] = $edata['summary'] = 'Status changed from "'.$tData['status'].'" to "'.$Task['status'].'"';
+				 $this->AppEvents->create_event($edata);	
+				
+				}
+				
+				if($tData['priority'] != $Task['priority'] ){
+					
+					$old_priority = 'none';
+				
+				if(isset($PriortyType[$tData['priority']])){
+				     $old_priority = $PriortyType[$tData['priority']];
+				}
+				 
+				 $new_priority = 'none';
+				 
+				if(isset($PriortyType[$Task['priority']])){
+				   $new_priority = $PriortyType[$Task['priority']];
+				} 	
+					
+				 $edata['description'] = $edata['summary'] = 'Priority changed from "'.$old_priority.'" to "'.$new_priority.'"';
+				 
+				  $this->AppEvents->create_event($edata);	
+				}
+				
+				if($tData['due_date'] != $Task['due_date'] ){
+				 
+				$old_due_date = 'none';
+				
+				if($tData['due_date'] != '' && $tData['due_date'] != '0000-00-00'){
+				  $old_due_date = date("M d, Y", strtotime($tData['due_date']));
+				}
+				 
+				 $new_due_date = 'none';
+				 
+				if($Task['due_date'] != '' && $Task['due_date'] != '0000-00-00'){
+				  $new_due_date = date("M d, Y", strtotime($Task['due_date']));
+				}	 	
+					
+				 $edata['description'] = $edata['summary'] = 'Due date changed from "'.$old_due_date.'" to "'.$new_due_date.'"';
+				  $this->AppEvents->create_event($edata);		
+				}
+			   
+			 
+			 
+				if($data['message'] != ''){
+			
+					unset($data['id']);
+					$data['created_by'] = $this->sUser['id'];
+					
+					$this->loadModel('TaskComments');
+					$TaskComments = $this->TaskComments->newEntity();
+					$TaskComments= $this->TaskComments->patchEntity($TaskComments, $data);
+					$result = $this->TaskComments->save($TaskComments);
+					
+					$edata['comment_id'] = $result->id;
+					$edata['summary'] = 'Commented' ;
+					$edata['description'] = 'Commented' ;
+					
+					$this->AppEvents->create_event($edata);	
+			
+			 }
+			 
+			
+				
+			}
+		
+	   
+	   
+	   exit;
+   } 
 
 }

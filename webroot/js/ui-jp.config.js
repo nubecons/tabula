@@ -12,7 +12,7 @@ var jp_config = {
   moment:         [   'libs/jquery/moment/moment.js'],
   screenfull:     [   'libs/jquery/screenfull/dist/screenfull.min.js'],
   slimScroll:     [   'libs/jquery/slimscroll/jquery.slimscroll.min.js'],
-  sortable:       [   'libs/jquery/html5sortable/jquery.sortable.js'],
+//  sortable:       [   'libs/jquery/html5sortable/jquery.sortable.js'],
   nestable:       [   'libs/jquery/nestable/jquery.nestable.js',
                       'libs/jquery/nestable/jquery.nestable.css'],
   filestyle:      [   'libs/jquery/bootstrap-filestyle/src/bootstrap-filestyle.js'],
