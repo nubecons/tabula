@@ -64,3 +64,21 @@ display:none;
 	color: #3c763d;
 	padding:8px;
 	}	
+.label {
+    font-size: 100% !important;
+}
+
+.circle-icon {
+    border-style: dotted;
+    border-color: lightgray;    
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 10px;
+    vertical-align: middle;
+    padding: 3px;
+}
+.text-xs {
+    font-size: 10px;
+}

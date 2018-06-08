@@ -37,8 +37,8 @@
 				  $req_name = $this->GetInfo->getReqName($Task['requirment_id']);
 			 ?>
              <tr>
-             <td colspan="7">
-             <b>  <?=$req_name['title']?> </b>
+                 <td colspan="7" style=" background-color:  bisque;">
+                 <b> Requirement: &nbsp;  <?=$req_name['title']?> </b>
              </td>
              </tr>
              

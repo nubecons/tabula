@@ -1,34 +1,7 @@
 <?php
 
-/**
-
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
-
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
-
- *
-
- * Licensed under The MIT License
-
- * For full copyright and license information, please see the LICENSE.txt
-
- * Redistributions of files must retain the above copyright notice.
-
- *
-
- * @copyright Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
-
- * @link      https://cakephp.org CakePHP(tm) Project
-
- * @since     0.2.9
-
- * @license   https://opensource.org/licenses/mit-license.php MIT License
-
- */
 
 namespace App\Controller;
-
-
 
 use Cake\Core\Configure;
 
@@ -41,20 +14,6 @@ use Cake\View\Exception\MissingTemplateException;
 use Cake\Event\Event;
 
 use App\View\Helper\GetInfoHelper;
-
-/**
-
- * Static content controller
-
- *
-
- * This controller will render views from Template/Pages/
-
- *
-
- * @link https://book.cakephp.org/3.0/en/controllers/pages-controller.html
-
- */
 
 class TasksController extends AppController
 {
@@ -72,7 +31,7 @@ class TasksController extends AppController
 		$this->set('title', 'Manage Tasks');
 	}
         
-  public function design($project_id = null)
+  public function design($project_id = null, $ajax=null)
     {  
 	   
 	   
@@ -85,29 +44,18 @@ class TasksController extends AppController
 		$this->set('PriortyType', $this->Projects->PriortyType);
 		$this->set('ProjectStatusClass', $this->Projects->ProjectStatusClass);
 		$this->set('PriortyTypeClass', $this->Projects->PriortyTypeClass);
-		
-			 
-		
-		
-		$TeamMembers[$this->sUser['id']] = 'You';
+
+            $TeamMembers[$this->sUser['id']] = 'You';
 	    $TeamMembers = $TeamMembers + $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'email'])->where( ['created_by' => $this->sUser['id']])->toArray();
 	    $this->set('TeamMembers', $TeamMembers);
 	   
 	   
 		$ProjectFollowers = $this->ProjectFollowers->find('list', ['keyField' => 'project_id', 'valueField' => 'project_id'])->where(['follower_id' => $this->sUser['id'], 'is_updated' => 'YES'])->toArray();
-	
-		
-	 	 
-	
 		$pconditions['user_id'] = $this->sUser['id'];
 		$Projects = $this->Projects->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where($pconditions)->toArray();
 		$this->set('Projects', $Projects);
-        
-		
-		
 
-		
-		if($project_id){
+		if($project_id !=null && $project_id !='null'){
 		
 		 $conditions['project_id'] = $project_id;
 		
@@ -134,7 +82,10 @@ class TasksController extends AppController
         $this->set('Requirments', $Requirments);
 		
 		$this->set('requirement_id','');
-		
+                if($ajax=='ajax'){
+                $this->Flash->success(__('Action Successfully Completed.'));  
+			 	//return $this->redirect($this->referer);
+                }
 	
     }
 	
@@ -612,7 +563,7 @@ public function myTasks(){
 			 	return $this->redirect($this->referer());  
 			 }  
 		
-		 }else{
+		 }
 		  
 		   $ProjectFollowerIdz = $this->ProjectFollowers->find('list', ['keyField' => 'follower_id', 'valueField' => 'follower_id'])->where(['project_id' => $Task['project']['id'], 'is_updated' => 'YES'])->toArray();
 		  
@@ -622,9 +573,9 @@ public function myTasks(){
 		      $ProjectFollowers = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'email'])->where( ['id in ' => $ProjectFollowerIdz])->toArray();
 		   }
 	      
-		   $this->set('ProjectFollowers', $ProjectFollowers);
+		   $this->set('ProjectFollowers', [$this->sUser['id']=>'You']+$ProjectFollowers);
 		 
-		 }
+		 
 		 
 	   
 	   $tData = $this->Tasks->find()
@@ -634,9 +585,6 @@ public function myTasks(){
 	
 	  if($this->request->is('post') || $this->request->is('put'))
 		{
-			
-		
-		
 			$data = $this->request->data;
 			$Task = $this->Tasks->patchEntity($Task, $data);
 			$this->Tasks->save($Task);
@@ -712,7 +660,8 @@ public function myTasks(){
 		
 		 }
 		 
-		 return $this->redirect(['action' => 'detail',$id]);
+		 $this->Flash->success(__('Action Successfully Completed.'));  
+			 	return $this->redirect(['controller' => 'tasks', 'action' => 'kanban']); 
 			
 		}
 		

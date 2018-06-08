@@ -1,7 +1,7 @@
 <?php $site_url = $this->Url->build('/',true); ?> 
 <div class="row">
     <div class="col-sm-5">
-  		<button class="btn m-b-xs w-xl btn-default" onClick="createTaskModel()"> <i class="glyphicon glyphicon-plus"></i>Create New Task</button>
+  		<button class="btn m-b-xs w-xl btn-default" onClick="createTaskModel()"> <i class="glyphicon glyphicon-plus"></i>Create QA Task</button>
 		
         <div class="btn-group pull-right">
 	         <a href="<?=$site_url?>tasks/qaList/<?=$requirement_id?>" data-toggle="tooltip" title="List View">  <button type="button" class="btn btn-sm btn-bg btn-default"><i class="glyphicon glyphicon-list"></i></button></a>
@@ -25,11 +25,17 @@
 	  foreach($Requirments as $Requirment){
 		     
 			    $counter =  $counter + 1 ;
+                            $TaskHealth =0;
 		   
 				$New_tasks = $this->GetInfo->getCountTasks($Requirment['id'] , 'New','QA');
 				$InProgress_tasks = $this->GetInfo->getCountTasks($Requirment['id'] , 'In Progress','QA');
 				$Close_tasks = $this->GetInfo->getCountTasks($Requirment['id'] , 'Close','QA');
 				$Resolve_tasks = $this->GetInfo->getCountTasks($Requirment['id'] , 'Resolve','QA');
+                                 $AllTasks = $New_tasks+$InProgress_tasks+$Close_tasks+$Resolve_tasks;
+                                $RemainingTasks =$New_tasks+$InProgress_tasks;
+                                if($RemainingTasks >0){
+                                $TaskHealth = round(($RemainingTasks/$AllTasks)/100);
+                                }
 		    
 		  ?>
             <div class="panel panel-default">
@@ -50,16 +56,16 @@
                   
                     <em class="text-xs">Project: <span class="label bg-primary m-t-xs"><?=$Requirment['project']['name']?></span></em>
                      &nbsp;
-                    <em class="text-success"><i class="fa fa-level-up"> Heath:</i> 20%</em>
+                    <em class="text-success"><i class="fa fa-level-up"> Heath:</i> <?=$TaskHealth;?>%</em>
                      &nbsp;
                     <em class="text-xs  pull-right">Created on <span class="text-danger"><?=date('M d, Y', strtotime($Requirment['created']))?></span></em>
                     <br> <br>
                    <small class="m-t-xs">
                     
-                    <span class="label bg-info m-t-xs"><a href="#" data-toggle="tooltip" title="New Tasks(<?=$New_tasks?>)">New Tasks(<?=$New_tasks?>)</a></span>
-                    <span class="label bg-warning m-t-xs"><a href="#" data-toggle="tooltip" title="In Progress Tasks(<?=$InProgress_tasks?>)">In Progress Tasks(<?=$InProgress_tasks?>)</a></span>
-                    <span class="label bg-primary m-t-xs"><a href="#" data-toggle="tooltip" title="Close Tasks(<?=$Close_tasks?>)">Close Tasks(<?=$Close_tasks?>)</a></span>
-                    <span class="label bg-success m-t-xs"><a href="#" data-toggle="tooltip" title="Resolve Tasks(<?=$Resolve_tasks?>)">Resolve Tasks(<?=$Resolve_tasks?>)</a></span>
+                    <span class="label bg-info m-t-xs"><a href="#" data-toggle="tooltip" title="New (<?=$New_tasks?>)">New <?=$New_tasks?></a></span>
+                    <span class="label bg-warning m-t-xs"><a href="#" data-toggle="tooltip" title="In Progress (<?=$InProgress_tasks?>)">In Progress <?=$InProgress_tasks?></a></span>
+                    <span class="label bg-primary m-t-xs"><a href="#" data-toggle="tooltip" title="Closed (<?=$Close_tasks?>)">Closed <?=$Close_tasks?></a></span>
+                    <span class="label bg-success m-t-xs"><a href="#" data-toggle="tooltip" title="Resolved (<?=$Resolve_tasks?>)">Resolved <?=$Resolve_tasks?></a></span>
             
                    
                     </small>
@@ -67,7 +73,6 @@
                     <small class="text-xs">
                       <a  href="<?=$site_url?>tasks/qaList/<?=$Requirment['id']?>">LIST VIEW </a> &nbsp; | &nbsp; 
                       <a  href="<?=$site_url?>tasks/qakanban/<?=$Requirment['id']?>">BOARD VIEW </a> &nbsp; | &nbsp; 
-                      <a onClick="createTaskModel('<?=$Requirment['id']?>' ,'DESIGN')">CREATE DESIGN TASK</a> &nbsp; | &nbsp; 
                       <a onClick="createTaskModel('<?=$Requirment['id']?>' ,'QA')">CREATE QA</a>
                      </small>
                     

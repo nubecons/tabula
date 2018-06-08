@@ -182,8 +182,8 @@ $('#form_addComment .btn_submit').click(function(e) {
   			<div class="panel panel-default">
              <div class="panel-body">
                <div class="tl-content panel bg-success padder">
-              <span class="arrow arrow-success right pull-up hidden-left"></span>
-              <span class="arrow arrow-success right pull-up visible-left"></span>
+<!--              <span class="arrow arrow-success right pull-up hidden-left"></span>
+              <span class="arrow arrow-success right pull-up visible-left"></span>-->
               <div class="text-lt"><strong><i class=" glyphicon glyphicon-th "></i> Project</strong></div>
             </div>
              &nbsp; &nbsp; &nbsp; &nbsp;
@@ -194,8 +194,6 @@ $('#form_addComment .btn_submit').click(function(e) {
              <div class="panel panel-default">
              <div class="panel-body">
                <div class="tl-content panel bg-primary padder">
-              <span class="arrow arrow-primary right pull-up hidden-left"></span>
-              <span class="arrow arrow-primary right pull-up visible-left"></span>
               <div class="text-lt"><strong><i class=" fa fa-user "></i> Assign To</strong></div>
             </div>
              &nbsp; &nbsp; &nbsp; &nbsp;
@@ -213,8 +211,8 @@ $('#form_addComment .btn_submit').click(function(e) {
                <div class="panel panel-default">
              <div class="panel-body">
                <div class="tl-content panel bg-info padder">
-              <span class="arrow arrow-info right pull-up hidden-left"></span>
-              <span class="arrow arrow-info right pull-up visible-left"></span>
+<!--              <span class="arrow arrow-info right pull-up hidden-left"></span>
+              <span class="arrow arrow-info right pull-up visible-left"></span>-->
               <div class="text-lt"><strong><i class=" glyphicon glyphicon-calendar "></i> Due Date</strong></div>
             </div>
              &nbsp; &nbsp; &nbsp; &nbsp;

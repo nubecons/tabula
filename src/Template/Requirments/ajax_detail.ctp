@@ -100,12 +100,12 @@
 				
 				
 		
-			if(confirm("Do you want to create task")){
+			//if(confirm("Do you want to create task")){
 				$('#AddTask').modal('show');
 				$('#req_field').val(mytext);
 				$('#req_field1').val(mytext.toString().substring(0, 5));
 				
-				}
+				//}
 			}
 		});
 		/*end select text*/

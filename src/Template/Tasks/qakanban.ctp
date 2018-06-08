@@ -11,7 +11,7 @@
  <div class="col-sm-3">
     <div class="panel panel-default">
     <div class="panel-heading">
-    <h4> <i class="fa fa-cubes"></i> New </h4>                  
+    <h4>   New </h4>                  
     </div>
    
     </div>
@@ -53,16 +53,16 @@
                 <div class="media-body">                        
                     <a  href="<?=$site_url?>tasks/detail/<?=$Task['id']?>"  class="h4"  ><?=$Task['title']?></a>
                 	 <small class="block m-t-xs"><br></small>
-                    <em class="text-xs">Project: <span class="btn-xs btn-primary  m-t-xs"><?=$Task['project']['name']?>a</span></em>
+                         <em>Project: &nbsp; <span class="btn-xs btn-primary  m-t-xs"><?=$Task['project']['name']?>a</span></em>
                    <br>
                     <em class="text-xs">
                      <?php
 					$due_date = '' ;
 					if($Task['due_date'] != ''){ $due_date = date("Y-m-d", strtotime($Task['due_date'])) ; }
 					?>
-                     <a href="#" data-toggle="tooltip" title="Due Date" onClick="updateTaskField('due_date','<?=$Task['id']?>','<?=$due_date?>')">  <i class="glyphicon glyphicon-calendar"></i><span id="spn_dute_date_<?=$Task['id']?>"><?php if($Task['due_date']!= ''){ echo date("M d, Y", strtotime($Task['due_date'])) ; }else{echo "Due Date" ;}?></span></a>
-                     <a href="#" data-toggle="tooltip" title="Estimate" onClick="updateTaskField('estimate','<?=$Task['id']?>','<?=$Task['estimate']?>')">  <i class="glyphicon glyphicon-hourglass"></i><span id="spn_estimate_<?=$Task['id']?>"><?php if($Task['estimate']!= ''){ echo $Task['estimate']."Hours" ; }else{echo "Estimate" ;}?></span></a>
-                     <a href="#" data-toggle="tooltip" title="Priority" onClick="updateTaskField('priority','<?=$Task['id']?>','<?=$Task['priority']?>')">  <i class="glyphicon glyphicon-sort"></i><span id="spn_priority_<?=$Task['id']?>"><?=$PriortyType[$Task['priority']]?></span></a></em>
+                     <a href="#" data-toggle="tooltip" title="Due Date" onClick="updateTaskField('due_date','<?=$Task['id']?>','<?=$due_date?>')">  <i class="glyphicon glyphicon-calendar circle-icon"></i><span id="spn_dute_date_<?=$Task['id']?>"><?php if($Task['due_date']!= ''){ echo date("M d, Y", strtotime($Task['due_date'])) ; }else{echo "Due Date" ;}?></span></a>
+                     <a href="#" data-toggle="tooltip" title="Estimate" onClick="updateTaskField('estimate','<?=$Task['id']?>','<?=$Task['estimate']?>')">  <i class="glyphicon glyphicon-hourglass circle-icon"></i><span id="spn_estimate_<?=$Task['id']?>"><?php if($Task['estimate']!= ''){ echo $Task['estimate']."Hours" ; }else{echo "Estimate" ;}?></span></a>
+                     <a href="#" data-toggle="tooltip" title="Priority" onClick="updateTaskField('priority','<?=$Task['id']?>','<?=$Task['priority']?>')">  <i class="glyphicon glyphicon-sort circle-icon"></i><span id="spn_priority_<?=$Task['id']?>"><?=$PriortyType[$Task['priority']]?></span></a></em>
                     <?php /*?><em class="text-xs pull-right">Priority: <span class=" btn-xs btn-<?=$PriortyTypeClass[$Task['priority']]?> m-t-xs"><?=$PriortyType[$Task['priority']]?></span></em><?php */?>
 
                    
@@ -89,7 +89,7 @@
 
 <div class="panel panel-default">
         <div class="panel-heading">
-          <h4> <i class="fa fa-cubes"></i> In Progress </h4>                  
+          <h4>   In Progress </h4>                  
         </div>
         </div>
         <div class="drag_body"  id="In Progress"> 
@@ -123,16 +123,16 @@
                 <div class="media-body">                        
                    <a  href="<?=$site_url?>tasks/detail/<?=$Task['id']?>"  class="h4"  ><?=$Task['title']?></a>
  					<small class="block m-t-xs"><br></small>
-                    <em class="text-xs">Project: <span class="btn-xs btn-primary  m-t-xs"><?=$Task['project']['name']?>a</span></em>
+                                        <em>Project: &nbsp; <span class="btn-xs btn-primary  m-t-xs"><?=$Task['project']['name']?>a</span></em>
                     <br>
                     <em class="text-xs">
                     <?php
 					$due_date = '' ;
 					if($Task['due_date'] != ''){ $due_date = date("Y-m-d", strtotime($Task['due_date'])) ; }
 					?>
-                     <a href="#" data-toggle="tooltip" title="Due Date" onClick="updateTaskField('due_date','<?=$Task['id']?>','<?=$due_date?>')">  <i class="glyphicon glyphicon-calendar"></i><span id="spn_dute_date_<?=$Task['id']?>"><?php if($Task['due_date']!= ''){ echo date("M d, Y", strtotime($Task['due_date'])) ; }else{echo "Due Date" ;}?></span></a>
-                     <a href="#" data-toggle="tooltip" title="Estimate" onClick="updateTaskField('estimate','<?=$Task['id']?>','<?=$Task['estimate']?>')">  <i class="glyphicon glyphicon-hourglass"></i><span id="spn_estimate_<?=$Task['id']?>"><?php if($Task['estimate']!= ''){ echo $Task['estimate']."Hours" ; }else{echo "Estimate" ;}?></span></a>
-                     <a href="#" data-toggle="tooltip" title="Priority" onClick="updateTaskField('priority','<?=$Task['id']?>','<?=$Task['priority']?>')">  <i class="glyphicon glyphicon-sort"></i><span id="spn_priority_<?=$Task['id']?>"><?=$PriortyType[$Task['priority']]?></span></a>
+                     <a href="#" data-toggle="tooltip" title="Due Date" onClick="updateTaskField('due_date','<?=$Task['id']?>','<?=$due_date?>')">  <i class="glyphicon glyphicon-calendar circle-icon"></i><span id="spn_dute_date_<?=$Task['id']?>"><?php if($Task['due_date']!= ''){ echo date("M d, Y", strtotime($Task['due_date'])) ; }else{echo "Due Date" ;}?></span></a>
+                     <a href="#" data-toggle="tooltip" title="Estimate" onClick="updateTaskField('estimate','<?=$Task['id']?>','<?=$Task['estimate']?>')">  <i class="glyphicon glyphicon-hourglass circle-icon"></i><span id="spn_estimate_<?=$Task['id']?>"><?php if($Task['estimate']!= ''){ echo $Task['estimate']."Hours" ; }else{echo "Estimate" ;}?></span></a>
+                     <a href="#" data-toggle="tooltip" title="Priority" onClick="updateTaskField('priority','<?=$Task['id']?>','<?=$Task['priority']?>')">  <i class="glyphicon glyphicon-sort circle-icon"></i><span id="spn_priority_<?=$Task['id']?>"><?=$PriortyType[$Task['priority']]?></span></a>
                    </em>
                     <?php /*?><em class="text-xs pull-right">Priority: <span class=" btn-xs btn-<?=$PriortyTypeClass[$Task['priority']]?> m-t-xs"><?=$PriortyType[$Task['priority']]?></span></em><?php */?>
 				 </div>
@@ -163,7 +163,7 @@
 
        <div class="panel panel-default">
         <div class="panel-heading">
-          <h4> <i class="fa fa-cubes"></i> Resolved </h4>                  
+          <h4>   Resolved </h4>                  
         </div>
         </div>
          <div class="drag_body" id="Resolve" style="padding-bottom:25px;"> 
@@ -202,16 +202,16 @@
                 <div class="media-body">                        
                    <a  href="<?=$site_url?>tasks/detail/<?=$Task['id']?>"  class="h4"  ><?=$Task['title']?></a>
                   <small class="block m-t-xs"><br></small>
-                    <em class="text-xs">Project: <span class="btn-xs btn-primary  m-t-xs"><?=$Task['project']['name']?>a</span></em>
+                  <em>Project:  &nbsp;<span class="btn-xs btn-primary  m-t-xs"><?=$Task['project']['name']?>a</span></em>
                   <br>
                     <em class="text-xs">
                     <?php
 					$due_date = '' ;
 					if($Task['due_date'] != ''){ $due_date = date("Y-m-d", strtotime($Task['due_date'])) ; }
 					?>
-                     <a href="#" data-toggle="tooltip" title="Due Date" onClick="updateTaskField('due_date','<?=$Task['id']?>','<?=$due_date?>')">  <i class="glyphicon glyphicon-calendar"></i><span id="spn_dute_date_<?=$Task['id']?>"><?php if($Task['due_date']!= ''){ echo date("M d, Y", strtotime($Task['due_date'])) ; }else{echo "Due Date" ;}?></span></a>
-                     <a href="#" data-toggle="tooltip" title="Estimate" onClick="updateTaskField('estimate','<?=$Task['id']?>','<?=$Task['estimate']?>')">  <i class="glyphicon glyphicon-hourglass"></i><span id="spn_estimate_<?=$Task['id']?>"><?php if($Task['estimate']!= ''){ echo $Task['estimate']."Hours" ; }else{echo "Estimate" ;}?></span></a>
-                     <a href="#" data-toggle="tooltip" title="Priority" onClick="updateTaskField('priority','<?=$Task['id']?>','<?=$Task['priority']?>')">  <i class="glyphicon glyphicon-sort"></i><span id="spn_priority_<?=$Task['id']?>"><?=$PriortyType[$Task['priority']]?></span></a></em>
+                     <a href="#" data-toggle="tooltip" title="Due Date" onClick="updateTaskField('due_date','<?=$Task['id']?>','<?=$due_date?>')">  <i class="glyphicon glyphicon-calendar circle-icon"></i><span id="spn_dute_date_<?=$Task['id']?>"><?php if($Task['due_date']!= ''){ echo date("M d, Y", strtotime($Task['due_date'])) ; }else{echo "Due Date" ;}?></span></a>
+                     <a href="#" data-toggle="tooltip" title="Estimate" onClick="updateTaskField('estimate','<?=$Task['id']?>','<?=$Task['estimate']?>')">  <i class="glyphicon glyphicon-hourglass circle-icon"></i><span id="spn_estimate_<?=$Task['id']?>"><?php if($Task['estimate']!= ''){ echo $Task['estimate']."Hours" ; }else{echo "Estimate" ;}?></span></a>
+                     <a href="#" data-toggle="tooltip" title="Priority" onClick="updateTaskField('priority','<?=$Task['id']?>','<?=$Task['priority']?>')">  <i class="glyphicon glyphicon-sort circle-icon"></i><span id="spn_priority_<?=$Task['id']?>"><?=$PriortyType[$Task['priority']]?></span></a></em>
                     <?php /*?><em class="text-xs pull-right">Priority: <span class=" btn-xs btn-<?=$PriortyTypeClass[$Task['priority']]?> m-t-xs"><?=$PriortyType[$Task['priority']]?></span></em><?php */?>
 
                   
@@ -239,7 +239,7 @@
   
 <div class="panel panel-default">
         <div class="panel-heading">
-          <h4> <i class="fa fa-cubes"></i> Close </h4>                  
+          <h4>   Close </h4>                  
         </div>
         </div>
          <div class="drag_body" id="Close" style="padding-bottom:25px;"> 
@@ -273,15 +273,15 @@
                 <div class="media-body">                        
                    <a  href="<?=$site_url?>tasks/detail/<?=$Task['id']?>"  class="h4"  ><?=$Task['title']?></a>
                     <small class="block m-t-xs"><br></small>
-                    <em class="text-xs">Project: <span class="btn-xs btn-primary  m-t-xs"><?=$Task['project']['name']?>a</span></em> <br>
+                    <em>Project: &nbsp; <span class="btn-xs btn-primary  m-t-xs"><?=$Task['project']['name']?>a</span></em> <br>
                     <em class="text-xs">
                     <?php
 					$due_date = '' ;
 					if($Task['due_date'] != ''){ $due_date = date("Y-m-d", strtotime($Task['due_date'])) ; }
 					?>
-                     <a href="#" data-toggle="tooltip" title="Due Date" onClick="updateTaskField('due_date','<?=$Task['id']?>','<?=$due_date?>')">  <i class="glyphicon glyphicon-calendar"></i><span id="spn_dute_date_<?=$Task['id']?>"><?php if($Task['due_date']!= ''){ echo date("M d, Y", strtotime($Task['due_date'])) ; }else{echo "Due Date" ;}?></span></a>
-                     <a href="#" data-toggle="tooltip" title="Estimate" onClick="updateTaskField('estimate','<?=$Task['id']?>','<?=$Task['estimate']?>')">  <i class="glyphicon glyphicon-hourglass"></i><span id="spn_estimate_<?=$Task['id']?>"><?php if($Task['estimate']!= ''){ echo $Task['estimate']."Hours" ; }else{echo "Estimate" ;}?></span></a>
-                     <a href="#" data-toggle="tooltip" title="Priority" onClick="updateTaskField('priority','<?=$Task['id']?>','<?=$Task['priority']?>')">  <i class="glyphicon glyphicon-sort"></i><span id="spn_priority_<?=$Task['id']?>"><?=$PriortyType[$Task['priority']]?></span></a></em>
+                     <a href="#" data-toggle="tooltip" title="Due Date" onClick="updateTaskField('due_date','<?=$Task['id']?>','<?=$due_date?>')">  <i class="glyphicon glyphicon-calendar circle-icon"></i><span id="spn_dute_date_<?=$Task['id']?>"><?php if($Task['due_date']!= ''){ echo date("M d, Y", strtotime($Task['due_date'])) ; }else{echo "Due Date" ;}?></span></a>
+                     <a href="#" data-toggle="tooltip" title="Estimate" onClick="updateTaskField('estimate','<?=$Task['id']?>','<?=$Task['estimate']?>')">  <i class="glyphicon glyphicon-hourglass circle-icon"></i><span id="spn_estimate_<?=$Task['id']?>"><?php if($Task['estimate']!= ''){ echo $Task['estimate']."Hours" ; }else{echo "Estimate" ;}?></span></a>
+                     <a href="#" data-toggle="tooltip" title="Priority" onClick="updateTaskField('priority','<?=$Task['id']?>','<?=$Task['priority']?>')">  <i class="glyphicon glyphicon-sort circle-icon"></i><span id="spn_priority_<?=$Task['id']?>"><?=$PriortyType[$Task['priority']]?></span></a></em>
                     <?php /*?><em class="text-xs pull-right">Priority: <span class=" btn-xs btn-<?=$PriortyTypeClass[$Task['priority']]?> m-t-xs"><?=$PriortyType[$Task['priority']]?></span></em><?php */?>
                 </div>
                

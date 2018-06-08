@@ -3,7 +3,7 @@
     <div class="col-sm-5">
   
         
-<button class="btn m-b-xs w-xl btn-default" onClick="createTaskModel()"> <i class="glyphicon glyphicon-plus"></i>Create New Task</button>
+<button class="btn m-b-xs w-xl btn-default" onClick="createTaskModel()"> <i class="glyphicon glyphicon-plus"></i>Create Design Task</button>
 <div class="btn-group pull-right">
 	         <a href="<?=$site_url?>tasks/designList/<?=$requirement_id?>" data-toggle="tooltip" title="List View">  <button type="button" class="btn btn-sm btn-bg btn-default"><i class="glyphicon glyphicon-list"></i></button></a>
              <a href="<?=$site_url?>tasks/kanban/<?=$requirement_id?>" data-toggle="tooltip" title="Kanban View"> <button type="button" class="btn btn-sm btn-bg btn-default"><i class="glyphicon glyphicon-blackboard"></i></button></a>
@@ -26,11 +26,16 @@
 	  foreach($Requirments as $Requirment){
 		     
 			    $counter =  $counter + 1 ;
-		   
+		   $TaskHealth=0;
 				$New_tasks = $this->GetInfo->getCountTasks($Requirment['id'] , 'New','DESIGN');
 				$InProgress_tasks = $this->GetInfo->getCountTasks($Requirment['id'] , 'In Progress','DESIGN');
 				$Close_tasks = $this->GetInfo->getCountTasks($Requirment['id'] , 'Close','DESIGN');
 				$Resolve_tasks = $this->GetInfo->getCountTasks($Requirment['id'] , 'Resolve','DESIGN');
+                                $AllTasks = $New_tasks+$InProgress_tasks+$Close_tasks+$Resolve_tasks;
+                                $RemainingTasks =$New_tasks+$InProgress_tasks;
+                                if($RemainingTasks >0){
+                                $TaskHealth = round(($RemainingTasks/$AllTasks)/100);
+                                }
 		    
 		  ?>
             <div class="panel panel-default">
@@ -51,18 +56,18 @@
                    <?php /*?> <a  href="<?=$site_url?>tasks/designList/<?=$Requirment['id']?>" class="h4" ><i class="fa fa-fw fa-circle <?=$color_class[$counter]?>"></i><?=$Requirment['title']?></a><?php */?>
                     <small class="block m-t-xs"> </small>
                   
-                    <em class="text-xs">Project: <span class="label bg-primary m-t-xs"><?=$Requirment['project']['name']?></span></em>
+                    <em>Project: &nbsp;<span class="label bg-primary m-t-xs"><?=$Requirment['project']['name']?></span></em>
                      &nbsp;
-                    <em class="text-success"><i class="fa fa-level-up"> Heath:</i> 20%</em>
+                    <em class="text-success"><i class="fa fa-level-up"> Heath:</i> <?=$TaskHealth?>%</em>
                      &nbsp;
                     <em class="text-xs  pull-right">Created on <span class="text-danger"><?=date('M d, Y', strtotime($Requirment['created']))?></span></em>
                     <br> <br>
                    <small class="m-t-xs">
                     
-                    <span class="label bg-info m-t-xs"><a href="#" data-toggle="tooltip" title="New Tasks(<?=$New_tasks?>)">New Tasks(<?=$New_tasks?>)</a></span>
-                    <span class="label bg-warning m-t-xs"><a href="#" data-toggle="tooltip" title="In Progress Tasks(<?=$InProgress_tasks?>)">In Progress Tasks(<?=$InProgress_tasks?>)</a></span>
-                    <span class="label bg-primary m-t-xs"><a href="#" data-toggle="tooltip" title="Close Tasks(<?=$Close_tasks?>)">Close Tasks(<?=$Close_tasks?>)</a></span>
-                    <span class="label bg-success m-t-xs"><a href="#" data-toggle="tooltip" title="Resolve Tasks(<?=$Resolve_tasks?>)">Resolve Tasks(<?=$Resolve_tasks?>)</a></span>
+                    <span class="label bg-info m-t-xs"><a href="#" data-toggle="tooltip" title="New (<?=$New_tasks?>)">New Tasks <?=$New_tasks?></a></span>
+                    <span class="label bg-warning m-t-xs"><a href="#" data-toggle="tooltip" title="In Progress (<?=$InProgress_tasks?>)">In Progress <?=$InProgress_tasks?></a></span>
+                    <span class="label bg-primary m-t-xs"><a href="#" data-toggle="tooltip" title="Closed (<?=$Close_tasks?>)">Closed <?=$Close_tasks?></a></span>
+                    <span class="label bg-success m-t-xs"><a href="#" data-toggle="tooltip" title="Resolved (<?=$Resolve_tasks?>)">Resolved <?=$Resolve_tasks?></a></span>
             
                    
                     </small>

@@ -61,15 +61,15 @@ site_url = '<?=$site_url?>';
           </a>
           
            <a href="<?=$site_url?>Requirments" class="btn no-shadow navbar-btn" >
-            <i class="glyphicon glyphicon-list"></i> Requirements
+<!--            <i class="glyphicon glyphicon-list"></i> -->Requirements
           </a>
           
           <a href="<?=$site_url?>tasks/design" class="btn no-shadow navbar-btn" >
-            <i class="fa fa-cubes"></i> Design
+<!--            <i class="fa fa-cubes"></i> --> Design
           </a>
           
             <a href="<?=$site_url?>tasks/qa" class="btn no-shadow navbar-btn" >
-            <i class="fa fa-check"></i> QA VARIFICATION
+<!--            <i class="fa fa-check"></i> -->QA Verification
           </a>
         </div>
         <!-- / buttons -->
