@@ -1,11 +1,10 @@
 <?php
-namespace App\Controller\Admin;
-
-use App\Controller\AppController;
+namespace App\Controller;
+use Cake\Core\Configure;
+use Cake\Network\Exception\ForbiddenException;
+use Cake\Network\Exception\NotFoundException;
+use Cake\View\Exception\MissingTemplateException;
 use Cake\Event\Event;
-use Cake\Datasource\ConnectionManager;
-
-use App\View\Helper\CkHelper;
 
 class PagesController extends AppController {
 
@@ -20,11 +19,6 @@ class PagesController extends AppController {
 
         $this->Auth->allow(['about', 'contact', 'privacy', 'home', 'display']);
     }
-	
-	function test(){
-		
-		
-		}
 
     function calendar() {
 
