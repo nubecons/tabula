@@ -879,11 +879,11 @@ unset($data['id']);
 
             $query = $this->TaskComments->find('all')->contain(['Projects','Requirments'])
                     ->select($this->TaskComments)->select(['Projects.name'])
-                    ->group('TaskComments.project_id');
+                    ->group('TaskComments.id');
             $this->paginate['limit'] = 100;
             $this->paginate['order'] = ['TaskComments.requirment_id' => 'DESC', 'TaskComments.created' => 'DESC',];
             $Tasks = $this->paginate($query, array('url' => '/Tasks/'));
-            
+          
             $this->set('Tasks', $Tasks);
             $this->set('requirement_id', $req_id);
     }

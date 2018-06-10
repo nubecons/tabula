@@ -19,9 +19,9 @@ $site_url = $this->Url->build('/',true); ?>
 		$req_id = '';
                 $project_id = '';
                 $task_id = '';
-                
+             
 		 foreach($Tasks as $Task) {
-                     if($Task['file'] !=''){
+                     if($Task['file'] !=''){ 
 			 if($req_id != $Task['requirment_id'])
 			   {
 				  $req_id = $Task['requirment_id'];  
