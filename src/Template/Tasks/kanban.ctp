@@ -18,7 +18,7 @@ $site_url = $this->Url->build('/',true); ?>
 
         </div>
 
-        <div class="drag_body"  id="New"  style="padding-bottom:25px;">
+        <div class="drag_body"  id="New" style="padding-bottom:25px; min-height:100px">
         <?php if(count($NewTasks) == 0 ){?>
 
             <div class="alert alert-success">
@@ -95,7 +95,7 @@ $site_url = $this->Url->build('/',true); ?>
                 <h4> In Progress </h4>                  
             </div>
         </div>
-        <div class="drag_body"  id="In Progress"> 
+        <div class="drag_body"  id="In Progress" style="padding-bottom:25px; min-height:100px"> 
         <?php if(count($InProgressTasks) == 0 ){?>
 
             <div class="alert alert-success">
@@ -169,7 +169,7 @@ $site_url = $this->Url->build('/',true); ?>
                 <h4>   Resolved </h4>                  
             </div>
         </div>
-        <div class="drag_body" id="Resolve" style="padding-bottom:25px;"> 
+        <div class="drag_body" id="Resolve" style="padding-bottom:25px; min-height:100px"> 
         <?php if(count($ResolvedTasks) == 0 ){?>
 
             <div class="alert alert-success">
@@ -245,7 +245,7 @@ $site_url = $this->Url->build('/',true); ?>
                 <h4>   Close </h4>                  
             </div>
         </div>
-        <div class="drag_body" id="Close" style="padding-bottom:25px;"> 
+        <div class="drag_body" id="Close" style="padding-bottom:25px; min-height:100px"> 
         <?php if(count($CloseTasks) == 0 ){?>
 
             <div class="alert alert-success">

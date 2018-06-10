@@ -16,7 +16,7 @@
    
     </div>
 	
-     <div class="drag_body"  id="New"  style="padding-bottom:25px;">
+     <div class="drag_body"  id="New"  style="padding-bottom:25px; min-height:100px">
         <?php if(count($NewTasks) == 0 ){?>
         
       <div class="alert alert-success">
@@ -92,7 +92,7 @@
           <h4>   In Progress </h4>                  
         </div>
         </div>
-        <div class="drag_body"  id="In Progress"> 
+        <div class="drag_body"  style="padding-bottom:25px; min-height:100px" id="In Progress"> 
         <?php if(count($InProgressTasks) == 0 ){?>
         
       <div class="alert alert-success">
@@ -166,7 +166,7 @@
           <h4>   Resolved </h4>                  
         </div>
         </div>
-         <div class="drag_body" id="Resolve" style="padding-bottom:25px;"> 
+         <div class="drag_body"  id="Resolve"  style="padding-bottom:25px; min-height:100px"> 
         <?php if(count($ResolvedTasks) == 0 ){?>
         
       <div class="alert alert-success">
@@ -242,7 +242,7 @@
           <h4>   Close </h4>                  
         </div>
         </div>
-         <div class="drag_body" id="Close" style="padding-bottom:25px;"> 
+         <div class="drag_body"  id="Close"  style="padding-bottom:25px; min-height:100px"> 
         <?php if(count($CloseTasks) == 0 ){?>
         
       <div class="alert alert-success">
@@ -314,7 +314,7 @@
  $(function() {
 	 
 	 sortable('.drag_body',{
-   					connectWith: 'drag_body',
+   					connectWith: '.drag_body',
 					handle: ".panel-body",
 					forcePlaceholderSize: true
 					});
