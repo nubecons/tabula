@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-sm-5">
   
-<button class="btn m-b-xs w-xl btn-default" data-toggle="modal" data-target="#ModeladdProject"> <i class="glyphicon glyphicon-plus"></i></button>
+<button class="btn m-b-xs w-xl btn-default" data-toggle="modal" data-target="#ModeladdProject"> <i class="glyphicon glyphicon-plus"></i>Create New Project</button>
 <div class="panel panel-default">
         <div class="panel-heading">
           <h4> Projects </h4>                  
@@ -75,15 +75,10 @@
 <script>
 	
 function getDetail(id){
-	
- 
   $.ajax({
-		type:'POST',
-		
+		type:'POST',		
 		url:'<?=$site_url?>projects/ajax_detail/'+id,
 		beforeSend: function() {
-		//	$('#btn_addProject').hide();
-		//	$('#btn_addProject_load').show();
 			},
 		success:function(data) {
 			$('#divProjectDetail').html(data);
@@ -92,8 +87,6 @@ function getDetail(id){
   return false;
 
 }
-
-
 </script>  
 
 

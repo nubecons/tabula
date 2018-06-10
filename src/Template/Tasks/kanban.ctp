@@ -333,9 +333,6 @@ $site_url = $this->Url->build('/',true); ?>
                                         });
                                     });
 
-
-
-
                                     function updateTaskField(field, id, value) {
 
                                         $('#updateTaskField').modal('show');
@@ -343,7 +340,6 @@ $site_url = $this->Url->build('/',true); ?>
                                         $('#md_field_name').val(field);
 
                                         $('#md_field_id').val(id);
-
 
                                         $('.up_md_fields').hide();
 
@@ -358,8 +354,6 @@ $site_url = $this->Url->build('/',true); ?>
                                     $(document).ready(function () {
 
                                         $('#form_updateTaskField  .btn_submit').click(function (e) {
-
-
                                             e.preventDefault();
                                             var dataString = $('#form_updateTaskField').serialize();
                                             $.ajax({
@@ -367,13 +361,11 @@ $site_url = $this->Url->build('/',true); ?>
                                                 data: dataString,
                                                 url: '<?=$site_url?>tasks/updateField',
                                                 beforeSend: function () {
-
                                                     $('#form_updateTaskField .btn_submit').hide();
                                                     $('#form_updateTaskField .btn_loader').show();
 
                                                 },
                                                 success: function (data) {
-
                                                     $('#form_updateTaskField .btn_submit').show();
                                                     $('#form_updateTaskField .btn_loader').hide();
                                                     $('#updateTaskField').modal('hide');
