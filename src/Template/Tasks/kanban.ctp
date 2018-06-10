@@ -304,34 +304,85 @@ $site_url = $this->Url->build('/',true); ?>
 
 </div>
 
+<script src="<?=$site_url?>libs/jquery/html5sortable/html.sortable.js"></script> 
+<script src="<?=$site_url?>libs/jquery/html5sortable/html.sortable.src.js"></script>  
 
-<script src="<?=$site_url?>libs/jquery/html5sortable/jquery.sortable.js"></script>  
-<script src="<?=$site_url?>libs/jquery/nestable/jquery.nestable.js"></script>  
   
 <script>
 
 
-                                    $(function () {
-                                        $(".drag_body").sortable({
-                                            connectWith: ".drag_body",
-                                            handle: ".panel-body",
-                                            forcePlaceholderSize: true,
-                                            placeholder: "portlet-placeholder ui-corner-all",
-                                        }).bind('sortupdate', function (e, ui) {
+				$(function () {
+					
+					sortable('.drag_body',{
+   					connectWith: 'drag_body',
+					handle: ".panel-body",
+					forcePlaceholderSize: true
+					});
+					
+					$('.drag_body').on('sortupdate', function(e, ui){
+						 status = ui.item.parent(".drag_body").attr("id");
+						 id = ui.item.attr('id');
+						$.ajax({
+							type: 'POST',
+							data: {'status': status, 'id': id},
+							url: '<?=$site_url?>tasks/updateStatus',
+							success: function (data) {
+								ui.item.next(".alert-success").hide();
+								ui.item.closest(".alert-success").hide();
+							}
+						});
+						
+				/*console.log('Parent old: ');
+				console.log(obj.startparent);
+				console.log('Parent new: ');
+				console.log(obj.endparent);
+				console.log('Index: '+obj.oldindex+' -> '+obj.index);
+				console.log('elementIndex: '+obj.oldElementIndex+' -> '+obj.elementIndex);*/
+			});
+					
+					
+					
+					
+					
+					
+					
+					$(".drag_body22").sortable({
+					
+						connectWith: ".drag_body",
+						handle: ".panel-body",
+						forcePlaceholderSize: true,
+						 placeholder: "portlet-placeholder ui-corner-all",
+					
+					})/*.bind('sortupdate', function (e, ui) {
 
-                                             status = ui.item.parent(".drag_body").attr("id");
-                                             id = ui.item.attr('id');
-                                            $.ajax({
-                                                type: 'POST',
-                                                data: {'status': status, 'id': id},
-                                                url: '<?=$site_url?>tasks/updateStatus',
-                                                success: function (data) {
-                                                    ui.item.next(".alert-success").hide();
-                                                    ui.item.closest(".alert-success").hide();
-                                                }
-                                            });
-                                        });
-                                    });
+						 status = ui.item.parent(".drag_body").attr("id");
+						 id = ui.item.attr('id');
+						$.ajax({
+							type: 'POST',
+							data: {'status': status, 'id': id},
+							url: '<?=$site_url?>tasks/updateStatus',
+							success: function (data) {
+								ui.item.next(".alert-success").hide();
+								ui.item.closest(".alert-success").hide();
+							}
+						});
+					})*/.bind('sortstart', function(e, ui) {
+ // alert('asdasdasd');
+  
+  $('#test').val('asdasd');
+    /*
+
+    This event is triggered when the user starts sorting and the DOM position has not yet changed.
+
+    ui.item contains the current dragged element
+    ui.placeholder contains the placeholder element
+    ui.startparent contains the element that the dragged item comes from
+
+    */
+});;
+					
+					
+				});
 
 
 
