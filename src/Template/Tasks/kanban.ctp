@@ -306,6 +306,8 @@ $site_url = $this->Url->build('/',true); ?>
 
 
 <script src="<?=$site_url?>libs/jquery/html5sortable/jquery.sortable.js"></script>  
+<script src="<?=$site_url?>libs/jquery/nestable/jquery.nestable.js"></script>  
+  
 <script>
 
 
