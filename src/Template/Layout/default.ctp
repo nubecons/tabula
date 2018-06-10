@@ -361,7 +361,7 @@ site_url = '<?=$site_url?>';
               </li>
               
                <li>
-                <a href class="auto">      
+                <a href="<?=$site_url?>tasks/fileList" class="auto">      
                   <i class="glyphicon glyphicon-file"></i>
                   <span class="font-bold">File list</span>
                 </a>

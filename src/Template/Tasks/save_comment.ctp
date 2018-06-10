@@ -1,5 +1,6 @@
  <?php $site_url = $this->Url->build('/',true); ?> 
  <?php
+ if($TaskComment['message'] != ''){
     
 	if(isset($is_ajax)){
 
@@ -66,5 +67,6 @@
                  <em class="text-danger text-xs pull-right"> <?=date('M d, Y h:i a', strtotime($TaskComment['created']))?></em> <br>
             </div>
           </div>
-          <?php }?>
+          <?php }
+ }?>
       

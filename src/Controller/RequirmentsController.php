@@ -16,9 +16,6 @@ use App\View\Helper\GetInfoHelper;
 
 class RequirmentsController extends AppController
 {
-
-	
-
 	public function initialize()
 	{
   
@@ -64,7 +61,7 @@ class RequirmentsController extends AppController
    }
 
 
-   public function index($project_id = null)
+   public function index($project_id = null, $ajax=null)
     {  
 	   
 	    $this->loadModel('Projects');
@@ -86,9 +83,7 @@ class RequirmentsController extends AppController
 	    $TeamMembers = $TeamMembers + $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'email'])->where( ['created_by' => $this->sUser['id']])->toArray();
 	    $this->set('TeamMembers', $TeamMembers);
 		 
-		
-		
-		if($project_id){
+		if($project_id != null && $project_id != 'null'){
 		
 		   $conditions['project_id'] = $project_id;
 		
@@ -113,7 +108,10 @@ class RequirmentsController extends AppController
         $this->paginate['order'] = ['created' => 'DESC', ];
         $Requirments = $this->paginate($query, array('url' => '/Requirments/'));
         $this->set('Requirments', $Requirments);
-		
+	        if ($ajax == 'ajax') {
+            $this->Flash->success(__('Action Successfully Completed.'));
+            //return $this->redirect($this->referer);
+        }	
 		
 	
     }
@@ -249,7 +247,12 @@ public function ajaxDetail($id = null ){
 		exit;
    }
 
-		
+    function getRequirements($project_id) {
+        $this->viewBuilder()->setLayout(false);
+        $Requirements = $this->Requirments->find('list', ['keyField' => 'id', 'valueField' => 'title'])->where(['project_id' => $project_id])->limit(15000)->toArray();
+
+        $this->set('Requirements', $Requirements);
+    }		
 			
 
 

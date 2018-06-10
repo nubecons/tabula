@@ -215,7 +215,7 @@
 
                         $('#AddReq').modal('hide');
                         // alert('Requirment created successfully.');
-                         window.location.href = '<?=$site_url?>Tasks/design/null/ajax'; 	   
+                         window.location.href = '<?=$site_url?>Requirments/index/'+ null+'/ajax'; 	   
 
                     }
 

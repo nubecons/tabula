@@ -155,9 +155,7 @@
 				   }else{
 					   
 					   $('#AddTask').modal('hide');
-					    alert('Task created successfully.');
-						window.location.reload(true);
-						//window.location.href = '<?=$site_url?>Projects/index/'+data; 	   
+					    window.location.href = '<?=$site_url?>Tasks/qa/'+ null+'/ajax'; 	   
 				  }
 				  
 				}
@@ -184,17 +182,17 @@
                 <input type="hidden" class="form-control" name="requirment_id" id="model_requirment_id"  value="" >
                 <input type="hidden" class="form-control" name="task_type" id="model_task_type"  value="QA" >
             
-            <div class="form-group" id="project_id_div">
-              <label>Project </label> <br>
-               <?php echo $this->Form->input('project_id', ['empty' =>'Select', 'options' => $Projects,  'class'=>'form-control' ,'required' => true ,'dev' => false, 'label' => false]); ?>
-            </div>  
-               
-          <?php /*?>  <div class="form-group">
-              <label>Task type</label> <br>
-            
-               <?php echo $this->Form->input('task_type', ['default' =>'DESIGN',  'empty' =>'Select', 'options' => ['DESIGN' => 'Design' , 'QA' => 'QA'],  'class'=>'form-control' ,'required' => true ,'dev' => false, 'label' => false]); ?>
-             
-            </div><?php */?>
+                <div class="form-group" id="project_id_div">
+                        <label>Project </label> <br>
+               <?php echo $this->Form->input('project_id', ['empty' =>'Select', 'options' => $Projects,  'class'=>'form-control','id'=>'project_id','onchange' => "get_requirements()" ,'required' => true ,'dev' => false, 'label' => false]); ?>
+                    </div>  
+                    <div class="form-group" >
+                        <label>Requirement:</label>
+                        <div id="requirement_div">
+               <?php echo $this->Form->input('requirment_id', [ 'required' => true, 'empty' =>'-- Select --', 'dev' => false , 'label' => false, 'class'=>'form-control','required' => true]); ?>
+                        </div>
+
+                    </div>
             
             <div class="form-group">
               <label>Title</label>
@@ -239,3 +237,19 @@
             </div>
           </div>
         </div>
+<script>
+    function get_requirements() {
+
+        var project_id = $('#project_id option:selected').val();
+        $.ajax({
+            type: "POST",
+            url: "<?php echo $site_url?>Requirments/get_requirements/" + project_id,
+            success: function (data) {
+                if (data != '')
+                {
+                    $('#requirement_div').html(data);
+                }
+            }
+        });
+    }
+</script>

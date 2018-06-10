@@ -17,7 +17,8 @@ class TaskCommentsTable extends Table
 
 public function initialize(array $config)
     {
-	   $this->belongsTo('Requirment');
+	   $this->belongsTo('Requirments');  
+           $this->belongsTo('Projects');
 
        $this->addBehavior('Timestamp', [
 

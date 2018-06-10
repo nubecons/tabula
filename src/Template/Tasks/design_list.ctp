@@ -152,9 +152,7 @@ $site_url = $this->Url->build('/',true); ?>
                     } else {
 
                         $('#AddTask').modal('hide');
-                        alert('Task created successfully.');
-                        window.location.reload(true);
-                        //window.location.href = '<?=$site_url?>Projects/index/'+data; 	   
+                        window.location.href = '<?=$site_url?>Tasks/design/'+ null+'/ajax'; 	   
                     }
 
                 }
@@ -177,20 +175,19 @@ $site_url = $this->Url->build('/',true); ?>
             </div>
             <div class="modal-body">
                 <form role="form" id="form_AddTask" >
-               <?php /*?> <input type="hidden" class="form-control" name="requirment_id" value="<?=$Requirment['id']?>" ><?php */?>
                     <input type="hidden" class="form-control" name="task_type"  value="DESIGN" >
 
-                    <div class="form-group">
+                        <div class="form-group" id="project_id_div">
                         <label>Project </label> <br>
-               <?php echo $this->Form->input('project_id', ['empty' =>'Select', 'options' => $Projects,  'class'=>'form-control' ,'required' => true ,'dev' => false, 'label' => false]); ?>
+               <?php echo $this->Form->input('project_id', ['empty' =>'Select', 'options' => $Projects,  'class'=>'form-control','id'=>'project_id','onchange' => "get_requirements()" ,'required' => true ,'dev' => false, 'label' => false]); ?>
                     </div>  
+                    <div class="form-group" >
+                        <label>Requirement:</label>
+                        <div id="requirement_div">
+               <?php echo $this->Form->input('requirment_id', [ 'required' => true, 'empty' =>'-- Select --', 'dev' => false , 'label' => false, 'class'=>'form-control','required' => true]); ?>
+                        </div>
 
-          <?php /*?>  <div class="form-group">
-              <label>Task type</label> <br>
-            
-               <?php echo $this->Form->input('task_type', ['default' =>'DESIGN',  'empty' =>'Select', 'options' => ['DESIGN' => 'Design' , 'QA' => 'QA'],  'class'=>'form-control' ,'required' => true ,'dev' => false, 'label' => false]); ?>
-             
-            </div><?php */?>
+                    </div>
                     <div class="form-group">
                         <label>Title</label>
                         <input type="text" class="form-control" name="title" id="req_field1" >
@@ -232,3 +229,19 @@ $site_url = $this->Url->build('/',true); ?>
     </div>
 </div> 
 
+<script>
+    function get_requirements() {
+
+        var project_id = $('#project_id option:selected').val();
+        $.ajax({
+            type: "POST",
+            url: "<?php echo $site_url?>Requirments/get_requirements/" + project_id,
+            success: function (data) {
+                if (data != '')
+                {
+                    $('#requirement_div').html(data);
+                }
+            }
+        });
+    }
+</script>
