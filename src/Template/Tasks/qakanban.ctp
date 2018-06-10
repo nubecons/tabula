@@ -302,13 +302,42 @@
 </div>
 
 
- <script src="<?=$site_url?>libs/jquery/html5sortable/jquery.sortable.js"></script>  
+<?php /*?> <script src="<?=$site_url?>libs/jquery/html5sortable/jquery.sortable.js"></script>
+ <script src="<?=$site_url?>libs/jquery/nestable/jquery.nestable.js"></script>    
+ <?php */?>
  
+ <script src="<?=$site_url?>libs/jquery/html5sortable/html.sortable.js"></script> 
+<script src="<?=$site_url?>libs/jquery/html5sortable/html.sortable.src.js"></script>  
  
 <script>
 
  $(function() {
-    $( ".drag_body" ).sortable({
+	 
+	 sortable('.drag_body',{
+   					connectWith: 'drag_body',
+					handle: ".panel-body",
+					forcePlaceholderSize: true
+					});
+					
+					$('.drag_body').on('sortupdate', function(e, ui){
+						 status = ui.item.parent(".drag_body").attr("id");
+						 id = ui.item.attr('id');
+						$.ajax({
+							type: 'POST',
+							data: {'status': status, 'id': id},
+							url: '<?=$site_url?>tasks/updateStatus',
+							success: function (data) {
+								ui.item.next(".alert-success").hide();
+								ui.item.closest(".alert-success").hide();
+							}
+						});
+						
+				
+			});
+	 
+	 
+	 
+    $( ".drag_bodyaaaaaaaaa" ).sortable({
       connectWith: ".drag_body",
       handle: ".panel-body",
 	  forcePlaceholderSize: true, 
