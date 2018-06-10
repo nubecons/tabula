@@ -35,8 +35,9 @@ $site_url = $this->Url->build('/',true); ?>
 				$Resolve_tasks = $this->GetInfo->getCountTasks($Requirment['id'] , 'Resolve','DESIGN');
                                 $AllTasks = $New_tasks+$InProgress_tasks+$Close_tasks+$Resolve_tasks;
                                 $RemainingTasks =$New_tasks+$InProgress_tasks;
-                                if($RemainingTasks >0){
-                                $TaskHealth = round(($RemainingTasks/$AllTasks)/100);
+                                $DoneTasks =$Close_tasks+$Resolve_tasks;
+                                if($AllTasks >0){
+                                $TaskHealth = round(($DoneTasks*100)/$AllTasks);
                                 }
 		    
 		  ?>
@@ -60,7 +61,11 @@ $site_url = $this->Url->build('/',true); ?>
 
                         <em>Project: &nbsp;<span class="label bg-primary m-t-xs"><?=$Requirment['project']['name']?></span></em>
                         &nbsp;
-                        <em class="text-success"><i class="fa fa-level-up"> Heath:</i> <?=$TaskHealth?>%</em>
+                         <?php if($TaskHealth <=33){?>
+                        <em class="text-danger"><i class="fa fa-level-down"> Heath:</i> <?=$TaskHealth;?>%</em>
+                        <?php }else{?>
+                        <em class="text-success"><i class="fa fa-level-up"> Heath:</i> <?=$TaskHealth;?>%</em>
+                        <?php }?>
                         &nbsp;
                         <em class="text-xs  pull-right">Created on <span class="text-danger"><?=date('M d, Y', strtotime($Requirment['created']))?></span></em>
                         <br> <br>

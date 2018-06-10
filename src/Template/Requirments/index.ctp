@@ -21,6 +21,17 @@
 	  foreach($Requirments as $Requirment){
 		     
                     $counter =  $counter + 1 ;
+                       $TaskHealth=0;
+				$New_tasks = $this->GetInfo->getCountTasks($Requirment['id'] , 'New');
+				$InProgress_tasks = $this->GetInfo->getCountTasks($Requirment['id'] , 'In Progress');
+				$Close_tasks = $this->GetInfo->getCountTasks($Requirment['id'] , 'Close');
+				$Resolve_tasks = $this->GetInfo->getCountTasks($Requirment['id'] , 'Resolve');
+                                $AllTasks = $New_tasks+$InProgress_tasks+$Close_tasks+$Resolve_tasks;
+                                $RemainingTasks =$New_tasks+$InProgress_tasks;
+                                $DoneTasks =$Close_tasks+$Resolve_tasks;
+                                if($AllTasks >0){
+                                $TaskHealth = round(($DoneTasks*100)/$AllTasks);
+                                }
 		   		    
 		  ?>
                 <article class="media">
@@ -36,7 +47,11 @@
 
                         <em>Project: &nbsp; <span class="label bg-primary m-t-xs"><?=$Requirment['project']['name']?></span></em>
                         &nbsp;
-                        <em class="text-success"><i class="fa fa-level-up"> Heath:</i> 20%</em>
+                        <?php if($TaskHealth <=33){?>
+                        <em class="text-danger"><i class="fa fa-level-down"> Heath:</i> <?=$TaskHealth;?>%</em>
+                        <?php }else{?>
+                        <em class="text-success"><i class="fa fa-level-up"> Heath:</i> <?=$TaskHealth;?>%</em>
+                        <?php }?>
                         &nbsp;
                         <em class="text-xs  pull-right">Created on <span class="text-danger"><?=date('M d, Y', strtotime($Requirment['created']))?></span></em>
 
@@ -163,13 +178,6 @@
 
     </div>
 </div>      
-
- <?php /*?><script src="<?=$site_url?>libs/jquery/bootstrap/dist/js/daterangepicker.js"></script>
- <script type="text/javascript">
-            $(function () {
-                $('#datetimepicker1').datetimepicker();
-            });
-        </script><?php */?>
 <script>
     $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
